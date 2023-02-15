@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="nginx 官方帮助文档，http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;docs&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx核心配置文件">
+<meta property="og:url" content="http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="勾三股四">
+<meta property="og:description" content="nginx 官方帮助文档，http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;docs&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-10T01:58:09.000Z">
+<meta property="article:modified_time" content="2023-01-10T08:34:53.877Z">
+<meta property="article:author" content="yuan kun">
+<meta property="article:tag" content="Linux从入门到放弃">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Nginx核心配置文件</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2023/01/11/%E5%B8%B8%E7%94%A8shell%E8%84%9A%E6%9C%AC/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&text=Nginx核心配置文件"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Nginx核心配置文件"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&is_video=false&description=Nginx核心配置文件"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Nginx核心配置文件&body=Check out this article: http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Nginx核心配置文件"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Nginx核心配置文件"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Nginx核心配置文件"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Nginx核心配置文件"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&name=Nginx核心配置文件&description=nginx 官方帮助文档，http://nginx.org/en/docs/"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&t=Nginx核心配置文件"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">Nginx核心配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-number">1.1.</span> <span class="toc-text">配置文件说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">全局配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#http%E9%85%8D%E7%BD%AE%E5%9D%97"><span class="toc-number">1.3.</span> <span class="toc-text">http配置块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MIME"><span class="toc-number">1.4.</span> <span class="toc-text">MIME</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87server%E9%A6%96%E9%83%A8"><span class="toc-number">1.5.</span> <span class="toc-text">指定响应报文server首部</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#root-%E4%B8%8E-alias"><span class="toc-number">1.6.</span> <span class="toc-text">root 与 alias</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#location-%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8"><span class="toc-number">1.7.</span> <span class="toc-text">location 的详细使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx-%E5%9B%9B%E5%B1%82%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">1.8.</span> <span class="toc-text">Nginx 四层访问控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx-%E8%B4%A6%E6%88%B7%E8%AE%A4%E8%AF%81%E5%8A%9F%E8%83%BD"><span class="toc-number">1.9.</span> <span class="toc-text">Nginx 账户认证功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8"><span class="toc-number">1.10.</span> <span class="toc-text">检测文件是否存在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%BF%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE"><span class="toc-number">1.11.</span> <span class="toc-text">长连接配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E4%B8%8B%E8%BD%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">1.12.</span> <span class="toc-text">作为下载服务器配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE"><span class="toc-number">1.13.</span> <span class="toc-text">其他配置</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Nginx核心配置文件
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">yuankun</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-10T01:58:09.000Z" itemprop="datePublished">2023-01-10</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Nginx/">Nginx</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/" rel="tag">Linux从入门到放弃</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Nginx核心配置文件"><a href="#Nginx核心配置文件" class="headerlink" title="Nginx核心配置文件"></a>Nginx核心配置文件</h1><h2 id="配置文件说明"><a href="#配置文件说明" class="headerlink" title="配置文件说明"></a>配置文件说明</h2><p>nginx官网文档说明</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://nginx.org/en/docs/</span><br></pre></td></tr></table></figure>
+
+<p>tengine帮助文档</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://tengine.taobao.org/nginx_docs/cn/docs</span><br></pre></td></tr></table></figure>
+
+<p> Nginx的配置文件的组成部分： </p>
+<p>主配置文件：nginx.conf </p>
+<p>子配置文件: include conf.d&#x2F;*.conf </p>
+<p>fastcgi， uwsgi，scgi 等协议相关的配置文件 mime.types：支持的mime类型，MIME(Multipurpose Internet Mail Extensions)多用途互联网邮 件扩展类型，MIME消息能包含文本、图像、音频、视频以及其他应用程序专用的数据，是设定某 种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动 使用指定应用程序来打开。多用于指定一些客户端自定义的文件名，以及一些媒体文件打开方式。 MIME参考文档：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME</a>_ Types </p>
+<p>nginx 配置文件格式说明 </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">配置文件由指令与指令块构成</span><br><span class="line">每条指令以;分号结尾，指令与值之间以空格符号分隔</span><br><span class="line">可以将多条指令放在同一行,用分号分隔即可,但可读性差,不推荐</span><br><span class="line">指令块以&#123; &#125;大括号将多条指令组织在一起,且可以嵌套指令块</span><br><span class="line">include语句允许组合多个配置文件以提升可维护性</span><br><span class="line">使用#符号添加注释，提高可读性</span><br><span class="line">使用$符号使用变量</span><br><span class="line">部分指令的参数支持正则表达式</span><br></pre></td></tr></table></figure>
+
+<p>Nginx主配置文件的配置指令方式</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">directive value [value2 ...];</span><br><span class="line">注意</span><br><span class="line">(1) 指令必须以分号结尾</span><br><span class="line">(2) 支持使用配置变量</span><br><span class="line"> 内建变量：由Nginx模块引入，可直接引用</span><br><span class="line"> 自定义变量：由用户使用set命令定义,格式: set variable_name value;</span><br><span class="line"> 引用变量：$variable_name</span><br></pre></td></tr></table></figure>
+
+<p>主配置文件结构：四部分</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">main block：主配置段，即全局配置段，对http,mail都有效</span><br><span class="line">#事件驱动相关的配置</span><br><span class="line">event &#123;</span><br><span class="line"> ...</span><br><span class="line">&#125;  </span><br><span class="line">#http/https 协议相关配置段</span><br><span class="line">http &#123;</span><br><span class="line"> ...</span><br><span class="line">&#125;          </span><br><span class="line">#默认配置文件不包括下面两个块</span><br><span class="line">#mail 协议相关配置段</span><br><span class="line">mail &#123;</span><br><span class="line"> ...</span><br><span class="line">&#125;    </span><br><span class="line">#stream 服务器相关配置段</span><br><span class="line">stream &#123;</span><br><span class="line"> ...</span><br><span class="line">&#125; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>默认的nginx.conf配置文件格式说明</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">#全局配置端，对全局生效，主要设置nginx的启动用户/组，启动的工作进程数量，工作模式，Nginx的PID</span><br><span class="line">路径，日志路径等。</span><br><span class="line">user nginx nginx;</span><br><span class="line">worker_processes  1;   #启动工作进程数数量</span><br><span class="line">events &#123; #events设置快，主要影响nginx服务器与用户的网络连接，比如是否允许同时接受多个网络连</span><br><span class="line">接，使用哪种事件驱动模型处理请求，每个工作进程可以同时支持的最大连接数，是否开启对多工作进程下的</span><br><span class="line">网络连接进行序列化等。</span><br><span class="line">     worker_connections  1024;   #设置单个nginx工作进程可以接受的最大并发，作为web服务器</span><br><span class="line">的时候最大并发数为worker_connections * worker_processes，作为反向代理的时候为</span><br><span class="line">(worker_connections * worker_processes)/2</span><br><span class="line">&#125;</span><br><span class="line">http &#123; #http块是Nginx服务器配置中的重要部分，缓存、代理和日志格式定义等绝大多数功能和第三方模</span><br><span class="line">块都可以在这设置，http块可以包含多个server块，而一个server块中又可以包含多个location块，</span><br><span class="line">server块可以配置文件引入、MIME-Type定义、日志自定义、是否启用sendfile、连接超时时间和单个链</span><br><span class="line">接的请求上限等。</span><br><span class="line">   include       mime.types;</span><br><span class="line">   default_type application/octet-stream;</span><br><span class="line">   sendfile       on; #作为web服务器的时候打开sendfile加快静态文件传输，指定是否使用</span><br><span class="line">sendfile系统调用来传输文件,sendfile系统调用在两个文件描述符之间直接传递数据(完全在内核中操</span><br><span class="line">作)，从而避免了数据在内核缓冲区和用户缓冲区之间的拷贝，操作效率很高，被称之为零拷贝，硬盘 &gt;&gt;</span><br><span class="line">kernel buffer (快速拷贝到kernelsocket buffer) &gt;&gt;协议栈。</span><br><span class="line">   keepalive_timeout  65;  #长连接超时时间，单位是秒</span><br><span class="line">   server &#123; #设置一个虚拟机主机，可以包含自己的全局快，同时也可以包含多个location模块。比如</span><br><span class="line">本虚拟机监听的端口、本虚拟机的名称和IP配置，多个server 可以使用一个端口，比如都使用80端口提供</span><br><span class="line">web服务、</span><br><span class="line">       listen       80;  #配置server监听的端口</span><br><span class="line">       server_name localhost; #本server的名称，当访问此名称的时候nginx会调用当前</span><br><span class="line">serevr内部的配置进程匹配。</span><br><span class="line">       location / &#123; #location其实是server的一个指令，为nginx服务器提供比较多而且灵活的指</span><br><span class="line">令，都是在location中体现的，主要是基于nginx接受到的请求字符串，对用户请求的UIL进行匹配，并对特</span><br><span class="line">定的指令进行处理，包括地址重定向、数据缓存和应答控制等功能都是在这部分实现，另外很多第三方模块的</span><br><span class="line">配置也是在location模块中配置。</span><br><span class="line">           root   html; #相当于默认页面的目录名称，默认是安装目录的相对路径，可以使用绝对路</span><br><span class="line">径配置。</span><br><span class="line">           index index.html index.htm; #默认的页面文件名称</span><br><span class="line">       &#125;</span><br><span class="line">       error_page   500 502 503 504 /50x.html; #错误页面的文件名称</span><br><span class="line">       location = /50x.html &#123; #location处理对应的不同错误码的页面定义到/50x.html，这个</span><br><span class="line">跟对应其server中定义的目录下。</span><br><span class="line">           root   html;  #定义默认页面所在的目录</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">    </span><br><span class="line">#和邮件相关的配置</span><br><span class="line">#mail &#123;</span><br><span class="line">#               ...</span><br><span class="line">#       &#125;         mail 协议相关配置段</span><br><span class="line">#tcp代理配置，1.9版本以上支持</span><br><span class="line">#stream &#123;</span><br><span class="line">#               ...</span><br><span class="line">#       &#125;       stream 服务器相关配置段</span><br><span class="line">#导入其他路径的配置文件</span><br><span class="line">#include /apps/nginx/conf.d/*.conf</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h2><p> Main 全局配置段常见的配置指令分类 </p>
+<ul>
+<li>正常运行必备的配置</li>
+<li>优化性能相关的配置</li>
+<li>用于调试及定位问题相关的配置</li>
+<li>事件驱动相关的配置</li>
+</ul>
+<p>全局配置说明: </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">user nginx nginx; #启动Nginx工作进程的用户和组</span><br><span class="line">worker_processes [number | auto]; #启动Nginx工作进程的数量,一般设为和CPU核心数相同</span><br><span class="line">worker_cpu_affinity 00000001 00000010 00000100 00001000 | auto ; #将Nginx工作进程绑</span><br><span class="line">定到指定的CPU核心，默认Nginx是不进行进程绑定的，绑定并不是意味着当前nginx进程独占以一核心CPU，</span><br><span class="line">但是可以保证此进程不会运行在其他核心上，这就极大减少了nginx的工作进程在不同的cpu核心上的来回跳</span><br><span class="line">转，减少了CPU对进程的资源分配与回收以及内存管理等，因此可以有效的提升nginx服务器的性能。</span><br><span class="line"></span><br><span class="line">CPU MASK: 00000001：0号CPU</span><br><span class="line">          00000010：1号CPU</span><br><span class="line">  10000000：7号CPU</span><br><span class="line">#示例:</span><br><span class="line">worker_cpu_affinity 0001 0010 0100 1000;第0号---第3号CPU</span><br><span class="line">worker_cpu_affinity 0101 1010;</span><br><span class="line">#示例</span><br><span class="line">worker_processes  4;</span><br><span class="line">worker_cpu_affinity 00000010 00001000 00100000 10000000;</span><br><span class="line">[root@centos8 ~]# ps axo pid,cmd,psr | grep nginx</span><br><span class="line">31093 nginx: master process /apps   1</span><br><span class="line">34474 nginx: worker process         1</span><br><span class="line">34475 nginx: worker process         3</span><br><span class="line">34476 nginx: worker process         5</span><br><span class="line">34477 nginx: worker process         7</span><br><span class="line">35751 grep nginx</span><br><span class="line">#auto 绑定CPU</span><br><span class="line">#The special value auto (1.9.10) allows binding worker processes automatically to</span><br><span class="line">available CPUs:</span><br><span class="line">worker_processes auto;</span><br><span class="line">worker_cpu_affinity auto;</span><br><span class="line">#The optional mask parameter can be used to limit the CPUs available for</span><br><span class="line">automatic binding:</span><br><span class="line">worker_cpu_affinity auto 01010101;</span><br><span class="line">#错误日志记录配置，语法：error_log file [debug | info | notice | warn | error | crit</span><br><span class="line">| alert | emerg]</span><br><span class="line">#error_log logs/error.log;</span><br><span class="line">#error_log logs/error.log notice;</span><br><span class="line">error_log /usr/local/src/nginx/logs/error.log error;</span><br><span class="line">#pid文件保存路径</span><br><span class="line">pid       /usr/local/src/nginx/logs/nginx.pid;</span><br><span class="line">worker_priority 0; #工作进程优先级，-20~20(19)</span><br><span class="line">worker_rlimit_nofile 65536; #所有worker进程能打开的文件数量上限,包括:Nginx的所有连接（例</span><br><span class="line">如与代理服务器的连接等），而不仅仅是与客户端的连接,另一个考虑因素是实际的并发连接数不能超过系统级</span><br><span class="line">别的最大打开文件数的限制.最好与ulimit -n 或者limits.conf的值保持一致,</span><br><span class="line">daemon off;  #前台运行Nginx服务用于测试、或者以容器运行时，需要设为off</span><br><span class="line">master_process off|on; #是否开启Nginx的master-worker工作模式，仅用于开发调试场景,默认为</span><br><span class="line">on</span><br><span class="line">events &#123;</span><br><span class="line">   worker_connections  65536;  #设置单个工作进程的最大并发连接数</span><br><span class="line">   use epoll; #使用epoll事件驱动，Nginx支持众多的事件驱动，比如:select、poll、epoll，只</span><br><span class="line">能设置在events模块中设置。</span><br><span class="line">   accept_mutex on; #on为同一时刻一个请求轮流由worker进程处理,而防止被同时唤醒所有</span><br><span class="line">worker,避免多个睡眠进程被唤醒的设置，默认为off，新请求会唤醒所有worker进程,此过程也称为&quot;惊</span><br><span class="line">群&quot;，因此nginx刚安装完以后要进行适当的优化。建议设置为on</span><br><span class="line">   multi_accept on; #on时Nginx服务器的每个工作进程可以同时接受多个新的网络连接，此指令默认</span><br><span class="line">为off，即默认为一个工作进程只能一次接受一个新的网络连接，打开后几个同时接受多个。建议设置为on</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>范例：实现nginx高并发配置</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 ~]#ulimit -n 102400</span><br><span class="line">[root@centos7 ~]#while true;do ab -c 5000 -n 10000 http://10.0.0.8/;sleep</span><br><span class="line">0.5;done</span><br><span class="line">#默认配置不支持高并发,会出现以下错误日志</span><br><span class="line">[root@centos8 conf]#tail /usr/local/src/nginx/logs/error.log</span><br><span class="line">2020/09/24 21:19:33 [crit] 41006#0: *1105860 open() &quot;/apps/nginx/html/50x.html&quot;</span><br><span class="line">failed (24: Too many open files), client: 10.0.0.7, server: localhost, request:</span><br><span class="line">&quot;GET / HTTP/1.0&quot;, host: &quot;10.0.0.8&quot;</span><br><span class="line">2020/09/24 21:19:33 [crit] 41006#0: accept4() failed (24: Too many open files)</span><br><span class="line">2020/09/24 21:19:33 [crit] 41006#0: *1114177 open()</span><br><span class="line">&quot;/apps/nginx/html/index.html&quot; failed (24: Too many open files), client: 10.0.0.7,</span><br><span class="line">server: localhost, request: &quot;GET / HTTP/1.0&quot;, host: &quot;10.0.0.8&quot;</span><br><span class="line">#如果systemd启动,则需要修改nginx.service文件中加LimitNOFILE=100000,才能有效</span><br><span class="line">#如果非systemd启动,可以修改下面pam限制</span><br><span class="line">[root@centos8 ~]#vim /etc/security/limits.conf</span><br><span class="line">*               soft   nofile          1000000</span><br><span class="line">*               hard   nofile          1000000</span><br><span class="line">[root@centos8 ~]#vim /apps/nginx/conf/nginx.conf</span><br><span class="line">worker_rlimit_nofile 100000;</span><br><span class="line">[root@centos8 ~]#systemctl restart nginx</span><br><span class="line">[root@centos8 ~]# watch -n1 &#x27;ps -axo pid,cmd,nice | grep nginx #验证进程优先级</span><br></pre></td></tr></table></figure>
+
+<h2 id="http配置块"><a href="#http配置块" class="headerlink" title="http配置块"></a>http配置块</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"> ...</span><br><span class="line"> ...  #各server的公共配置</span><br><span class="line"> server &#123;    #每个server用于定义一个虚拟主机,第一个server为默认虚拟服务器</span><br><span class="line"> ...</span><br><span class="line"> &#125;</span><br><span class="line"> server &#123;    </span><br><span class="line"> ...</span><br><span class="line"> server_name   #虚拟主机名</span><br><span class="line"> root     #主目录</span><br><span class="line"> alias     #路径别名</span><br><span class="line"> location [OPERATOR] URL &#123;     #指定URL的特性</span><br><span class="line"> ...</span><br><span class="line"> if CONDITION &#123;</span><br><span class="line"> ...</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>http配置协议说明</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">   include       mime.types; #导入支持的文件类型,是相对于/usr/local/src/nginx/conf的目录</span><br><span class="line">   default_type application/octet-stream; #除mime.types中文件类型外,设置其它文件默认</span><br><span class="line">类型，访问其它类型时会提示下载不匹配的类型文件</span><br><span class="line">#日志配置部分</span><br><span class="line">    #log_format main &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span><br><span class="line">    #                 &#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br><span class="line">    #                 &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span><br><span class="line">    #access_log logs/access.log main;</span><br><span class="line">#自定义优化参数</span><br><span class="line">   sendfile       on;</span><br><span class="line">    #tcp_nopush     on; #在开启了sendfile的情况下，合并请求后统一发送给客户端,必须开启</span><br><span class="line">sendfile</span><br><span class="line">    #tcp_nodelay   off; #在开启了keepalived模式下的连接是否启用TCP_NODELAY选项，当为</span><br><span class="line">off时，延迟0.2s发送，默认On时，不延迟发送，立即发送用户响应报文。</span><br><span class="line">    #keepalive_timeout 0;</span><br><span class="line">   keepalive_timeout  65 65; #设置会话保持时间,第二个值为响应首部:keepAlived:timeout=65,可以和第一个值不同</span><br><span class="line">    #gzip on; #开启文件压缩</span><br><span class="line">   server &#123;</span><br><span class="line">       listen       80; #设置监听地址和端口</span><br><span class="line">       server_name localhost; #设置server name，可以以空格隔开写多个并支持正则表达式，</span><br><span class="line">如:*.magedu.com www.magedu.* ~^www\d+\.magedu\.com$ default_server</span><br><span class="line">        #charset koi8-r; #设置编码格式，默认是俄语格式，建议改为utf-8</span><br><span class="line">        #access_log logs/host.access.log main;</span><br><span class="line">       location / &#123;</span><br><span class="line">           root   html;</span><br><span class="line">           index index.html index.htm;</span><br><span class="line">       &#125;</span><br><span class="line">        #error_page 404             /404.html;</span><br><span class="line">        # redirect server error pages to the static page /50x.html</span><br><span class="line">        #</span><br><span class="line">       error_page   500 502 503 504 /50x.html; #定义错误页面</span><br><span class="line">       location = /50x.html &#123;</span><br><span class="line">           root   html;</span><br><span class="line">       &#125;</span><br><span class="line">        # proxy the PHP scripts to Apache listening on 127.0.0.1:80</span><br><span class="line">        #</span><br><span class="line">        #location ~ \.php$ &#123; #以http的方式转发php请求到指定web服务器</span><br><span class="line">        #   proxy_pass   http://127.0.0.1;</span><br><span class="line">        #&#125;</span><br><span class="line">        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">        #</span><br><span class="line">        #location ~ \.php$ &#123; #以fastcgi的方式转发php请求到php处理</span><br><span class="line">        #   root           html;</span><br><span class="line">        #   fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">        #   fastcgi_index index.php;</span><br><span class="line">        #   fastcgi_param SCRIPT_FILENAME /scripts$fastcgi_script_name;</span><br><span class="line">        #   include       fastcgi_params;</span><br><span class="line">        #&#125;</span><br><span class="line">         # deny access to .htaccess files, if Apache&#x27;s document root</span><br><span class="line">        # concurs with nginx&#x27;s one</span><br><span class="line">        #</span><br><span class="line">        #location ~ /\.ht &#123; #拒绝web形式访问指定文件，如很多的网站都是通过.htaccess文件来</span><br><span class="line">改变自己的重定向等功能。</span><br><span class="line">        #   deny all;</span><br><span class="line">        #&#125;</span><br><span class="line">       location ~ /passwd.html &#123;</span><br><span class="line">           deny all;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">    # another virtual host using mix of IP-, name-, and port-based configuration</span><br><span class="line">    #</span><br><span class="line">    #server &#123; #自定义虚拟server</span><br><span class="line">    #   listen       8000;</span><br><span class="line">    #   listen       somename:8080;</span><br><span class="line">    #   server_name somename alias another.alias;</span><br><span class="line">    #   location / &#123;</span><br><span class="line">    #       root   html;</span><br><span class="line">    #       index index.html index.htm; #指定默认网页文件，此指令由</span><br><span class="line">ngx_http_index_module模块提供</span><br><span class="line">    #   &#125;</span><br><span class="line">    #&#125;</span><br><span class="line">    # HTTPS server</span><br><span class="line">    #</span><br><span class="line">    #server &#123; #https服务器配置</span><br><span class="line">    #   listen       443 ssl;</span><br><span class="line">    #   server_name localhost;</span><br><span class="line">    #   ssl_certificate     cert.pem;</span><br><span class="line">    #   ssl_certificate_key cert.key;</span><br><span class="line">    #   ssl_session_cache   shared:SSL:1m;</span><br><span class="line">    #   ssl_session_timeout 5m;</span><br><span class="line">    #   ssl_ciphers HIGH:!aNULL:!MD5;</span><br><span class="line">    #   ssl_prefer_server_ciphers on;</span><br><span class="line">    #   location / &#123;</span><br><span class="line">    #       root   html;</span><br><span class="line">    #       index index.html index.htm;</span><br><span class="line">    #   &#125;</span><br><span class="line">    #&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="MIME"><a href="#MIME" class="headerlink" title="MIME"></a>MIME</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#在响应报文中将指定的文件扩展名映射至MIME对应的类型</span><br><span class="line">include           /etc/nginx/mime.types;</span><br><span class="line">default_type     application/octet-stream;#除mime.types中的类型外，指定其它文件的默认</span><br><span class="line">MIME类型，浏览器一般会提示下载</span><br><span class="line">types &#123;</span><br><span class="line">   text/html html;</span><br><span class="line">   image/gif gif;</span><br><span class="line">   image/jpeg jpg;</span><br><span class="line">&#125;</span><br><span class="line">#MIME参考文档：</span><br><span class="line">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_Types</span><br></pre></td></tr></table></figure>
+
+<p>范例：识别PHP为text</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 conf]# vim /usr/local/src/nginx/html/test.php</span><br><span class="line">&lt;?php</span><br><span class="line">phpinfo();</span><br><span class="line">?&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改配置文件</span></span><br><span class="line">[root@centos7 conf]# vim /usr/local/src/nginx/conf/nginx.conf</span><br><span class="line">http &#123;</span><br><span class="line">   include       mime.types;</span><br><span class="line">   default_type text/html; # 加入次行</span><br><span class="line">......</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">或者修改为下面</span></span><br><span class="line">   include       mime.types;</span><br><span class="line">   default_type application/octet-stream;</span><br><span class="line">   types&#123;</span><br><span class="line">       text/plain php;  #加此行</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="指定响应报文server首部"><a href="#指定响应报文server首部" class="headerlink" title="指定响应报文server首部"></a>指定响应报文server首部</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#是否在响应报文中的Content-Type显示指定的字符集，默认off不显示</span><br><span class="line">charset charset | off;</span><br><span class="line">#示例</span><br><span class="line">charset utf-8;</span><br><span class="line">#是否在响应报文的Server首部显示nginx版本</span><br><span class="line">server_tokens on | off | build | string;</span><br></pre></td></tr></table></figure>
+
+<p>修改server字段</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">如果想自定义响应报文的nginx版本信息，需要修改源码文件，重新编译</span><br><span class="line">如果server_tokens on，修改 src/core/nginx.h 修改第13-14行，如下示例</span><br><span class="line">#define NGINX_VERSION     &quot;1.68.9&quot;</span><br><span class="line">#define NGINX_VER         &quot;test/&quot; NGINX_VERSION</span><br><span class="line">如果server_tokens off，修改 src/http/ngx_http_header_filter_module.c</span><br><span class="line">第49行，如下示例：</span><br><span class="line">static char ngx_http_server_string[] = &quot;Server: nginx&quot; CRLF;</span><br><span class="line">把其中的nginx改为自己想要的文字即可,如：test</span><br></pre></td></tr></table></figure>
+
+<h2 id="root-与-alias"><a href="#root-与-alias" class="headerlink" title="root 与 alias"></a>root 与 alias</h2><p>root：指定web的家目录，在定义location的时候，文件的绝对路径等于 root+location </p>
+<p>alias：定义路径别名，会把访问的路径重新定义到其指定的路径,文档映射的另一种机制;仅能用于 location上下文,此指令使用较少 </p>
+<p> 注意：location中使用root指令和alias指令的意义不同 </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root 给定的路径对应于location中的/uri 左侧的/</span><br><span class="line">alias 给定的路径对应于location中的/uri 的完整路径</span><br></pre></td></tr></table></figure>
+
+<h2 id="location-的详细使用"><a href="#location-的详细使用" class="headerlink" title="location 的详细使用"></a>location 的详细使用</h2><p>在一个server中location配置段可存在多个，用于实现从uri到文件系统的路径映射；ngnix会根据用户请 求的URI来检查定义的所有location，按一定的优先级找出一个最佳匹配，而后应用其配置 </p>
+<p>在没有使用正则表达式的时候，nginx会先在server中的多个location选取匹配度最高的一个uri，uri是 用户请求的字符串，即域名后面的web文件路径，然后使用该location模块中的正则url和字符串，如果 匹配成功就结束搜索，并使用此location处理此请求。</p>
+<p>location 官方帮助:  </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://nginx.org/en/docs/http/ngx_http_core_module.html#location</span><br></pre></td></tr></table></figure>
+
+<p>语法规则</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#语法规则：</span><br><span class="line">location [ = | ~ | ~* | ^~ ] uri &#123; ... &#125;</span><br><span class="line">=   #用于标准uri前，需要请求字串与uri精确匹配，大小敏感,如果匹配成功就停止向下匹配并立即处理请</span><br><span class="line">求</span><br><span class="line">^~  #用于标准uri前，表示包含正则表达式,并且匹配以指定的正则表达式开头,对uri的最左边部分做匹配</span><br><span class="line">检查，不区分字符大小写</span><br><span class="line">~   #用于标准uri前，表示包含正则表达式,并且区分大小写</span><br><span class="line">~*  #用于标准uri前，表示包含正则表达式,并且不区分大写</span><br><span class="line">不带符号 #匹配起始于此uri的所有的uri</span><br><span class="line">\   #用于标准uri前，表示包含正则表达式并且转义字符。可以将 . * ?等转义为普通符号</span><br><span class="line">#匹配优先级从高到低：</span><br><span class="line">=, ^~, ~/~*, 不带符号</span><br></pre></td></tr></table></figure>
+
+<p>官网案例</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">location = / &#123;</span><br><span class="line">   [ configuration A ]</span><br><span class="line">&#125;</span><br><span class="line">location / &#123;</span><br><span class="line">   [ configuration B ]</span><br><span class="line">&#125;</span><br><span class="line">location /documents/ &#123;</span><br><span class="line">   [ configuration C ]</span><br><span class="line">&#125;</span><br><span class="line">location ^~ /images/ &#123;</span><br><span class="line">   [ configuration D ]</span><br><span class="line">&#125;</span><br><span class="line">location ~* \.(gif|jpg|jpeg)$ &#123;</span><br><span class="line">   [ configuration E ]</span><br><span class="line">&#125;</span><br><span class="line">The “/” request will match configuration A(?), the “/index.html” request will</span><br><span class="line">match configuration B,</span><br><span class="line">the “/documents/document.html” request will match configuration C, the</span><br><span class="line">“/images/1.gif” request will match configuration D, and the “/documents/1.jpg”</span><br><span class="line">request will match configuration E.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>精确匹配图片</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	server_name localhost;</span><br><span class="line">	root /data/web;</span><br><span class="line">	index index.html *.html;</span><br><span class="line">	location = /test.jpg &#123;</span><br><span class="line">	  root /data/image;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>匹配案例-文件名后缀</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	server_name localhost;</span><br><span class="line">	root /data/web;</span><br><span class="line">	index index.html *.html;</span><br><span class="line">	location ~* \.(gif|jpg|jpeg|bmp|png|tiff|tif|ico|wmf|js|css)$ &#123;</span><br><span class="line">	  root /data/web1;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>匹配案例-优先级</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name localhost;</span><br><span class="line">        root /data/web;</span><br><span class="line">        index index.html *.html;</span><br><span class="line">        location = /test2.jpg &#123;</span><br><span class="line">          root /data/web2;</span><br><span class="line">          index index.html;</span><br><span class="line">&#125;</span><br><span class="line">        location ~* \.(gif|jpg|jpeg|bmp|png|tiff|tif|ico|wmf|js|css)$ &#123;</span><br><span class="line">          root /data/web1;</span><br><span class="line">          index index.html;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">#匹配优先级：=, ^~, ～/～*，/</span><br><span class="line">location优先级：(location =) &gt; (location ^~ 路径) &gt; (location ~,~* 正则顺序) &gt;</span><br><span class="line">(location 完整路径) &gt; (location 部分起始路径) &gt; (/)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nginx-四层访问控制"><a href="#Nginx-四层访问控制" class="headerlink" title="Nginx 四层访问控制"></a>Nginx 四层访问控制</h2><p> 访问控制基于模块ngx_http_access_module实现，可以通过匹配客户端源IP地址进行限制 注意: 如果能在防火墙设备控制,最好就不要在nginx上配置,可以更好的节约资源 </p>
+<p>官方帮助: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://nginx.org/en/docs/http/ngx_http_access_module.html</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">location = /login/ &#123;</span><br><span class="line">   root /data/nginx/html/pc;</span><br><span class="line">   allow 10.0.0.0/24;</span><br><span class="line">   deny all;</span><br><span class="line"> &#125;</span><br><span class="line">location /about &#123;</span><br><span class="line">   alias /data/nginx/html/pc;</span><br><span class="line">   index index.html;  </span><br><span class="line">   deny  192.168.1.1;   # 禁止该IP访问</span><br><span class="line">   allow 192.168.1.0/24;  # 允许该网段访问</span><br><span class="line">   allow 10.1.1.0/16;</span><br><span class="line">   allow 2001:0db8::/32;</span><br><span class="line">   deny all;  #按先小范围到大范围排序</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nginx-账户认证功能"><a href="#Nginx-账户认证功能" class="headerlink" title="Nginx 账户认证功能"></a>Nginx 账户认证功能</h2><p> 由 ngx_http_auth_basic_module 模块提供此功能 </p>
+<p>官方帮助: </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://nginx.org/en/docs/http/ngx_http_auth_basic_module.html#auth_basic</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#CentOS安装包</span><br><span class="line">[root@centos7 ~]#yum -y install httpd-tools</span><br><span class="line">#Ubuntu安装包</span><br><span class="line">[root@Ubuntu ~]#apt -y install apache2-utils</span><br><span class="line"></span><br><span class="line">#创建用户</span><br><span class="line">#-b 非交互式方式提交密码</span><br><span class="line">[root@centos7 ~]# htpasswd -cb /usr/local/src/nginx/conf.d/passwd admin 123456</span><br><span class="line">Adding password for user admin</span><br><span class="line"></span><br><span class="line">[root@centos7 conf.d]# cat passwd </span><br><span class="line">admin:$apr1$/MugqAsJ$MbWcOmC5U9WTZlgK5MJeU.</span><br><span class="line">[root@centos7 conf.d]# </span><br><span class="line"></span><br><span class="line">#安全加固</span><br><span class="line">[root@centos7 ~]# chown nginx.nginx /usr/local/src/nginx/conf.d/passwd</span><br><span class="line">[root@centos7 ~]# chmod 600 /usr/local/src/nginx/conf.d/passwd</span><br><span class="line"></span><br><span class="line"># 修改配置文件</span><br><span class="line">server&#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name localhost;</span><br><span class="line">        root /data/web;</span><br><span class="line">        index index.html *.html;</span><br><span class="line">        location /about &#123;</span><br><span class="line">          alias /data/web1;</span><br><span class="line">          index index.html *.html;</span><br><span class="line">          auth_basic           &quot;login password&quot;;</span><br><span class="line">          auth_basic_user_file /usr/local/src/nginx/conf.d/passwd;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="检测文件是否存在"><a href="#检测文件是否存在" class="headerlink" title="检测文件是否存在"></a>检测文件是否存在</h2><p> try_files 会按顺序检查文件是否存在，返回第一个找到的文件或文件夹（结尾加斜线表示为文件夹）， 如果所有文件或文件夹都找不到，会进行一个内部重定向到最后一个参数。只有最后一个参数可以引起 一个内部重定向，之前的参数只设置内部URI的指向。最后一个参数是回退URI且必须存在，否则会出现 内部500错误。</p>
+<p> 语法格式</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Syntax: try_files file ... uri;</span><br><span class="line">try_files file ... =code;</span><br><span class="line">Default: —</span><br><span class="line">Context: server, location</span><br></pre></td></tr></table></figure>
+
+<p>范例： 如果不存在页面, 就转到default.html页面 </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	server_name localhost;</span><br><span class="line"> 	root /data/web;</span><br><span class="line">	index index.html *.html;</span><br><span class="line">	location / &#123;</span><br><span class="line">	#如果不存在页面, 就转到default.html页面 </span><br><span class="line">	 # try_files $uri  $uri.html $uri/index.html /about/default.html;</span><br><span class="line">	 # 返回自定义状态码 489</span><br><span class="line">	  try_files $uri $uri/index.html $uri.html =489;</span><br><span class="line">	  index index.html *.html;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="长连接配置"><a href="#长连接配置" class="headerlink" title="长连接配置"></a>长连接配置</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">keepalive_timeout timeout [header_timeout];  #设定保持连接超时时长，0表示禁止长连接，默</span><br><span class="line">认为75s，通常配置在http字段作为站点全局配置</span><br><span class="line">keepalive_requests number;  #在一次长连接上所允许请求的资源的最大数量，默认为1000次,建议适</span><br><span class="line">当调大,比如:500</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">keepalive_requests 3;</span><br><span class="line">keepalive_timeout  65 60;</span><br><span class="line">#开启长连接后，返回客户端的会话保持时间为60s，单次长连接累计请求达到指定次数请求或65秒就会被断</span><br><span class="line">开，第二个数字60为发送给客户端应答报文头部中显示的超时时间设置为60s：如不设置客户端将不显示超时</span><br><span class="line">时间。</span><br><span class="line">Keep-Alive:timeout=60  #浏览器收到的服务器返回的报文</span><br><span class="line">#如果设置为0表示关闭会话保持功能，将如下显示：</span><br><span class="line">Connection:close  #浏览器收到的服务器返回的报文</span><br></pre></td></tr></table></figure>
+
+<h2 id="作为下载服务器配置"><a href="#作为下载服务器配置" class="headerlink" title="作为下载服务器配置"></a>作为下载服务器配置</h2><p> nginx_http_autoindex_module 模块处理以斜杠字符 “&#x2F;“ 结尾的请求，并生成目录列表,可以做为下载服务 配置使用 官方文档: </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://nginx.org/en/docs/http/ngx_http_autoindex_module.html#autoindex</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Syntax:	autoindex on | off;</span><br><span class="line">Default:	</span><br><span class="line">autoindex off;</span><br><span class="line">Context:	http, server, location</span><br></pre></td></tr></table></figure>
+
+<p>相关指令</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">autoindex on | off;#自动文件索引功能，默为off</span><br><span class="line">autoindex_exact_size on | off;  #计算文件确切大小（单位bytes），off 显示大概大小（单位</span><br><span class="line">K、M)，默认on</span><br><span class="line">autoindex_localtime on | off ; #显示本机时间而非GMT(格林威治)时间，默认off</span><br><span class="line">autoindex_format html | xml | json | jsonp; #显示索引的页面文件风格，默认html</span><br><span class="line">limit_rate rate; #限制响应客户端传输速率(除GET和HEAD以外的所有方法)，单位B/s,即</span><br><span class="line">bytes/second，默认值0,表示无限制,此指令由ngx_http_core_module提供</span><br><span class="line">set $limit_rate 4k; #也可以通变量限速,单位B/s,同时设置,此项优级高.Rate limit can also</span><br><span class="line">be set in the $limit_rate variable, however, since version 1.17.0, this method is</span><br><span class="line">not recommended:</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 配置文件</span><br><span class="line">location /download &#123;</span><br><span class="line">   autoindex on;    #自动索引功能</span><br><span class="line">   autoindex_exact_size   on; #计算文件确切大小（单位bytes），此为默认值,off只显示大概大</span><br><span class="line">小（单位kb、mb、gb）  </span><br><span class="line">   autoindex_localtime   on; #on表示显示本机时间而非GMT(格林威治)时间,默为为off显示GMT</span><br><span class="line">时间</span><br><span class="line">   limit_rate 1024k;   #限速,默认不限速</span><br><span class="line">   root /data/web/download;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">keepalive_disable none | browser ...;  </span><br><span class="line">#对哪种浏览器禁用长连接</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">limit_except method ... &#123; ... &#125;，仅用于location</span><br><span class="line">#禁止客户端使用除了指定的请求方法之外的其它方法,如果使用会出现403错误</span><br><span class="line">method:GET, HEAD, POST, PUT, DELETE，MKCOL, COPY, MOVE, OPTIONS, PROPFIND,</span><br><span class="line">PROPPATCH, LOCK, UNLOCK, PATCH</span><br><span class="line">limit_except GET &#123;</span><br><span class="line"> allow 192.168.0.0/24;</span><br><span class="line"> allow 10.0.0.1;</span><br><span class="line"> deny all;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#除了GET和HEAD 之外其它方法仅允许192.168.1.0/24网段主机使用</span><br><span class="line">location /upload &#123;</span><br><span class="line">       root /data/nginx/html/pc;</span><br><span class="line">       index index.html;</span><br><span class="line">       limit_except GET &#123;</span><br><span class="line">           allow  10.0.0.6;</span><br><span class="line">           deny all;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">Nginx核心配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="toc-number">1.1.</span> <span class="toc-text">配置文件说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">全局配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#http%E9%85%8D%E7%BD%AE%E5%9D%97"><span class="toc-number">1.3.</span> <span class="toc-text">http配置块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MIME"><span class="toc-number">1.4.</span> <span class="toc-text">MIME</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87server%E9%A6%96%E9%83%A8"><span class="toc-number">1.5.</span> <span class="toc-text">指定响应报文server首部</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#root-%E4%B8%8E-alias"><span class="toc-number">1.6.</span> <span class="toc-text">root 与 alias</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#location-%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8"><span class="toc-number">1.7.</span> <span class="toc-text">location 的详细使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx-%E5%9B%9B%E5%B1%82%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">1.8.</span> <span class="toc-text">Nginx 四层访问控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx-%E8%B4%A6%E6%88%B7%E8%AE%A4%E8%AF%81%E5%8A%9F%E8%83%BD"><span class="toc-number">1.9.</span> <span class="toc-text">Nginx 账户认证功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8"><span class="toc-number">1.10.</span> <span class="toc-text">检测文件是否存在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%BF%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE"><span class="toc-number">1.11.</span> <span class="toc-text">长连接配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E4%B8%8B%E8%BD%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">1.12.</span> <span class="toc-text">作为下载服务器配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE"><span class="toc-number">1.13.</span> <span class="toc-text">其他配置</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&text=Nginx核心配置文件"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Nginx核心配置文件"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&is_video=false&description=Nginx核心配置文件"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Nginx核心配置文件&body=Check out this article: http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Nginx核心配置文件"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Nginx核心配置文件"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Nginx核心配置文件"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&title=Nginx核心配置文件"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&name=Nginx核心配置文件&description=nginx 官方帮助文档，http://nginx.org/en/docs/"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/10/Nginx%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/&t=Nginx核心配置文件"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    yuan kun
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

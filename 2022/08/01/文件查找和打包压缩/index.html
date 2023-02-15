@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Linux find 命令用来在指定目录下查找文件。任何位于参数之前的字符串都将被视为欲查找的目录名;tar命令是Unix&#x2F;Linux系统中备份文件的可靠方法，几乎可以工作于任何环境中，它的使用权限是所有用户，建议针对目录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件查找和打包压缩">
+<meta property="og:url" content="http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/index.html">
+<meta property="og:site_name" content="勾三股四">
+<meta property="og:description" content="Linux find 命令用来在指定目录下查找文件。任何位于参数之前的字符串都将被视为欲查找的目录名;tar命令是Unix&#x2F;Linux系统中备份文件的可靠方法，几乎可以工作于任何环境中，它的使用权限是所有用户，建议针对目录。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image.assets/1659365798543.png">
+<meta property="article:published_time" content="2022-08-01T13:31:38.000Z">
+<meta property="article:modified_time" content="2022-12-16T14:57:16.988Z">
+<meta property="article:author" content="yuan kun">
+<meta property="article:tag" content="Linux从入门到放弃">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image.assets/1659365798543.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>文件查找和打包压缩</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/08/03/shell%E7%BC%96%E7%A8%8B/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&text=文件查找和打包压缩"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&title=文件查找和打包压缩"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&is_video=false&description=文件查找和打包压缩"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=文件查找和打包压缩&body=Check out this article: http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&title=文件查找和打包压缩"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&title=文件查找和打包压缩"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&title=文件查找和打包压缩"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&title=文件查找和打包压缩"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&name=文件查找和打包压缩&description=Linux find 命令用来在指定目录下查找文件。任何位于参数之前的字符串都将被视为欲查找的目录名;tar命令是Unix/Linux系统中备份文件的可靠方法，几乎可以工作于任何环境中，它的使用权限是所有用户，建议针对目录。"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&t=文件查找和打包压缩"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9"><span class="toc-number">1.</span> <span class="toc-text">文件查找和打包压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%9F%A5%E6%89%BE%E5%B7%A5%E5%85%B7"><span class="toc-number">1.1.</span> <span class="toc-text">1 查找工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-locate"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 locate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-find"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 find</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E6%8C%87%E5%AE%9A%E6%90%9C%E7%B4%A2%E7%9B%AE%E5%BD%95%E5%B1%82%E7%BA%A7"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">1.2.1 指定搜索目录层级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E5%AF%B9%E6%AF%8F%E4%B8%AA%E7%9B%AE%E5%BD%95%E5%85%88%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E5%86%85%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E5%86%8D%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E6%9C%AC%E8%BA%AB"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">1.2.2 对每个目录先处理目录内的文件，再处理目录本身</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-%E6%A0%B9%E6%8D%AE%E6%96%87%E4%BB%B6%E5%90%8D%E5%92%8Cinode%E6%9F%A5%E6%89%BE"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">1.2.3 根据文件名和inode查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-%E6%A0%B9%E6%8D%AE%E5%B1%9E%E4%B8%BB%E3%80%81%E5%B1%9E%E7%BB%84%E6%9F%A5%E6%89%BE"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">1.2.4 根据属主、属组查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-5-%E6%A0%B9%E6%8D%AE%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E6%9F%A5%E6%89%BE"><span class="toc-number">1.1.2.5.</span> <span class="toc-text">1.2.5 根据文件类型查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-6-%E7%A9%BA%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.2.6.</span> <span class="toc-text">1.2.6 空文件或目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-7-%E7%BB%84%E5%90%88%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.1.2.7.</span> <span class="toc-text">1.2.7 组合条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-8-%E6%8E%92%E9%99%A4%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.2.8.</span> <span class="toc-text">1.2.8 排除目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-9-%E6%A0%B9%E6%8D%AE%E6%97%B6%E9%97%B4%E6%88%B3"><span class="toc-number">1.1.2.9.</span> <span class="toc-text">1.2.9 根据时间戳</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-10-%E6%A0%B9%E6%8D%AE%E6%9D%83%E9%99%90%E6%9F%A5%E6%89%BE"><span class="toc-number">1.1.2.10.</span> <span class="toc-text">1.2.10 根据权限查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-11-%E5%A4%84%E7%90%86%E5%8A%A8%E4%BD%9C"><span class="toc-number">1.1.2.11.</span> <span class="toc-text">1.2.11 处理动作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%8F%82%E6%95%B0%E6%9B%BF%E6%8D%A2xargs"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 参数替换xargs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9"><span class="toc-number">1.2.</span> <span class="toc-text">2 压缩和解压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-compress%E5%92%8Cuncompress"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 compress和uncompress</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-gzip%E5%92%8Cgunzip"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 gzip和gunzip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-bzip2%E5%92%8Cbunzip2"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 bzip2和bunzip2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-xz%E5%92%8Cunxz"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 xz和unxz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-zip%E5%92%8Cunzip"><span class="toc-number">1.2.5.</span> <span class="toc-text">2.5 zip和unzip</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%89%93%E5%8C%85%E5%92%8C%E8%A7%A3%E5%8C%85"><span class="toc-number">1.3.</span> <span class="toc-text">3 打包和解包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-tar"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 tar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-split"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 split</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        文件查找和打包压缩
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">勒马听风</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-08-01T13:31:38.000Z" itemprop="datePublished">2022-08-01</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/" rel="tag">Linux从入门到放弃</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="文件查找和打包压缩"><a href="#文件查找和打包压缩" class="headerlink" title="文件查找和打包压缩"></a>文件查找和打包压缩</h1>  <p class="note note-success">内容概述</p>   
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- locate  </span><br><span class="line">- find  </span><br><span class="line">- xargs  </span><br><span class="line">- compress和uncompress  </span><br><span class="line">- gzip和gunzip  </span><br><span class="line">- bzip2和bunzip2  </span><br><span class="line">- xz和unxz  </span><br><span class="line">- zip和unzip  </span><br><span class="line">- tar </span><br></pre></td></tr></table></figure>
+
+<h2 id="1-查找工具"><a href="#1-查找工具" class="headerlink" title="1 查找工具"></a>1 查找工具</h2><p>在文件系统上查找符合条件的文件<br>文件查找：</p>
+<ul>
+<li>非实时查找(数据库查找)：locate</li>
+<li>实时查找：find</li>
+</ul>
+<h3 id="1-1-locate"><a href="#1-1-locate" class="headerlink" title="1.1 locate"></a>1.1 locate</h3><p>locate 查询系统上预建的文件索引数据库&#x2F;var&#x2F;lib&#x2F;mlocate&#x2F;mlocate.db<br>索引的构建是在系统较为空闲时自动进行(周期性任务)，执行updatedb可以更新数据库<br>索引构建过程需要遍历整个根文件系统，很消耗资源<br>locate和updatedb命令来自于mlocate包<br>工作特点:</p>
+<ul>
+<li>查找速度快</li>
+<li>模糊查找</li>
+<li>非实时查找</li>
+<li>搜索的是文件的全路径，不仅仅是文件名</li>
+<li>可能只搜索用户具备读取和执行权限的目录</li>
+</ul>
+<p>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locate [OPTION]... [PATTERN]...</span><br></pre></td></tr></table></figure>
+
+<p>常用选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-i 不区分大小写的搜索</span><br><span class="line">-n N 只列举前N个匹配项目</span><br><span class="line">-r 使用基本正则表达式</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#搜索名称或路径中包含“conf&quot;的文件</span><br><span class="line">locate conf</span><br><span class="line">#使用Regex来搜索以“.conf&quot;结尾的文件</span><br><span class="line">locate -r &#x27;\.conf$&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>范例：创建locatedb数据库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# updatedb</span><br><span class="line">[root@rocky8 data]# locate -n 3 conf</span><br><span class="line">/boot/config-4.18.0-372.13.1.el8_6.x86_64</span><br><span class="line">/boot/config-4.18.0-372.9.1.el8.x86_64</span><br><span class="line">/boot/grub2/i386-pc/configfile.mod</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>范例: 文件新创建和删除,无法马上更新locate数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># 创建yuankun.txt文件查找没有结果</span><br><span class="line">[root@rocky8 data]# touch yuankun.txt</span><br><span class="line">[root@rocky8 data]# locate yuankun.txt </span><br><span class="line">[root@rocky8 data]# </span><br><span class="line"></span><br><span class="line"># 已经删除/data/a.txt文件，查找a.txt文件还能找到</span><br><span class="line">[root@rocky8 data]# ll</span><br><span class="line">total 8</span><br><span class="line">-rw-r--r-- 1 root root   22 Jul 30 04:07 a.txt</span><br><span class="line">-rw-r--r-- 1 root root 1511 Jul 30 05:11 passwd</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  1 22:06 yuankun.txt</span><br><span class="line">[root@rocky8 data]# rm -rf a.txt </span><br><span class="line">[root@rocky8 data]# locate a.txt</span><br><span class="line">/data/a.txt</span><br><span class="line">/home/yuankun/a.txt</span><br><span class="line">/root/a.txt</span><br><span class="line">/root/data.txt</span><br><span class="line">/usr/lib/firmware/brcm/brcmfmac43340-sdio.pov-tab-p1006w-data.txt</span><br><span class="line">/usr/lib/firmware/brcm/brcmfmac43430-sdio.sinovoip,bpi-m2-ultra.txt</span><br><span class="line">/usr/share/crypto-policies/DEFAULT/java.txt</span><br><span class="line">/usr/share/crypto-policies/EMPTY/java.txt</span><br><span class="line">/usr/share/crypto-policies/FIPS/java.txt</span><br><span class="line">/usr/share/crypto-policies/FUTURE/java.txt</span><br><span class="line">/usr/share/crypto-policies/LEGACY/java.txt</span><br><span class="line">/usr/share/doc/perl-CPAN-Meta/t/README-data.txt</span><br><span class="line">/usr/share/doc/vim-common/README_extra.txt</span><br><span class="line">/usr/share/gnupg/help.ca.txt</span><br><span class="line">/usr/share/gnupg/help.da.txt</span><br><span class="line">/usr/share/gnupg/help.ja.txt</span><br><span class="line">/usr/share/vim/vim80/doc/ft_ada.txt</span><br><span class="line">/usr/share/vim/vim80/doc/if_lua.txt</span><br><span class="line">/usr/share/vim/vim80/doc/os_amiga.txt</span><br><span class="line">/usr/share/vim/vim80/doc/uganda.txt</span><br><span class="line">/www/server/panel/pyenv/lib/python3.7/test/test_email/data/msg_12a.txt</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-find"><a href="#1-2-find" class="headerlink" title="1.2 find"></a>1.2 find</h3><p>find 是实时查找工具，通过遍历指定路径完成文件查找。<br>工作特点：</p>
+<ul>
+<li>查找速度略慢</li>
+<li>精确查找</li>
+<li>实时查找</li>
+<li>查找条件丰富</li>
+<li>可能只搜索用户具备读取和执行权限的目录</li>
+</ul>
+<p>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find [OPTION]... [查找路径] [查找条件] [处理动作]</span><br></pre></td></tr></table></figure>
+
+<p>查找路径：指定具体目标路径；默认为当前目录<br>查找条件：指定的查找标准，可以文件名、大小、类型、权限等标准进行；默认为找出指定路径下的所<br>有文件<br>处理动作：对符合条件的文件做操作，默认输出至屏幕</p>
+<h4 id="1-2-1-指定搜索目录层级"><a href="#1-2-1-指定搜索目录层级" class="headerlink" title="1.2.1 指定搜索目录层级"></a>1.2.1 指定搜索目录层级</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-maxdepth level 最大搜索目录深度,指定目录下的文件为第1级</span><br><span class="line">-mindepth level 最小搜索目录深度</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /etc -maxdepth 2 -mindepth 2</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-2-对每个目录先处理目录内的文件，再处理目录本身"><a href="#1-2-2-对每个目录先处理目录内的文件，再处理目录本身" class="headerlink" title="1.2.2 对每个目录先处理目录内的文件，再处理目录本身"></a>1.2.2 对每个目录先处理目录内的文件，再处理目录本身</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-depth</span><br><span class="line">-d #warning: the -d option is deprecated; please use -depth instead, because the latter is a POSIX-compliant feature</span><br></pre></td></tr></table></figure>
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@centos8 data]#tree /data/test</span><br><span class="line">/data/test</span><br><span class="line">├── f1.txt</span><br><span class="line">├── f2.txt</span><br><span class="line">└── test2</span><br><span class="line">└── test3</span><br><span class="line">├── f3.txt</span><br><span class="line">└── f4.txt</span><br><span class="line">4 directories, 2 files</span><br><span class="line">[root@centos8 data]#find /data/test</span><br><span class="line">/data/test</span><br><span class="line">/data/test/f1.txt</span><br><span class="line">/data/test/f2.txt</span><br><span class="line">/data/test/test2</span><br><span class="line">/data/test/test2/test3</span><br><span class="line">/data/test/test2/test3/f3.txt</span><br><span class="line">/data/test/test2/test3/f4.txt</span><br><span class="line">[root@centos8 data]#find /data/test -depth</span><br><span class="line">/data/test/f1.txt</span><br><span class="line">/data/test/f2.txt</span><br><span class="line">/data/test/test2/test3/f3.txt</span><br><span class="line">/data/test/test2/test3/f4.txt</span><br><span class="line">/data/test/test2/test3</span><br><span class="line">/data/test/test2</span><br><span class="line">/data/test</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-3-根据文件名和inode查找"><a href="#1-2-3-根据文件名和inode查找" class="headerlink" title="1.2.3 根据文件名和inode查找"></a>1.2.3 根据文件名和inode查找</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-name &quot;文件名称&quot; #支持使用glob，如：*, ?, [], [^],通配符要加双引号引起来</span><br><span class="line">-iname &quot;文件名称&quot; #不区分字母大小写</span><br><span class="line">-inum n #按inode号查找</span><br><span class="line">-samefile name #相同inode号的文件</span><br><span class="line">-links n #链接数为n的文件</span><br><span class="line">-regex “PATTERN&quot; #以PATTERN匹配整个文件路径，而非文件名称</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-根据属主、属组查找"><a href="#1-2-4-根据属主、属组查找" class="headerlink" title="1.2.4 根据属主、属组查找"></a>1.2.4 根据属主、属组查找</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-user USERNAME #查找属主为指定用户(UID)的文件</span><br><span class="line">-group GRPNAME #查找属组为指定组(GID)的文件</span><br><span class="line">-uid UserID #查找属主为指定的UID号的文件</span><br><span class="line">-gid GroupID #查找属组为指定的GID号的文件</span><br><span class="line">-nouser #查找没有属主的文件</span><br><span class="line">-nogroup #查找没有属组的文件</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-5-根据文件类型查找"><a href="#1-2-5-根据文件类型查找" class="headerlink" title="1.2.5 根据文件类型查找"></a>1.2.5 根据文件类型查找</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-type TYPE</span><br><span class="line">TYPE可以是以下形式：</span><br><span class="line">f: 普通文件</span><br><span class="line">d: 目录文件</span><br><span class="line">l: 符号链接文件</span><br><span class="line">s：套接字文件</span><br><span class="line">b: 块设备文件</span><br><span class="line">c: 字符设备文件</span><br><span class="line">p: 管道文件</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看/home的目录</span><br><span class="line">find /home –type d -ls</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-6-空文件或目录"><a href="#1-2-6-空文件或目录" class="headerlink" title="1.2.6 空文件或目录"></a>1.2.6 空文件或目录</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-empty</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@centos8 ~]#find /app -type d -empty</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-7-组合条件"><a href="#1-2-7-组合条件" class="headerlink" title="1.2.7 组合条件"></a>1.2.7 组合条件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">与：-a ，默认多个条件是与关系，所以可以省略-a</span><br><span class="line">或：-o</span><br><span class="line">非：-not !</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@centos8 ~]#find /etc/ -type d -o -type l |wc -l</span><br><span class="line">307</span><br><span class="line">[root@centos8 ~]#find /etc/ -type d -o -type l -ls |wc -l</span><br><span class="line">101</span><br><span class="line">[root@centos8 ~]#find /etc/ \( -type d -o -type l \) -ls |wc -l</span><br><span class="line">30</span><br></pre></td></tr></table></figure>
+
+<p>德·摩根定律：</p>
+<ul>
+<li>非 A) 且 (非 B) &#x3D; 非(A 或 B)</li>
+<li>(非 A) 或 (非 B) &#x3D; 非(A 且 B)</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">!A -a !B = !(A -o B)</span><br><span class="line">!A -o !B = !(A -a B)</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#找出/tmp目录下，属主不是root，且文件名不以f开头的文件</span><br><span class="line">find /tmp \( -not -user root -a -not -name &#x27;f*&#x27; \) -ls</span><br><span class="line">find /tmp -not \( -user root -o -name &#x27;f*&#x27; \) –ls</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-8-排除目录"><a href="#1-2-8-排除目录" class="headerlink" title="1.2.8 排除目录"></a>1.2.8 排除目录</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#查找/etc/下，除/etc/security目录的其它所有.conf后缀的文件</span><br><span class="line">find /etc -path &#x27;/etc/security&#x27; -a -prune -o -name &quot;*.conf&quot;</span><br><span class="line">#查找/etc/下，除/etc/security和/etc/systemd,/etc/dbus-1三个目录的所有.conf后缀的文件</span><br><span class="line">find /etc \( -path &quot;/etc/security&quot; -o -path &quot;/etc/systemd&quot; -o -path &quot;/etc/dbus-</span><br><span class="line">1&quot; \) -a -prune -o -name &quot;*.conf&quot;</span><br><span class="line">#排除/proc和/sys目录</span><br><span class="line">find / \( -path &quot;/sys&quot; -o -path &quot;/proc&quot; \) -a -prune -o -type f -a -mmin -1</span><br></pre></td></tr></table></figure>
+
+<p>范例:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">find / -size +10G</span><br><span class="line">[root@centos8 ~]#find / -size +10G</span><br><span class="line">/proc/kcore</span><br><span class="line">find: ‘/proc/25229/task/25229/fd/6’: No such file or directory</span><br><span class="line">find: ‘/proc/25229/task/25229/fdinfo/6’: No such file or directory</span><br><span class="line">find: ‘/proc/25229/fd/5’: No such file or directory</span><br><span class="line">find: ‘/proc/25229/fdinfo/5’: No such file or directory</span><br><span class="line">[root@centos8 ~]#ll -h /proc/kcore</span><br><span class="line">-r-------- 1 root root 128T Dec 14 2020 /proc/kcore</span><br><span class="line">[root@centos8 ~]#du -sh /proc/kcore</span><br><span class="line">0 /proc/kcore</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-9-根据时间戳"><a href="#1-2-9-根据时间戳" class="headerlink" title="1.2.9 根据时间戳"></a>1.2.9 根据时间戳</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#以“天&quot;为单位</span><br><span class="line">-atime [+|-]#</span><br><span class="line"># #表示[#,#+1)</span><br><span class="line">+# #表示[#+1,∞]</span><br><span class="line">-# #表示[0,#)</span><br><span class="line">-mtime</span><br><span class="line">-ctime</span><br><span class="line">#以“分钟&quot;为单位</span><br><span class="line">-amin</span><br><span class="line">-mmin</span><br><span class="line">-cmin</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1659365798543.png" alt="1659365798543"></p>
+<h4 id="1-2-10-根据权限查找"><a href="#1-2-10-根据权限查找" class="headerlink" title="1.2.10 根据权限查找"></a>1.2.10 根据权限查找</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-perm [/|-]MODE</span><br><span class="line">MODE #精确权限匹配</span><br><span class="line">/MODE #任何一类(u,g,o)对象的权限中只要有一位匹配即可，或关系，+ 从CentOS 7开始淘汰</span><br><span class="line">-MODE #每一类对象都必须同时拥有指定权限，与关系</span><br><span class="line">0 表示不关注</span><br></pre></td></tr></table></figure>
+
+<p>说明：<br>find -perm 755 会匹配权限模式恰好是755的文件<br>只要当任意人有写权限时，find -perm &#x2F;222就会匹配<br>只有当每个人都有写权限时，find -perm -222才会匹配<br>只有当其它人（other）有写权限时，find -perm -002才会匹配</p>
+<h4 id="1-2-11-处理动作"><a href="#1-2-11-处理动作" class="headerlink" title="1.2.11 处理动作"></a>1.2.11 处理动作</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-print：默认的处理动作，显示至屏幕</span><br><span class="line">-ls：类似于对查找到的文件执行&quot;ls -dils&quot;命令格式输出</span><br><span class="line">-fls file：查找到的所有文件的长格式信息保存至指定文件中，相当于 -ls &gt; file</span><br><span class="line">-delete：删除查找到的文件，慎用！</span><br><span class="line">-ok COMMAND &#123;&#125; \; 对查找到的每个文件执行由COMMAND指定的命令，对于每个文件执行命令之前，都会</span><br><span class="line">交互式要求用户确认</span><br><span class="line">-exec COMMAND &#123;&#125; \; 对查找到的每个文件执行由COMMAND指定的命令</span><br><span class="line">&#123;&#125;: 用于引用查找到的文件名称自身</span><br></pre></td></tr></table></figure>
+
+<p>关于 {} ;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://askubuntu.com/questions/339015/what-does-mean-in-the-find-command</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#备份配置文件，添加.orig这个扩展名</span><br><span class="line">[root@rocky8 data]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file1.conf</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file2.conf</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file3.conf</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file4.conf</span><br><span class="line">-rw-r--r-- 1 root root 1511 Jul 30 05:11 passwd</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  1 22:06 yuankun.txt</span><br><span class="line">[root@rocky8 data]# find ./ -name &#x27;file*.conf&#x27;</span><br><span class="line">./file1.conf</span><br><span class="line">./file2.conf</span><br><span class="line">./file3.conf</span><br><span class="line">./file4.conf</span><br><span class="line">[root@rocky8 data]# find ./ -name &#x27;file*.conf&#x27; -exec cp &#123;&#125; &#123;&#125;.orig \;</span><br><span class="line">[root@rocky8 data]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file1.conf</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:07 file1.conf.orig</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file2.conf</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:07 file2.conf.orig</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file3.conf</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:07 file3.conf.orig</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file4.conf</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:07 file4.conf.orig</span><br><span class="line">-rw-r--r-- 1 root root 1511 Jul 30 05:11 passwd</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  1 22:06 yuankun.txt</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#提示删除存在时间超过３天以上的joe的临时文件</span><br><span class="line">find /tmp -ctime +3 -user joe -ok rm &#123;&#125; \;</span><br><span class="line">#在主目录中寻找可被其它用户写入的文件</span><br><span class="line">find ~ -perm -002 -exec chmod o-w &#123;&#125; \;</span><br><span class="line">#查找/data下的权限为644，后缀为sh的普通文件，增加执行权限</span><br><span class="line">find /data –type f -perm 644 -name &quot;*.sh&quot; –exec chmod 755 &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-参数替换xargs"><a href="#1-3-参数替换xargs" class="headerlink" title="1.3 参数替换xargs"></a>1.3 参数替换xargs</h3><p>由于很多命令不支持管道|来传递参数，xargs用于产生某个命令的参数，xargs 可以读入 stdin 的数<br>据，并且以空格符或回车符将 stdin 的数据分隔成为参数<br>另外，许多命令不能接受过多参数，命令执行可能会失败，xargs 可以解决<br>注意：文件名或者是其他意义的名词内含有空格符的情况<br>find 经常和 xargs 命令进行组合,形式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find | xargs COMMAND</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">#显示10个数字</span><br><span class="line">[root@centos8 ~]#seq 10 | xargs</span><br><span class="line">1 2 3 4 5 6 7 8 9 10</span><br><span class="line">#删除当前目录下的大量文件</span><br><span class="line">ls | xargs rm</span><br><span class="line"></span><br><span class="line">#</span><br><span class="line">find -name &quot;*.sh&quot; | xargs ls -Sl</span><br><span class="line"></span><br><span class="line">[root@centos8 data]#echo &#123;1..10&#125; |xargs</span><br><span class="line">1 2 3 4 5 6 7 8 9 10</span><br><span class="line">[root@centos8 data]#echo &#123;1..10&#125; |xargs -n1</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">[root@centos8 data]#echo &#123;1..10&#125; |xargs -n2</span><br><span class="line">1 2</span><br><span class="line">3 4</span><br><span class="line">5 6</span><br><span class="line">7 8</span><br><span class="line">9 10</span><br><span class="line"></span><br><span class="line">#批量创建和删除用户</span><br><span class="line">echo user&#123;1..10&#125; |xargs -n1 useradd</span><br><span class="line">echo user&#123;1..100&#125; | xargs -n1 userdel -r</span><br><span class="line"></span><br><span class="line">#这个命令是错误的</span><br><span class="line">find /sbin/ -perm /700 | ls -l</span><br><span class="line">#查找有特殊权限的文件，并排序</span><br><span class="line">find /bin/ -perm /7000 | xargs ls -Sl</span><br><span class="line">#此命令和上面有何区别？</span><br><span class="line">find /bin/ -perm -7000 | xargs ls -Sl</span><br><span class="line">#以字符nul分隔</span><br><span class="line">find -type f -name &quot;*.txt&quot; -print0 | xargs -0 rm</span><br><span class="line">#并发执行多个进程</span><br><span class="line">seq 100 |xargs -i -P10 wget -P /data http://10.0.0.8/&#123;&#125;.html</span><br><span class="line">#并行下载bilibili视频</span><br><span class="line">yum install python3-pip -y</span><br><span class="line">pip3 install you-get</span><br><span class="line">seq 60 | xargs -i -P3 you-get https://www.bilibili.com/video/BV14K411W7UF?p=&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>练习<br>1、查找&#x2F;var目录下属主为root，且属组为mail的所有文件<br>2、查找&#x2F;var目录下不属于root、lp、gdm的所有文件<br>3、查找&#x2F;var目录下最近一周内其内容修改过，同时属主不为root，也不是postfix的文件<br>4、查找当前系统上没有属主或属组，且最近一个周内曾被访问过的文件<br>5、查找&#x2F;etc目录下大于1M且类型为普通文件的所有文件<br>6、查找&#x2F;etc目录下所有用户都没有写权限的文件<br>7、查找&#x2F;etc目录下至少有一类用户没有执行权限的文件<br>8、查找&#x2F;etc&#x2F;init.d目录下，所有用户都有执行权限，且其它用户有写权限的文件</p>
+<h2 id="2-压缩和解压缩"><a href="#2-压缩和解压缩" class="headerlink" title="2 压缩和解压缩"></a>2 压缩和解压缩</h2><p>主要针对单个文件压缩，而非目录</p>
+<h3 id="2-1-compress和uncompress"><a href="#2-1-compress和uncompress" class="headerlink" title="2.1 compress和uncompress"></a>2.1 compress和uncompress</h3><p>此工具来自于ncompress包,此工具目前已经很少使用<br>对应的文件是 .Z 后缀</p>
+<p>常用选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-d 解压缩，相当于uncompress</span><br><span class="line">-c 结果输出至标准输出,不删除原文件</span><br><span class="line">-v 显示详情</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">compress filename #压缩</span><br><span class="line">uncompress filename # 解压缩</span><br></pre></td></tr></table></figure>
+
+<p>zcat file.Z 不显式解压缩的前提下查看文本文件内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zcat file.Z &gt;file</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-gzip和gunzip"><a href="#2-2-gzip和gunzip" class="headerlink" title="2.2 gzip和gunzip"></a>2.2 gzip和gunzip</h3><p>来自于 gzip 包<br>对应的文件是 .gz 后缀<br>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gzip [OPTION] ···file···</span><br></pre></td></tr></table></figure>
+
+<p>常用选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-k keep, 保留原文件,CentOS 8 新特性</span><br><span class="line">-d 解压缩，相当于gunzip</span><br><span class="line">-c 结果输出至标准输出，保留原文件不改变</span><br><span class="line">-# 指定压缩比，#取值为1-9，值越大压缩比越大</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 压缩</span><br><span class="line">gzip filename</span><br><span class="line"></span><br><span class="line"># 解压缩</span><br><span class="line">gunzip file.gz</span><br><span class="line"></span><br><span class="line">#不显式解压缩的前提下查看文本文件内容</span><br><span class="line">zcat file.gz</span><br></pre></td></tr></table></figure>
+
+<p>范例:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gzip -c messages &gt;messages.gz</span><br><span class="line">gzip -c -d messages.gz &gt; messages</span><br><span class="line">zcat messages.gz &gt; messages</span><br><span class="line">cat messages | gzip &gt; m.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-bzip2和bunzip2"><a href="#2-3-bzip2和bunzip2" class="headerlink" title="2.3 bzip2和bunzip2"></a>2.3 bzip2和bunzip2</h3><p>来自于 bzip2 包<br>对应的文件是 .bz2 后缀<br>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bzip2 [OPTION]... FILE ...</span><br></pre></td></tr></table></figure>
+
+<p>常用选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-k keep, 保留原文件</span><br><span class="line">-d 解压缩</span><br><span class="line">-c 结果输出至标准输出，保留原文件不改变</span><br><span class="line">-# 1-9，压缩比，默认为9</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bzip2 file # 压缩</span><br><span class="line">bunzip2 file.bz2 解压缩</span><br><span class="line">bzcat file.bz2 不显式解压缩的前提下查看文本文件内容</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-xz和unxz"><a href="#2-4-xz和unxz" class="headerlink" title="2.4 xz和unxz"></a>2.4 xz和unxz</h3><p>来自于 xz 包<br>对应的文件是 .xz 后缀<br>格式:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xz [OPTION]... FILE ...</span><br></pre></td></tr></table></figure>
+
+<p>常用选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-k keep, 保留原文件</span><br><span class="line">-d 解压缩</span><br><span class="line">-c 结果输出至标准输出，保留原文件不改变</span><br><span class="line">-# 压缩比，取值1-9，默认为6</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unxz file.xz #解压缩</span><br><span class="line">xzcat file.xz #不显式解压缩的前提下查看文本文件内容</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-zip和unzip"><a href="#2-5-zip和unzip" class="headerlink" title="2.5 zip和unzip"></a>2.5 zip和unzip</h3><p>zip 可以实现打包目录和多个文件成一个文件并压缩，但可能会丢失文件属性信息，如：所有者和组信<br>息，一般建议使用 tar 代替<br>分别来自于 zip 和 unzip 包<br>对应的文件是 .zip 后缀<br>范例: zip帮助</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#打包并压缩</span><br><span class="line">zip -r /backup/sysconfig.zip /etc/sysconfig/</span><br><span class="line">#不包括目录本身，只打包目录内的文件和子目录</span><br><span class="line">cd /etc/sysconfig; zip -r /root/sysconfig.zip *</span><br><span class="line">#默认解压缩至当前目录</span><br><span class="line">unzip /backup/sysconfig.zip</span><br><span class="line">#解压缩至指定目录,如果指定目录不存在，会在其父目录（必须事先存在）下自动生成</span><br><span class="line">unzip /backup/sysconfig.zip -d /tmp/config</span><br><span class="line">cat /var/log/messages | zip messages -</span><br><span class="line">#-p 表示管道</span><br><span class="line">unzip -p message.zip &gt; message</span><br></pre></td></tr></table></figure>
+
+<p>范例: 交互式加密和解密</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# zip -e file1.conf.zip file1.conf</span><br><span class="line">Enter password: </span><br><span class="line">Verify password: </span><br><span class="line">  adding: file1.conf (stored 0%)</span><br><span class="line">[root@rocky8 data]# unzip file1.conf.zip </span><br><span class="line">Archive:  file1.conf.zip</span><br><span class="line">[file1.conf.zip] file1.conf password: </span><br><span class="line">replace file1.conf? [y]es, [n]o, [A]ll, [N]one, [r]ename: y</span><br><span class="line"> extracting: file1.conf              </span><br><span class="line">[root@rocky8 data]# ll</span><br><span class="line">total 8</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file1.conf</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:07 file1.conf.orig</span><br><span class="line">-rw-r--r-- 1 root root  198 Aug  2 22:06 file1.conf.zip</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file2.conf</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:07 file2.conf.orig</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file3.conf</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:07 file3.conf.orig</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:02 file4.conf</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  2 21:07 file4.conf.orig</span><br><span class="line">-rw-r--r-- 1 root root 1511 Jul 30 05:11 passwd</span><br><span class="line">-rw-r--r-- 1 root root    0 Aug  1 22:06 yuankun.txt</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>范例: 非交互式加密和解密</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# zip -P 123456 file2.conf.zip file2.conf  # p是大P</span><br><span class="line">  adding: file2.conf (stored 0%)</span><br><span class="line"># 解压</span><br><span class="line">[root@rocky8 data]# unzip file2.conf.zip </span><br><span class="line">Archive:  file2.conf.zip</span><br><span class="line">[file2.conf.zip] file2.conf password: </span><br><span class="line">replace file2.conf? [y]es, [n]o, [A]ll, [N]one, [r]ename: y</span><br><span class="line"> extracting: file2.conf              </span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<h2 id="3-打包和解包"><a href="#3-打包和解包" class="headerlink" title="3 打包和解包"></a>3 打包和解包</h2><h3 id="3-1-tar"><a href="#3-1-tar" class="headerlink" title="3.1 tar"></a>3.1 tar</h3><p>tar 即 Tape ARchive 磁带归档，可以对目录和多个文件打包一个文件，并且可以压缩，保留文件属性不<br>丢失，常用于备份功能，推荐使用<br>对应的文件是 .tar 后缀<br>格式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tar [-ABcdgGhiklmMoOpPrRsStuUvwWxzZ][-b &lt;区块数目&gt;][-C &lt;目的目录&gt;][-f &lt;备份文件&gt;][-F</span><br><span class="line">&lt;Script文件&gt;][-K &lt;文件&gt;][-L &lt;媒体容量&gt;][-N &lt;日期时间&gt;][-T &lt;范本文件&gt;][-V &lt;卷册名称&gt;][-X</span><br><span class="line">&lt;范本文件&gt;][-&lt;设备编号&gt;&lt;存储密度&gt;][--after-date=&lt;日期时间&gt;][--atime-preserve][--</span><br><span class="line">backuup=&lt;备份方式&gt;][--checkpoint][--concatenate][--confirmation][--delete][--</span><br><span class="line">exclude=&lt;范本样式&gt;][--force-local][--group=&lt;群组名称&gt;][--help][--ignore-failed-</span><br><span class="line">read][--new-volume-script=&lt;Script文件&gt;][--newer-mtime][--no-recursion][--null][--</span><br><span class="line">numeric-owner][--owner=&lt;用户名称&gt;][--posix][--erve][--preserve-order][--preserve-</span><br><span class="line">permissions][--record-size=&lt;区块数目&gt;][--recursive-unlink][--remove-files][--rsh-</span><br><span class="line">command=&lt;执行指令&gt;][--same-owner][--suffix=&lt;备份字尾字符串&gt;][--totals][--use-</span><br><span class="line">compress-program=&lt;执行指令&gt;][--version][--volno-file=&lt;编号文件&gt;][文件或目录...]</span><br></pre></td></tr></table></figure>
+
+<p>常用选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">-A或--catenate 新增文件到已存在的备份文件。</span><br><span class="line">-b&lt;区块数目&gt;或--blocking-factor=&lt;区块数目&gt; 设置每笔记录的区块数目，每个区块大小为12Bytes。</span><br><span class="line">-B或--read-full-records 读取数据时重设区块大小。</span><br><span class="line">-c或--create 建立新的备份文件。</span><br><span class="line">-C&lt;目的目录&gt;或--directory=&lt;目的目录&gt; 切换到指定的目录。</span><br><span class="line">-d或--diff或--compare 对比备份文件内和文件系统上的文件的差异。</span><br><span class="line">-f&lt;备份文件&gt;或--file=&lt;备份文件&gt; 指定备份文件。</span><br><span class="line">-F&lt;Script文件&gt;或--info-script=&lt;Script文件&gt; 每次更换磁带时，就执行指定的Script文件。</span><br><span class="line">-g或--listed-incremental 处理GNU格式的大量备份。</span><br><span class="line"></span><br><span class="line">-G或--incremental 处理旧的GNU格式的大量备份。</span><br><span class="line">-h或--dereference 不建立符号连接，直接复制该连接所指向的原始文件。</span><br><span class="line">-i或--ignore-zeros 忽略备份文件中的0 Byte区块，也就是EOF。</span><br><span class="line">-k或--keep-old-files 解开备份文件时，不覆盖已有的文件。</span><br><span class="line">-K&lt;文件&gt;或--starting-file=&lt;文件&gt; 从指定的文件开始还原。</span><br><span class="line">-l或--one-file-system 复制的文件或目录存放的文件系统，必须与tar指令执行时所处的文件系统相</span><br><span class="line">同，否则不予复制。</span><br><span class="line">-L&lt;媒体容量&gt;或-tape-length=&lt;媒体容量&gt; 设置存放每体的容量，单位以1024 Bytes计算。</span><br><span class="line">-m或--modification-time 还原文件时，不变更文件的更改时间。</span><br><span class="line">-M或--multi-volume 在建立，还原备份文件或列出其中的内容时，采用多卷册模式。</span><br><span class="line">-N&lt;日期格式&gt;或--newer=&lt;日期时间&gt; 只将较指定日期更新的文件保存到备份文件里。</span><br><span class="line">-o或--old-archive或--portability 将资料写入备份文件时使用V7格式。</span><br><span class="line">-O或--stdout 把从备份文件里还原的文件输出到标准输出设备。</span><br><span class="line">-p或--same-permissions 用原来的文件权限还原文件。</span><br><span class="line">-P或--absolute-names 文件名使用绝对名称，不移除文件名称前的&quot;/&quot;号。</span><br><span class="line">-r或--append 新增文件到已存在的备份文件的结尾部分。</span><br><span class="line">-R或--block-number 列出每个信息在备份文件中的区块编号。</span><br><span class="line">-s或--same-order 还原文件的顺序和备份文件内的存放顺序相同。</span><br><span class="line">-S或--sparse 倘若一个文件内含大量的连续0字节，则将此文件存成稀疏文件。</span><br><span class="line">-t或--list 列出备份文件的内容。</span><br><span class="line">-T&lt;范本文件&gt;或--files-from=&lt;范本文件&gt; 指定范本文件，其内含有一个或多个范本样式，让tar解开或</span><br><span class="line">建立符合设置条件的文件。</span><br><span class="line">-u或--update 仅置换较备份文件内的文件更新的文件。</span><br><span class="line">-U或--unlink-first 解开压缩文件还原文件之前，先解除文件的连接。</span><br><span class="line">-v或--verbose 显示指令执行过程。</span><br><span class="line">-V&lt;卷册名称&gt;或--label=&lt;卷册名称&gt; 建立使用指定的卷册名称的备份文件。</span><br><span class="line">-w或--interactive 遭遇问题时先询问用户。</span><br><span class="line">-W或--verify 写入备份文件后，确认文件正确无误。</span><br><span class="line">-x或--extract或--get 从备份文件中还原文件。</span><br><span class="line">-X&lt;范本文件&gt;或--exclude-from=&lt;范本文件&gt; 指定范本文件，其内含有一个或多个范本样式，让ar排除</span><br><span class="line">符合设置条件的文件。</span><br><span class="line">-z或--gzip或--ungzip 通过gzip指令处理备份文件。</span><br><span class="line">-Z或--compress或--uncompress 通过compress指令处理备份文件。</span><br><span class="line">-&lt;设备编号&gt;&lt;存储密度&gt; 设置备份用的外围设备编号及存放数据的密度。</span><br><span class="line">--after-date=&lt;日期时间&gt; 此参数的效果和指定&quot;-N&quot;参数相同。</span><br><span class="line">--atime-preserve 不变更文件的存取时间。</span><br><span class="line">--backup=&lt;备份方式&gt;或--backup 移除文件前先进行备份。</span><br><span class="line">--checkpoint 读取备份文件时列出目录名称。</span><br><span class="line">--concatenate 此参数的效果和指定&quot;-A&quot;参数相同。</span><br><span class="line">--confirmation 此参数的效果和指定&quot;-w&quot;参数相同。</span><br><span class="line">--delete 从备份文件中删除指定的文件。</span><br><span class="line">--exclude=&lt;范本样式&gt; 排除符合范本样式的文件。</span><br><span class="line">--group=&lt;群组名称&gt; 把加入设备文件中的文件的所属群组设成指定的群组。</span><br><span class="line">--help 在线帮助。</span><br><span class="line">--ignore-failed-read 忽略数据读取错误，不中断程序的执行。</span><br><span class="line">--new-volume-script=&lt;Script文件&gt; 此参数的效果和指定&quot;-F&quot;参数相同。</span><br><span class="line">--newer-mtime 只保存更改过的文件。</span><br><span class="line">--no-recursion 不做递归处理，也就是指定目录下的所有文件及子目录不予处理。</span><br><span class="line">--null 从null设备读取文件名称。</span><br><span class="line">--numeric-owner 以用户识别码及群组识别码取代用户名称和群组名称。</span><br><span class="line">--owner=&lt;用户名称&gt; 把加入备份文件中的文件的拥有者设成指定的用户。</span><br><span class="line">--posix 将数据写入备份文件时使用POSIX格式。</span><br><span class="line">--preserve 此参数的效果和指定&quot;-ps&quot;参数相同。</span><br><span class="line">--preserve-order 此参数的效果和指定&quot;-A&quot;参数相同。</span><br><span class="line">--preserve-permissions 此参数的效果和指定&quot;-p&quot;参数相同。</span><br><span class="line">--record-size=&lt;区块数目&gt; 此参数的效果和指定&quot;-b&quot;参数相同。</span><br><span class="line">--recursive-unlink 解开压缩文件还原目录之前，先解除整个目录下所有文件的连接。</span><br><span class="line">--remove-files 文件加入备份文件后，就将其删除。</span><br><span class="line"></span><br><span class="line">--rsh-command=&lt;执行指令&gt; 设置要在远端主机上执行的指令，以取代rsh指令。</span><br><span class="line">--same-owner 尝试以相同的文件拥有者还原文件。</span><br><span class="line">--suffix=&lt;备份字尾字符串&gt; 移除文件前先行备份。</span><br><span class="line">--totals 备份文件建立后，列出文件大小。</span><br><span class="line">--use-compress-program=&lt;执行指令&gt; 通过指定的指令处理备份文件。</span><br><span class="line">--version 显示版本信息。</span><br><span class="line">--volno-file=&lt;编号文件&gt; 使用指定文件内的编号取代预设的卷册编号。</span><br></pre></td></tr></table></figure>
+
+<p>范例：打包并压缩</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zcvf filename.tar.gz filename</span><br></pre></td></tr></table></figure>
+
+<p>范例：解压缩</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar xf filename.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-split"><a href="#3-2-split" class="headerlink" title="3.2 split"></a>3.2 split</h3><p>split 命令可以分割一个文件为多个文件<br>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#分割大的 tar 文件为多份小文件</span><br><span class="line">split -b Size –d tar-file-name prefix-name</span><br><span class="line">示例:</span><br><span class="line">split -b 1M mybackup.tgz mybackup-parts</span><br><span class="line">#切换成的多个小分文件使用数字后缀</span><br><span class="line">split -b 1M –d mybackup.tgz mybackup-parts</span><br></pre></td></tr></table></figure>
+
+<p>将多个切割的小文件合并成一个大文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat mybackup-parts* &gt; mybackup.tar.gz</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9"><span class="toc-number">1.</span> <span class="toc-text">文件查找和打包压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%9F%A5%E6%89%BE%E5%B7%A5%E5%85%B7"><span class="toc-number">1.1.</span> <span class="toc-text">1 查找工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-locate"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 locate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-find"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 find</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E6%8C%87%E5%AE%9A%E6%90%9C%E7%B4%A2%E7%9B%AE%E5%BD%95%E5%B1%82%E7%BA%A7"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">1.2.1 指定搜索目录层级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E5%AF%B9%E6%AF%8F%E4%B8%AA%E7%9B%AE%E5%BD%95%E5%85%88%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E5%86%85%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E5%86%8D%E5%A4%84%E7%90%86%E7%9B%AE%E5%BD%95%E6%9C%AC%E8%BA%AB"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">1.2.2 对每个目录先处理目录内的文件，再处理目录本身</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-%E6%A0%B9%E6%8D%AE%E6%96%87%E4%BB%B6%E5%90%8D%E5%92%8Cinode%E6%9F%A5%E6%89%BE"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">1.2.3 根据文件名和inode查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-%E6%A0%B9%E6%8D%AE%E5%B1%9E%E4%B8%BB%E3%80%81%E5%B1%9E%E7%BB%84%E6%9F%A5%E6%89%BE"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">1.2.4 根据属主、属组查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-5-%E6%A0%B9%E6%8D%AE%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E6%9F%A5%E6%89%BE"><span class="toc-number">1.1.2.5.</span> <span class="toc-text">1.2.5 根据文件类型查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-6-%E7%A9%BA%E6%96%87%E4%BB%B6%E6%88%96%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.2.6.</span> <span class="toc-text">1.2.6 空文件或目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-7-%E7%BB%84%E5%90%88%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.1.2.7.</span> <span class="toc-text">1.2.7 组合条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-8-%E6%8E%92%E9%99%A4%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.2.8.</span> <span class="toc-text">1.2.8 排除目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-9-%E6%A0%B9%E6%8D%AE%E6%97%B6%E9%97%B4%E6%88%B3"><span class="toc-number">1.1.2.9.</span> <span class="toc-text">1.2.9 根据时间戳</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-10-%E6%A0%B9%E6%8D%AE%E6%9D%83%E9%99%90%E6%9F%A5%E6%89%BE"><span class="toc-number">1.1.2.10.</span> <span class="toc-text">1.2.10 根据权限查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-11-%E5%A4%84%E7%90%86%E5%8A%A8%E4%BD%9C"><span class="toc-number">1.1.2.11.</span> <span class="toc-text">1.2.11 处理动作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%8F%82%E6%95%B0%E6%9B%BF%E6%8D%A2xargs"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 参数替换xargs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9"><span class="toc-number">1.2.</span> <span class="toc-text">2 压缩和解压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-compress%E5%92%8Cuncompress"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 compress和uncompress</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-gzip%E5%92%8Cgunzip"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 gzip和gunzip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-bzip2%E5%92%8Cbunzip2"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 bzip2和bunzip2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-xz%E5%92%8Cunxz"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 xz和unxz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-zip%E5%92%8Cunzip"><span class="toc-number">1.2.5.</span> <span class="toc-text">2.5 zip和unzip</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%89%93%E5%8C%85%E5%92%8C%E8%A7%A3%E5%8C%85"><span class="toc-number">1.3.</span> <span class="toc-text">3 打包和解包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-tar"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 tar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-split"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 split</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&text=文件查找和打包压缩"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&title=文件查找和打包压缩"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&is_video=false&description=文件查找和打包压缩"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=文件查找和打包压缩&body=Check out this article: http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&title=文件查找和打包压缩"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&title=文件查找和打包压缩"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&title=文件查找和打包压缩"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&title=文件查找和打包压缩"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&name=文件查找和打包压缩&description=Linux find 命令用来在指定目录下查找文件。任何位于参数之前的字符串都将被视为欲查找的目录名;tar命令是Unix/Linux系统中备份文件的可靠方法，几乎可以工作于任何环境中，它的使用权限是所有用户，建议针对目录。"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/&t=文件查找和打包压缩"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    yuan kun
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

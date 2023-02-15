@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux防火墙">
+<meta property="og:url" content="http://example.com/2022/09/25/FireWall/index.html">
+<meta property="og:site_name" content="勾三股四">
+<meta property="og:description" content="firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image.assets/1664334608880.png">
+<meta property="og:image" content="http://example.com/image.assets/1664336861788.png">
+<meta property="og:image" content="http://example.com/image.assets/1664337377531.png">
+<meta property="og:image" content="http://example.com/image.assets/1664338350371.png">
+<meta property="og:image" content="http://example.com/image.assets/1664338392568.png">
+<meta property="og:image" content="http://example.com/image.assets/1664348845247.png">
+<meta property="article:published_time" content="2022-09-25T13:28:11.000Z">
+<meta property="article:modified_time" content="2022-12-16T14:57:40.222Z">
+<meta property="article:author" content="yuan kun">
+<meta property="article:tag" content="Linux从入门到放弃">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image.assets/1664334608880.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux防火墙</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/09/28/MySQL/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/09/22/DNS/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/09/25/FireWall/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/09/25/FireWall/&text=Linux防火墙"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/09/25/FireWall/&title=Linux防火墙"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/09/25/FireWall/&is_video=false&description=Linux防火墙"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux防火墙&body=Check out this article: http://example.com/2022/09/25/FireWall/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/09/25/FireWall/&title=Linux防火墙"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/09/25/FireWall/&title=Linux防火墙"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/09/25/FireWall/&title=Linux防火墙"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/09/25/FireWall/&title=Linux防火墙"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/09/25/FireWall/&name=Linux防火墙&description=&lt;p class=&#34;note note-success&#34;&gt; firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术。 &lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/09/25/FireWall/&t=Linux防火墙"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">防火墙基本认识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Netfilter"><span class="toc-number">1.1.</span> <span class="toc-text">Netfilter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.</span> <span class="toc-text">防火墙工具介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iptables"><span class="toc-number">1.2.1.</span> <span class="toc-text">iptables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#firewalld"><span class="toc-number">1.2.2.</span> <span class="toc-text">firewalld</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nftables"><span class="toc-number">1.2.3.</span> <span class="toc-text">nftables</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#netfilter%E4%B8%AD%E4%BA%94%E4%B8%AA%E5%8B%BE%E5%AD%90%E5%87%BD%E6%95%B0%E5%92%8C%E6%8A%A5%E6%96%87%E6%B5%81%E5%90%91"><span class="toc-number">1.3.</span> <span class="toc-text">netfilter中五个勾子函数和报文流向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iptables%E7%BB%84%E6%88%90"><span class="toc-number">1.4.</span> <span class="toc-text">iptables组成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-1"><span class="toc-number">2.</span> <span class="toc-text">iptables</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iptables%E8%A7%84%E5%88%99%E8%AF%B4%E6%98%8E"><span class="toc-number">2.1.</span> <span class="toc-text">iptables规则说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iptables%E8%A7%84%E5%88%99%E7%BB%84%E6%88%90"><span class="toc-number">2.1.1.</span> <span class="toc-text">iptables规则组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iptables%E8%A7%84%E5%88%99%E6%B7%BB%E5%8A%A0%E6%97%B6%E8%80%83%E9%87%8F%E7%82%B9"><span class="toc-number">2.1.2.</span> <span class="toc-text">iptables规则添加时考量点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iptables%E7%94%A8%E6%B3%95%E8%AF%B4%E6%98%8E"><span class="toc-number">2.2.</span> <span class="toc-text">iptables用法说明</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Linux防火墙
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">yuankun</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-09-25T13:28:11.000Z" itemprop="datePublished">2022-09-25</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/" rel="tag">Linux从入门到放弃</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p class="note note-success"> firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术。 </p>
+<span id="more"></span>  
+
+<h1 id="防火墙基本认识"><a href="#防火墙基本认识" class="headerlink" title="防火墙基本认识"></a>防火墙基本认识</h1><h2 id="Netfilter"><a href="#Netfilter" class="headerlink" title="Netfilter"></a>Netfilter</h2><p> <img src="/../image.assets/1664334608880.png" alt="1664334608880"> </p>
+<p>Linux防火墙是由Netfilter组件提供的，Netfilter工作在内核空间，集成在linux内核中。<br>Netfilter 是Linux 2.4.x之后新一代的Linux防火墙机制，是linux内核的一个子系统。Netfilter采用模块<br>化设计，具有良好的可扩充性，提供扩展各种网络服务的结构化底层框架。Netfilter与IP协议栈是无缝<br>契合，并允许对数据报进行过滤、地址转换、处理等操作。  </p>
+<p><a target="_blank" rel="noopener" href="https://netfilter.org/documentation/">Netfilter官网文档</a>  </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 ~]# grep -m 10 NETFILTER /boot/config-3.10.0-1160.el7.x86_64 </span><br><span class="line">CONFIG_NETFILTER=y</span><br><span class="line"># CONFIG_NETFILTER_DEBUG is not set</span><br><span class="line">CONFIG_NETFILTER_ADVANCED=y</span><br><span class="line">CONFIG_BRIDGE_NETFILTER=m</span><br><span class="line">CONFIG_NETFILTER_NETLINK=m</span><br><span class="line">CONFIG_NETFILTER_NETLINK_ACCT=m</span><br><span class="line">CONFIG_NETFILTER_NETLINK_QUEUE=m</span><br><span class="line">CONFIG_NETFILTER_NETLINK_LOG=m</span><br><span class="line">CONFIG_NETFILTER_NETLINK_QUEUE_CT=y</span><br><span class="line">CONFIG_NETFILTER_SYNPROXY=m</span><br><span class="line">[root@centos7 ~]# </span><br></pre></td></tr></table></figure>
+
+<h2 id="防火墙工具介绍"><a href="#防火墙工具介绍" class="headerlink" title="防火墙工具介绍"></a>防火墙工具介绍</h2><h3 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h3><p>由软件包iptables提供的命令行工具，工作在用户空间，用来编写规则，写好的规则被送往netfilter，告<br>诉内核如何去处理信息包。</p>
+<ul>
+<li>查看iptables信息</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 ~]# rpm -qi iptables</span><br><span class="line">Name        : iptables</span><br><span class="line">Version     : 1.4.21</span><br><span class="line">Release     : 35.el7</span><br><span class="line">Architecture: x86_64</span><br><span class="line">Install Date: Sat 17 Sep 2022 10:31:09 AM CST</span><br><span class="line">Group       : System Environment/Base</span><br><span class="line">Size        : 1556976</span><br><span class="line">License     : GPLv2</span><br><span class="line">Signature   : RSA/SHA256, Thu 15 Oct 2020 02:51:02 AM CST, Key ID 24c6a8a7f4a80eb5</span><br><span class="line">Source RPM  : iptables-1.4.21-35.el7.src.rpm</span><br><span class="line">Build Date  : Fri 02 Oct 2020 12:52:54 AM CST</span><br><span class="line">Build Host  : x86-01.bsys.centos.org</span><br><span class="line">Relocations : (not relocatable)</span><br><span class="line">Packager    : CentOS BuildSystem &lt;http://bugs.centos.org&gt;</span><br><span class="line">Vendor      : CentOS</span><br><span class="line">URL         : http://www.netfilter.org/</span><br><span class="line">Summary     : Tools for managing Linux kernel packet filtering capabilities</span><br><span class="line">Description :</span><br><span class="line">The iptables utility controls the network packet filtering code in the</span><br><span class="line">Linux kernel. If you need to set up firewalls and/or IP masquerading,</span><br><span class="line">you should install this package.</span><br><span class="line">[root@centos7 ~]# </span><br></pre></td></tr></table></figure>
+
+<p><strong>范例：安装iptables的server包</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 安装dnf</span><br><span class="line">[root@centos7 ~]# yum install dnf</span><br><span class="line"># 安装iptables-services</span><br><span class="line">[root@centos7 ~]# dnf -y install iptables-services</span><br><span class="line"># 查看iptables-services文件列表</span><br><span class="line">[root@centos7 ~]# rpm -ql iptables-services</span><br><span class="line">/etc/sysconfig/ip6tables</span><br><span class="line">/etc/sysconfig/iptables</span><br><span class="line">/usr/lib/systemd/system/ip6tables.service</span><br><span class="line">/usr/lib/systemd/system/iptables.service</span><br><span class="line">/usr/libexec/initscripts/legacy-actions/ip6tables</span><br><span class="line">/usr/libexec/initscripts/legacy-actions/ip6tables/panic</span><br><span class="line">/usr/libexec/initscripts/legacy-actions/ip6tables/save</span><br><span class="line">/usr/libexec/initscripts/legacy-actions/iptables</span><br><span class="line">/usr/libexec/initscripts/legacy-actions/iptables/panic</span><br><span class="line">/usr/libexec/initscripts/legacy-actions/iptables/save</span><br><span class="line">/usr/libexec/iptables</span><br><span class="line">/usr/libexec/iptables/ip6tables.init</span><br><span class="line">/usr/libexec/iptables/iptables.init</span><br><span class="line">[root@centos7 ~]# </span><br></pre></td></tr></table></figure>
+
+<h3 id="firewalld"><a href="#firewalld" class="headerlink" title="firewalld"></a>firewalld</h3><p>从CentOS 7 版开始引入了新的前端管理工具<br>软件包：</p>
+<ul>
+<li>firewalld  </li>
+<li>firewalld-config</li>
+</ul>
+<p>管理工具：  </p>
+<ul>
+<li>firewall-cmd 命令行工具  </li>
+<li>firewall-config 图形工作</li>
+</ul>
+<h3 id="nftables"><a href="#nftables" class="headerlink" title="nftables"></a>nftables</h3><p>它重用了netfilter框架的许多部分，例如连接跟踪和NAT功能。它还保留了命名法和基本iptables设计的几个部分，例如表，链和规则。就像iptables一样，表充当链的容器，并且链包含单独的规则，这些规则可以执行操作，例如丢弃数据包，移至下一个规则或跳至新链。<br>从用户的角度来看，nftables添加了一个名为nft的新工具，该工具替代了iptables，arptables和<br>ebtables中的所有其他工具。从体系结构的角度来看，它还替换了内核中处理数据包过滤规则集运行时评估的那些部分。</p>
+<ul>
+<li>查看软件信息</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 ~]# rpm -qi nftables</span><br><span class="line">Name        : nftables</span><br><span class="line">Epoch       : 1</span><br><span class="line">Version     : 0.8</span><br><span class="line">Release     : 14.el7</span><br><span class="line">Architecture: x86_64</span><br><span class="line">Install Date: Wed 28 Sep 2022 11:36:55 AM CST</span><br><span class="line">Group       : Unspecified</span><br><span class="line">Size        : 500068</span><br><span class="line">License     : GPLv2</span><br><span class="line">Signature   : RSA/SHA256, Fri 23 Aug 2019 05:36:19 AM CST, Key ID 24c6a8a7f4a80eb5</span><br><span class="line">Source RPM  : nftables-0.8-14.el7.src.rpm</span><br><span class="line">Build Date  : Fri 09 Aug 2019 09:13:15 AM CST</span><br><span class="line">Build Host  : x86-01.bsys.centos.org</span><br><span class="line">Relocations : (not relocatable)</span><br><span class="line">Packager    : CentOS BuildSystem &lt;http://bugs.centos.org&gt;</span><br><span class="line">Vendor      : CentOS</span><br><span class="line">URL         : http://netfilter.org/projects/nftables/</span><br><span class="line">Summary     : Netfilter Tables userspace utillites</span><br><span class="line">Description :</span><br><span class="line">Netfilter Tables userspace utilities.</span><br><span class="line">[root@centos7 ~]# </span><br></pre></td></tr></table></figure>
+
+<p><strong>范例：centos8支持三种防火墙服务</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky ~]# systemctl status iptables.service</span><br><span class="line">● iptables.service - IPv4 firewall with iptables</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/iptables.service; disabled; vendor preset: disabled)</span><br><span class="line">   Active: inactive (dead)</span><br><span class="line">[root@rocky ~]# systemctl status firewalld.service</span><br><span class="line">● firewalld.service - firewalld - dynamic firewall daemon</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)</span><br><span class="line">   Active: inactive (dead)</span><br><span class="line">     Docs: man:firewalld(1)</span><br><span class="line">[root@rocky ~]# systemctl status nftables.service</span><br><span class="line">● nftables.service - Netfilter Tables</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/nftables.service; disabled; vendor preset: disabled)</span><br><span class="line">   Active: inactive (dead)</span><br><span class="line">     Docs: man:nft(8)</span><br><span class="line">[root@rocky ~]# </span><br></pre></td></tr></table></figure>
+
+<h2 id="netfilter中五个勾子函数和报文流向"><a href="#netfilter中五个勾子函数和报文流向" class="headerlink" title="netfilter中五个勾子函数和报文流向"></a>netfilter中五个勾子函数和报文流向</h2><p>Netfilter在内核中选取五个位置放了五个hook(勾子) function(INPUT、OUTPUT、FORWARD、<br>PREROUTING、POSTROUTING)，而这五个hook function向用户开放，用户可以通过一个命令工具<br>（iptables）向其写入规则。</p>
+<p>由信息过滤表（table）组成，包含控制IP包处理的规则集（rules），规则被分组放在链（chain）上。</p>
+<p> <img src="/../image.assets/1664336861788.png" alt="1664336861788"> </p>
+<p>提示：从 Linux kernel 4.2 版以后，Netfilter 在prerouting 前加了一个 ingress 勾子函数。可以使用这<br>个新的入口挂钩来过滤来自第2层的流量，这个新挂钩比预路由要早，基本上是 tc 命令（流量控制工<br>具）的替代品。<br><strong>三种报文流向</strong></p>
+<ul>
+<li>流入本机：PREROUTING –&gt; INPUT–&gt;用户空间进程</li>
+<li>流出本机：用户空间进程 –&gt;OUTPUT–&gt; POSTROUTING</li>
+<li>转发：PREROUTING –&gt; FORWARD –&gt; POSTROUTING</li>
+</ul>
+<h2 id="iptables组成"><a href="#iptables组成" class="headerlink" title="iptables组成"></a>iptables组成</h2><p>iptables由五个表table和五个链chain以及一些规则组成</p>
+<p> <img src="/../image.assets/1664337377531.png" alt="1664337377531"> </p>
+<p><strong>链 chain：</strong></p>
+<ul>
+<li>内置链：每个内置链对应于一个钩子函数</li>
+<li>自定义链：用于对内置链进行扩展或补充，可实现更灵活的规则组织管理机制；只有Hook钩子调<br>用自定义链时，才生效</li>
+</ul>
+<p><strong>五个内置链chain:</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INPUT,OUTPUT,FORWARD,PREROUTING,POSTROUTING</span><br></pre></td></tr></table></figure>
+
+<p><strong>五个表：filter、nat、mangle、raw、security</strong></p>
+<ul>
+<li>filter：过滤规则表，根据预定义的规则过滤符合条件的数据包,默认表</li>
+<li>nat：network address translation 地址转换规则表</li>
+<li>mangle：修改数据标记位规则表</li>
+<li>raw：关闭启用的连接跟踪机制，加快封包穿越防火墙速度</li>
+<li>security：用于强制访问控制（MAC）网络规则，由Linux安全模块（如SELinux）实现<br>优先级由高到低的顺序为：</li>
+</ul>
+<p><strong>优先级由高到低的顺序为</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">security --&gt;raw--&gt;mangle--&gt;nat--&gt;filter</span><br></pre></td></tr></table></figure>
+
+<p><strong>表和链对应关系</strong></p>
+<p> <img src="/../image.assets/1664338350371.png" alt="1664338350371"> </p>
+<p><strong>数据包过滤匹配流程</strong></p>
+<p> <img src="/../image.assets/1664338392568.png" alt="1664338392568"> </p>
+<p><strong>内核中数据包的传输过程</strong></p>
+<ul>
+<li>当一个数据包进入网卡时，数据包首先进入PREROUTING链，内核根据数据包目的IP判断是否需要<br>转送出去</li>
+<li>如果数据包是进入本机的，数据包就会沿着图向下移动，到达INPUT链。数据包到达INPUT链后，<br>任何进程都会收到它。本机上运行的程序可以发送数据包，这些数据包经过OUTPUT链，然后到达<br>POSTROUTING链输出</li>
+<li>如果数据包是要转发出去的，且内核允许转发，数据包就会向右移动，经过FORWARD链，然后到<br>达POSTROUTING链输出</li>
+</ul>
+<p><strong>范例</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky ~]# iptables -vnL -t filter </span><br><span class="line">Chain INPUT (policy ACCEPT 0 packets, 0 bytes)</span><br><span class="line"> pkts bytes target     prot opt in     out     source               destination         </span><br><span class="line">  168 10248 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            state RELATED,ESTABLISHED</span><br><span class="line">    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0           </span><br><span class="line">    0     0 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           </span><br><span class="line">    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            state NEW tcp dpt:22</span><br><span class="line">    0     0 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited</span><br><span class="line"></span><br><span class="line">Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)</span><br><span class="line"> pkts bytes target     prot opt in     out     source               destination         </span><br><span class="line">    0     0 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited</span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT 101 packets, 11034 bytes)</span><br><span class="line"> pkts bytes target     prot opt in     out     source               destination         </span><br><span class="line">[root@rocky ~]# </span><br></pre></td></tr></table></figure>
+
+<p><strong>CentOS 6 nat表不支持INPUT链</strong></p>
+<h1 id="iptables-1"><a href="#iptables-1" class="headerlink" title="iptables"></a>iptables</h1><h2 id="iptables规则说明"><a href="#iptables规则说明" class="headerlink" title="iptables规则说明"></a>iptables规则说明</h2><h3 id="iptables规则组成"><a href="#iptables规则组成" class="headerlink" title="iptables规则组成"></a>iptables规则组成</h3><p>规则rule：根据规则的匹配条件尝试匹配报文，对匹配成功的报文根据规则定义的处理动作作出处理，<br>规则在链接上的次序即为其检查时的生效次序<br>匹配条件：默认为与条件，同时满足<br>基本匹配：IP，端口，TCP的Flags（SYN,ACK等）<br>扩展匹配：通过复杂高级功能匹配<br>处理动作：称为target，跳转目标</p>
+<ul>
+<li>内建处理动作：ACCEPT,DROP,REJECT,SNAT,DNAT,MASQUERADE,MARK,LOG…</li>
+<li>自定义处理动作：自定义chain，利用分类管理复杂情形</li>
+</ul>
+<p>规则要添加在链上，才生效；添加在自定义链上不会自动生效<br>白名单:只有指定的特定主机可以访问,其它全拒绝<br>黑名单:只有指定的特定主机拒绝访问,其它全允许,默认方式</p>
+<h3 id="iptables规则添加时考量点"><a href="#iptables规则添加时考量点" class="headerlink" title="iptables规则添加时考量点"></a>iptables规则添加时考量点</h3><ul>
+<li>要实现哪种功能：判断添加在哪张表上</li>
+<li>报文流经的路径：判断添加在哪个链上</li>
+<li>报文的流向：判断源和目的</li>
+<li>匹配规则：业务需要</li>
+</ul>
+<h2 id="iptables用法说明"><a href="#iptables用法说明" class="headerlink" title="iptables用法说明"></a>iptables用法说明</h2><p>帮助：man 8 iptables<br>格式：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables [-t table] &#123;-A|-C|-D&#125; chain rule-specification</span><br></pre></td></tr></table></figure>
+
+<p><strong>范例：filter表中INPUT规则</strong></p>
+<p> <img src="/../image.assets/1664348845247.png" alt="1664348845247"> </p>
+<p><strong>iptables命令格式详解</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables [-t table] SUBCOMMAND chain [-m matchname [per-match-options]]</span><br><span class="line">-j targetname [per-target-options]</span><br></pre></td></tr></table></figure>
+
+<p>1、-t table：指定表<br>raw, mangle, nat, [filter]默认<br>2、SUBCOMMAND：子命令<br>链管理类：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-N：new, 自定义一条新的规则链</span><br><span class="line">-E：重命名自定义链；引用计数不为0的自定义链不能够被重命名，也不能被删除</span><br><span class="line">-X：delete，删除自定义的空的规则链</span><br><span class="line">-P：Policy，设置默认策略；对filter表中的链而言，其默认策略有：ACCEPT：接受, DROP：丢弃</span><br></pre></td></tr></table></figure>
+
+<p><strong>范例</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 定义新的规则链</span><br><span class="line">[root@rocky ~]# iptables -N web_chain</span><br></pre></td></tr></table></figure>
+
+
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">防火墙基本认识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Netfilter"><span class="toc-number">1.1.</span> <span class="toc-text">Netfilter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.</span> <span class="toc-text">防火墙工具介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iptables"><span class="toc-number">1.2.1.</span> <span class="toc-text">iptables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#firewalld"><span class="toc-number">1.2.2.</span> <span class="toc-text">firewalld</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nftables"><span class="toc-number">1.2.3.</span> <span class="toc-text">nftables</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#netfilter%E4%B8%AD%E4%BA%94%E4%B8%AA%E5%8B%BE%E5%AD%90%E5%87%BD%E6%95%B0%E5%92%8C%E6%8A%A5%E6%96%87%E6%B5%81%E5%90%91"><span class="toc-number">1.3.</span> <span class="toc-text">netfilter中五个勾子函数和报文流向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iptables%E7%BB%84%E6%88%90"><span class="toc-number">1.4.</span> <span class="toc-text">iptables组成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables-1"><span class="toc-number">2.</span> <span class="toc-text">iptables</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iptables%E8%A7%84%E5%88%99%E8%AF%B4%E6%98%8E"><span class="toc-number">2.1.</span> <span class="toc-text">iptables规则说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iptables%E8%A7%84%E5%88%99%E7%BB%84%E6%88%90"><span class="toc-number">2.1.1.</span> <span class="toc-text">iptables规则组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iptables%E8%A7%84%E5%88%99%E6%B7%BB%E5%8A%A0%E6%97%B6%E8%80%83%E9%87%8F%E7%82%B9"><span class="toc-number">2.1.2.</span> <span class="toc-text">iptables规则添加时考量点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iptables%E7%94%A8%E6%B3%95%E8%AF%B4%E6%98%8E"><span class="toc-number">2.2.</span> <span class="toc-text">iptables用法说明</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/09/25/FireWall/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/09/25/FireWall/&text=Linux防火墙"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/09/25/FireWall/&title=Linux防火墙"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/09/25/FireWall/&is_video=false&description=Linux防火墙"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux防火墙&body=Check out this article: http://example.com/2022/09/25/FireWall/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/09/25/FireWall/&title=Linux防火墙"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/09/25/FireWall/&title=Linux防火墙"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/09/25/FireWall/&title=Linux防火墙"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/09/25/FireWall/&title=Linux防火墙"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/09/25/FireWall/&name=Linux防火墙&description=&lt;p class=&#34;note note-success&#34;&gt; firewall一般指防火墙。 防火墙（英语：Firewall）技术是通过有机结合各类用于安全管理与筛选的软件和硬件设备，帮助计算机网络于其内、外网之间构建一道相对隔绝的保护屏障，以保护用户资料与信息安全性的一种技术。 &lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/09/25/FireWall/&t=Linux防火墙"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    yuan kun
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

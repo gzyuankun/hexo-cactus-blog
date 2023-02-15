@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="本文将介绍Linux下使用Shell处理文本时最常用的工具并结合正则表达式处理文本。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文本处理工具和正则表达式">
+<meta property="og:url" content="http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="勾三股四">
+<meta property="og:description" content="本文将介绍Linux下使用Shell处理文本时最常用的工具并结合正则表达式处理文本。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image.assets/1658842039807.png">
+<meta property="og:image" content="http://example.com/image.assets/1658842714254.png">
+<meta property="og:image" content="http://example.com/image.assets/1658842736134.png">
+<meta property="og:image" content="http://example.com/image.assets/1658844469691.png">
+<meta property="og:image" content="http://example.com/image.assets/1658844624368.png">
+<meta property="og:image" content="http://example.com/image.assets/1658925029163.png">
+<meta property="og:image" content="http://example.com/image.assets/1658926795326.png">
+<meta property="og:image" content="http://example.com/image.assets/1659531426952.png">
+<meta property="article:published_time" content="2022-07-26T12:09:30.000Z">
+<meta property="article:modified_time" content="2022-12-16T14:57:11.557Z">
+<meta property="article:author" content="yuan kun">
+<meta property="article:tag" content="Linux从入门到放弃">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image.assets/1658842039807.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>文本处理工具和正则表达式</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/07/25/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&text=文本处理工具和正则表达式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&title=文本处理工具和正则表达式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&is_video=false&description=文本处理工具和正则表达式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=文本处理工具和正则表达式&body=Check out this article: http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&title=文本处理工具和正则表达式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&title=文本处理工具和正则表达式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&title=文本处理工具和正则表达式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&title=文本处理工具和正则表达式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&name=文本处理工具和正则表达式&description=本文将介绍Linux下使用Shell处理文本时最常用的工具并结合正则表达式处理文本。"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&t=文本处理工具和正则表达式"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7%E4%B9%8B%E7%A5%9EVIM"><span class="toc-number">1.</span> <span class="toc-text">1.文本编辑工具之神VIM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1%E4%BD%BF%E7%94%A8vim%E5%88%9D%E6%AD%A5"><span class="toc-number">1.1.</span> <span class="toc-text">1.1使用vim初步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1vim%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1.1vim命令格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-2%E4%B8%89%E7%A7%8D%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.1.2三种主要模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2%E6%89%A9%E5%B1%95%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">1.2扩展命令模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1%E6%89%A9%E5%B1%95%E6%A8%A1%E5%BC%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1扩展模式基本命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2%E5%9C%B0%E5%9D%80%E5%AE%9A%E7%95%8C"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2地址定界</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-1%E5%9C%B0%E5%9D%80%E5%AE%9A%E7%95%8C%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">1.2.2.1地址定界格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-2%E5%9C%B0%E5%9D%80%E5%AE%9A%E7%95%8C%E5%90%8E%E8%B7%9F%E4%B8%80%E4%B8%AA%E7%BC%96%E8%BE%91%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">1.2.2.2地址定界后跟一个编辑命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3%E6%9F%A5%E6%89%BE%E5%92%8C%E6%9B%BF%E6%8D%A2"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3查找和替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-4%E5%AE%9A%E5%88%B6vim%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%89%B9%E6%80%A7"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4定制vim的工作特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-1%E8%A1%8C%E5%8F%B7"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">1.2.4.1行号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-2%E5%BF%BD%E7%95%A5%E5%AD%97%E7%AC%A6%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">1.2.4.2忽略字符的大小写</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-3%E8%87%AA%E5%8A%A8%E7%BC%A9%E8%BF%9B"><span class="toc-number">1.2.4.3.</span> <span class="toc-text">1.2.4.3自动缩进</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-4%E5%A4%8D%E5%88%B6%E4%BF%9D%E7%95%99%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.4.4.</span> <span class="toc-text">1.2.4.4复制保留格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-5%E6%98%BE%E7%A4%BATab-I%E5%92%8C%E6%8D%A2%E8%A1%8C%E7%AC%A6-%E5%92%8C-%E6%98%BE%E7%A4%BA"><span class="toc-number">1.2.4.5.</span> <span class="toc-text">1.2.4.5显示Tab ^I和换行符 和$显示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-6%E9%AB%98%E4%BA%AE%E6%90%9C%E7%B4%A2"><span class="toc-number">1.2.4.6.</span> <span class="toc-text">1.2.4.6高亮搜索</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-7%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE"><span class="toc-number">1.2.4.7.</span> <span class="toc-text">1.2.4.7语法高亮</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-8%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.4.8.</span> <span class="toc-text">1.2.4.8文件格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-9Tab-%E7%94%A8%E7%A9%BA%E6%A0%BC%E4%BB%A3%E6%9B%BF"><span class="toc-number">1.2.4.9.</span> <span class="toc-text">1.2.4.9Tab 用空格代替</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-10Tab%E7%94%A8%E6%8C%87%E5%AE%9A%E7%A9%BA%E6%A0%BC%E7%9A%84%E4%B8%AA%E6%95%B0%E4%BB%A3%E6%9B%BF"><span class="toc-number">1.2.4.10.</span> <span class="toc-text">1.2.4.10Tab用指定空格的个数代替</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-11%E8%AE%BE%E7%BD%AE%E7%BC%A9%E8%BF%9B%E5%AE%BD%E5%BA%A6"><span class="toc-number">1.2.4.11.</span> <span class="toc-text">1.2.4.11设置缩进宽度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-12%E8%AE%BE%E7%BD%AE%E6%96%87%E6%9C%AC%E5%AE%BD%E5%BA%A6"><span class="toc-number">1.2.4.12.</span> <span class="toc-text">1.2.4.12设置文本宽度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-13-%E8%AE%BE%E7%BD%AE%E5%85%89%E6%A0%87%E6%89%80%E5%9C%A8%E8%A1%8C%E7%9A%84%E6%A0%87%E8%AF%86%E7%BA%BF"><span class="toc-number">1.2.4.13.</span> <span class="toc-text">1.2.4.13 设置光标所在行的标识线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-14%E5%8A%A0%E5%AF%86"><span class="toc-number">1.2.4.14.</span> <span class="toc-text">1.2.4.14加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-15%E4%BA%86%E8%A7%A3%E6%9B%B4%E5%A4%9A"><span class="toc-number">1.2.4.15.</span> <span class="toc-text">1.2.4.15了解更多</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">1.3命令模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-1%E9%80%80%E5%87%BAvim"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.3.1退出vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-2%E5%85%89%E6%A0%87%E8%B7%B3%E8%BD%AC"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.3.2光标跳转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-3%E5%AD%97%E7%AC%A6%E7%BC%96%E8%BE%91"><span class="toc-number">1.3.3.</span> <span class="toc-text">1.3.3字符编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-4%E6%9B%BF%E6%8D%A2"><span class="toc-number">1.3.4.</span> <span class="toc-text">1.3.4替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-5%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.5.</span> <span class="toc-text">1.3.5删除命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-6%E5%A4%8D%E5%88%B6%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.6.</span> <span class="toc-text">1.3.6复制命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-7%E7%B2%98%E8%B4%B4%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.7.</span> <span class="toc-text">1.3.7粘贴命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-8%E6%9F%A5%E6%89%BE"><span class="toc-number">1.3.8.</span> <span class="toc-text">1.3.8查找</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-9%E6%92%A4%E9%94%80%E6%9B%B4%E6%94%B9"><span class="toc-number">1.3.8.1.</span> <span class="toc-text">1.3.9撤销更改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-10%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95"><span class="toc-number">1.3.8.2.</span> <span class="toc-text">1.3.10高级用法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">1.4可视化模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5%E5%A4%9A%E6%96%87%E4%BB%B6%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.5.</span> <span class="toc-text">1.5多文件模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6%E5%A4%9A%E7%AA%97%E5%8F%A3%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.6.</span> <span class="toc-text">1.6多窗口模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-1%E5%A4%9A%E6%96%87%E4%BB%B6%E5%88%86%E5%89%B2"><span class="toc-number">1.6.1.</span> <span class="toc-text">1.6.1多文件分割</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-2%E5%8D%95%E6%96%87%E4%BB%B6%E7%AA%97%E5%8F%A3"><span class="toc-number">1.6.2.</span> <span class="toc-text">1.6.2单文件窗口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-7%E5%B8%AE%E5%8A%A9"><span class="toc-number">1.7.</span> <span class="toc-text">1.7帮助</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E5%B8%B8%E8%A7%81%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">2.常见文本处理工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.</span> <span class="toc-text">2.1文件内容查看命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1%E6%9F%A5%E7%9C%8B%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1查看文本文件内容</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-1-cat"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">2.1.1.1 cat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-2-nl"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">2.1.1.2 nl</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-3-tac"><span class="toc-number">2.1.1.3.</span> <span class="toc-text">2.1.1.3 tac</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-4-rev"><span class="toc-number">2.1.1.4.</span> <span class="toc-text">2.1.1.4 rev</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2%E6%9F%A5%E7%9C%8B%E9%9D%9E%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2查看非文本文件内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%88%86%E9%A1%B5%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="toc-number">2.2.</span> <span class="toc-text">2.2. 分页查看文件内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-more"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 more</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-less"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 less</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3%E6%98%BE%E7%A4%BA%E6%96%87%E6%9C%AC%E5%89%8D%E9%9D%A2%E7%9A%84%E6%88%96%E5%90%8E%E9%9D%A2%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-number">2.3.</span> <span class="toc-text">2.3显示文本前面的或后面的内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-head"><span class="toc-number">2.3.1.</span> <span class="toc-text">2.3.1 head</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-tail"><span class="toc-number">2.3.2.</span> <span class="toc-text">2.3.2 tail</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4%E6%8C%89%E5%88%97%E6%8A%BD%E5%8F%96%E6%96%87%E6%9C%AC-cut"><span class="toc-number">2.4.</span> <span class="toc-text">2.4按列抽取文本 cut</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6-paste"><span class="toc-number">2.5.</span> <span class="toc-text">2.5合并多个文件 paste</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-6%E5%88%86%E6%9E%90%E6%96%87%E6%9C%AC%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-number">2.6.</span> <span class="toc-text">2.6分析文本的工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-1-%E6%94%B6%E9%9B%86%E6%96%87%E6%9C%AC%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE-wc"><span class="toc-number">2.6.1.</span> <span class="toc-text">2.6.1 收集文本统计数据 wc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-2-%E6%96%87%E6%9C%AC%E6%8E%92%E5%BA%8F-sort"><span class="toc-number">2.6.2.</span> <span class="toc-text">2.6.2 文本排序 sort</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-3-%E5%8E%BB%E9%87%8D"><span class="toc-number">2.6.3.</span> <span class="toc-text">2.6.3 去重</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-4-%E6%AF%94%E8%BE%83%E6%96%87%E4%BB%B6"><span class="toc-number">2.6.4.</span> <span class="toc-text">2.6.4 比较文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-4-1-diff"><span class="toc-number">2.6.4.1.</span> <span class="toc-text">2.6.4.1 diff</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-4-2-patch"><span class="toc-number">2.6.4.2.</span> <span class="toc-text">2.6.4.2 patch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-4-3vimdiff"><span class="toc-number">2.6.4.3.</span> <span class="toc-text">2.6.4.3vimdiff</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-4-3cmp"><span class="toc-number">2.6.4.4.</span> <span class="toc-text">2.6.4.3cmp</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">3 正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1%E5%9F%BA%E6%9C%AC%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%83%E5%AD%97%E7%AC%A6"><span class="toc-number">3.1.</span> <span class="toc-text">3.1基本正则表达式元字符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D"><span class="toc-number">3.1.1.</span> <span class="toc-text">3.1 .1字符匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-%E5%8C%B9%E9%85%8D%E6%AC%A1%E6%95%B0"><span class="toc-number">3.1.2.</span> <span class="toc-text">3.1.2 匹配次数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-%E4%BD%8D%E7%BD%AE%E9%94%9A%E5%AE%9A"><span class="toc-number">3.1.3.</span> <span class="toc-text">3.1.3 位置锚定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-4-%E5%88%86%E7%BB%84%E5%85%B6%E4%BB%96"><span class="toc-number">3.1.4.</span> <span class="toc-text">3.1.4 分组其他</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E4%B8%89%E5%89%91%E5%AE%A2"><span class="toc-number">4.</span> <span class="toc-text">4 文本处理三剑客</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bgrep"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 文本处理三剑客之grep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E4%B9%8Bsed"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 文本处理工具之sed</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-1-sed%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 sed基本用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E4%B9%8Bawk"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 文本处理工具之awk</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        文本处理工具和正则表达式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">勒马听风</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-07-26T12:09:30.000Z" itemprop="datePublished">2022-07-26</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/" rel="tag">Linux从入门到放弃</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="1-文本编辑工具之神VIM"><a href="#1-文本编辑工具之神VIM" class="headerlink" title="1.文本编辑工具之神VIM"></a>1.文本编辑工具之神VIM</h1><h2 id="1-1使用vim初步"><a href="#1-1使用vim初步" class="headerlink" title="1.1使用vim初步"></a>1.1使用vim初步</h2><h3 id="1-1-1vim命令格式"><a href="#1-1-1vim命令格式" class="headerlink" title="1.1.1vim命令格式"></a>1.1.1vim命令格式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim [option]··· FILE ···</span><br></pre></td></tr></table></figure>
+
+<p>常用选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+# 打开文件后，让光标处于第#行的行首，+默认行尾</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim +10 passwd</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658842039807.png" alt="1658842039807"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+/PATTERN 让光标处于第一个被PATTERN匹配到的行行首</span><br><span class="line">-b file 二进制方式打开文件</span><br><span class="line">-d file1 file2… 比较多个文件，相当于 vimdiff</span><br><span class="line">-m file 只读打开文件</span><br><span class="line">-e file 直接进入ex模式，相当于执行ex file</span><br><span class="line">-y file Easy mode (like &quot;evim&quot;, modeless)，直接可以操作文件，ctrl+o:wq|q! 保存和不</span><br><span class="line">保存退出</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li>如果该文件存在，文件被打开并显示内容</li>
+<li>如果该文件不存在，当编辑后第一次存盘时创建它</li>
+</ul>
+<h3 id="1-1-2三种主要模式"><a href="#1-1-2三种主要模式" class="headerlink" title="1.1.2三种主要模式"></a>1.1.2三种主要模式</h3><p>三种常见模式：</p>
+<ul>
+<li><p>命令或普通(Normal)模式：默认模式，可以实现移动光标，剪切&#x2F;粘贴文本</p>
+</li>
+<li><p>插入(Insert)或编辑模式：用于修改文本</p>
+</li>
+<li><p>扩展命令(extended command )或命令(末)行模式：保存，退出等</p>
+</li>
+<li><p>命令模式–》插入模式</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">i insert, 在光标所在处输入</span><br><span class="line">I 在当前光标所在行的行首输入</span><br><span class="line">a append, 在光标所在处后面输入</span><br><span class="line">A 在当前光标所在行的行尾输入</span><br><span class="line">o 在当前光标所在行的下方打开一个新行</span><br><span class="line">O 在当前光标所在行的上方打开一个新行</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>插入模式 — ESC—–&gt; 命令模式</li>
+<li>命令模式 —- : —-&gt; 扩展命令模式</li>
+<li>扩展命令模式 —-ESC,enter—-&gt; 命令模式</li>
+</ul>
+<p>范例: 插入颜色字符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1 切换至插入模式</span><br><span class="line">2 按ctrl+v+[ 三个键,显示^[</span><br><span class="line">3 后续输入颜色信息,如:^[[32mhello^[[0m</span><br><span class="line">4 切换至扩展命令模式,保存退出</span><br><span class="line">5 cat 文件可以看到下面显示</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658842714254.png" alt="1658842714254"></p>
+<p><img src="/../image.assets/1658842736134.png" alt="1658842736134"></p>
+<h2 id="1-2扩展命令模式"><a href="#1-2扩展命令模式" class="headerlink" title="1.2扩展命令模式"></a>1.2扩展命令模式</h2><p>按“:”（冒号）进入Ex模式，创建一个命令提示符：处于底部的屏幕左侧</p>
+<h3 id="1-2-1扩展模式基本命令"><a href="#1-2-1扩展模式基本命令" class="headerlink" title="1.2.1扩展模式基本命令"></a>1.2.1扩展模式基本命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">w 写（存）磁盘文件</span><br><span class="line">wq 写入并退出</span><br><span class="line">x 写入并退出</span><br><span class="line">X 加密</span><br><span class="line">q 退出</span><br><span class="line">q！ 不存盘退出，即使更改都将丢失</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>读取文件内容到当前文件中</li>
+</ul>
+<p>用法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r filename	# 读文件内容到当前文件中</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 将当前目录下的b文件的内容读取到当前文件中</span><br><span class="line">vim a.txt</span><br><span class="line">:r b.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>将当前文件内容写入另一个文件</li>
+</ul>
+<p>用法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w filename # 将当前文件内容写入另一个文件</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 将当前文件(a.txt文件)内容写入到b.txt中去</span><br><span class="line">vim a.txt</span><br><span class="line">w c.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>执行命令</li>
+</ul>
+<p>用法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!command	#执行命令</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<p><img src="/../image.assets/1658844469691.png" alt="1658844469691"></p>
+<ul>
+<li>读入命令的输入</li>
+</ul>
+<p>用法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r!command	#读入命令的输入</span><br></pre></td></tr></table></figure>
+
+<p>范例：执行hostname命令输入到当前文件中</p>
+<p><img src="/../image.assets/1658844624368.png" alt="1658844624368"></p>
+<h3 id="1-2-2地址定界"><a href="#1-2-2地址定界" class="headerlink" title="1.2.2地址定界"></a>1.2.2地址定界</h3><p>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:start_pos,end_pos CMD</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-2-1地址定界格式"><a href="#1-2-2-1地址定界格式" class="headerlink" title="1.2.2.1地址定界格式"></a>1.2.2.1地址定界格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># #具体第#行，例如2表示第2行</span><br><span class="line">#,# #从左侧#表示起始行，到右侧#表示结尾行</span><br><span class="line">#,+# #从左侧#表示的起始行，加上右侧#表示的行数，范例：2,+3 表示2到5行</span><br><span class="line">. #当前行</span><br><span class="line">$ #最后一行</span><br><span class="line">.,$-1 #当前行到倒数第二行</span><br><span class="line">% #全文, 相当于1,$</span><br><span class="line">/pattern/ #从当前行向下查找，直到匹配pattern的第一行,即:正则表达式</span><br><span class="line">/pat1/,/pat2/ #从第一次被pat1模式匹配到的行开始，一直到第一次被pat2匹配到的行结束</span><br><span class="line">#,/pat/ #从指定行开始，一直找到第一个匹配pattern的行结束</span><br><span class="line">/pat/,$ #向下找到第一个匹配patttern的行到整个文件的结尾的所有行</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-2-2地址定界后跟一个编辑命令"><a href="#1-2-2-2地址定界后跟一个编辑命令" class="headerlink" title="1.2.2.2地址定界后跟一个编辑命令"></a>1.2.2.2地址定界后跟一个编辑命令</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">d #删除</span><br><span class="line">y #复制</span><br><span class="line">w file #将范围内的行另存至指定文件中</span><br><span class="line">r file #在指定位置插入指定文件中的所有内容</span><br><span class="line">t#行号 将前面指定的行复制到#行后</span><br><span class="line">m#行号 将前面指定的行移动到#行后</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<ul>
+<li>删除文件内容第几行到第几行</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:1,3d    #删除第一行到第三行</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658925029163.png" alt="1658925029163"></p>
+<ul>
+<li>复制文件全部内容</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:.,$y</span><br><span class="line"># 通过键盘上下键选择要复制在什么地方，选择后位置后按p键复制</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除文件全部内容</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%d</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-3查找和替换"><a href="#1-2-3查找和替换" class="headerlink" title="1.2.3查找和替换"></a>1.2.3查找和替换</h3><p>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s/查找的内容/替换为内容/修饰符</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">要查找的内容：可使用基本正则表达式模式</span><br><span class="line">替换为的内容：不能使用模式，但可以使用\1, \2, ...等后向引用符号；还可以使用“&amp;”引用前面查找时查</span><br><span class="line">找到的整个内容</span><br></pre></td></tr></table></figure>
+
+<p>修饰符：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">i #忽略大小写</span><br><span class="line">g #全局替换，默认情况下，每一行只替换第一次出现</span><br><span class="line">gc #全局替换，每次替换前询问</span><br></pre></td></tr></table></figure>
+
+<p>查找替换中的分隔符&#x2F;可替换为其它字符，如：#,@<br>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s@/etc@/var@g</span><br><span class="line">s#/boot#/#i</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>复制&#x2F;etc&#x2F;passwd到家目录下，将文件内的root全部替换为ROOT</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/root/ROOT/g</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-4定制vim的工作特性"><a href="#1-2-4定制vim的工作特性" class="headerlink" title="1.2.4定制vim的工作特性"></a>1.2.4定制vim的工作特性</h3><p>扩展命令模式的配置只是对当前vim进程有效，可将配置存放在文件中持久保存<br>配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/vimrc #全局</span><br><span class="line">~/.vimrc #个人</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-1行号"><a href="#1-2-4-1行号" class="headerlink" title="1.2.4.1行号"></a>1.2.4.1行号</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">显示：set number，简写 set nu</span><br><span class="line">取消显示：set nonumber, 简写 set nonu</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658926795326.png" alt="1658926795326"></p>
+<h4 id="1-2-4-2忽略字符的大小写"><a href="#1-2-4-2忽略字符的大小写" class="headerlink" title="1.2.4.2忽略字符的大小写"></a>1.2.4.2忽略字符的大小写</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">启用：set ignorecase，简写 set ic</span><br><span class="line">不忽略：set noic</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-3自动缩进"><a href="#1-2-4-3自动缩进" class="headerlink" title="1.2.4.3自动缩进"></a>1.2.4.3自动缩进</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">启用：set autoindent，简写 set ai</span><br><span class="line">禁用：set noai</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-4复制保留格式"><a href="#1-2-4-4复制保留格式" class="headerlink" title="1.2.4.4复制保留格式"></a>1.2.4.4复制保留格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">启用：set paste</span><br><span class="line">禁用：set nopaste</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-5显示Tab-I和换行符-和-显示"><a href="#1-2-4-5显示Tab-I和换行符-和-显示" class="headerlink" title="1.2.4.5显示Tab ^I和换行符 和$显示"></a>1.2.4.5显示Tab ^I和换行符 和$显示</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">启用：set list</span><br><span class="line">禁用：set nolist</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-6高亮搜索"><a href="#1-2-4-6高亮搜索" class="headerlink" title="1.2.4.6高亮搜索"></a>1.2.4.6高亮搜索</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">启用：set hlsearch</span><br><span class="line">禁用：set nohlsearch 简写：nohl</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-7语法高亮"><a href="#1-2-4-7语法高亮" class="headerlink" title="1.2.4.7语法高亮"></a>1.2.4.7语法高亮</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">启用：syntax on</span><br><span class="line">禁用：syntax off</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-8文件格式"><a href="#1-2-4-8文件格式" class="headerlink" title="1.2.4.8文件格式"></a>1.2.4.8文件格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">启用windows格式：set fileformat=dos</span><br><span class="line">启用unix格式：set fileformat=unix</span><br><span class="line">简写 set ff=dos|unix</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-9Tab-用空格代替"><a href="#1-2-4-9Tab-用空格代替" class="headerlink" title="1.2.4.9Tab 用空格代替"></a>1.2.4.9Tab 用空格代替</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">启用：set expandtab 默认为8个空格代替Tab</span><br><span class="line">禁用：set noexpandtab</span><br><span class="line">简写：set et</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-10Tab用指定空格的个数代替"><a href="#1-2-4-10Tab用指定空格的个数代替" class="headerlink" title="1.2.4.10Tab用指定空格的个数代替"></a>1.2.4.10Tab用指定空格的个数代替</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">启用：set tabstop=# 指定#个空格代替Tab</span><br><span class="line">简写：set ts=4</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-11设置缩进宽度"><a href="#1-2-4-11设置缩进宽度" class="headerlink" title="1.2.4.11设置缩进宽度"></a>1.2.4.11设置缩进宽度</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#向右缩进 命令模式&gt;&gt;</span><br><span class="line">#向左缩进 命令模式&lt;&lt;</span><br><span class="line">#设置缩进为4个字符</span><br><span class="line">set shiftwidth=4</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-12设置文本宽度"><a href="#1-2-4-12设置文本宽度" class="headerlink" title="1.2.4.12设置文本宽度"></a>1.2.4.12设置文本宽度</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set textwidth=65 (vim only) #从左向右计数</span><br><span class="line">set wrapmargin=15 #从右到左计数</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-13-设置光标所在行的标识线"><a href="#1-2-4-13-设置光标所在行的标识线" class="headerlink" title="1.2.4.13 设置光标所在行的标识线"></a>1.2.4.13 设置光标所在行的标识线</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">启用：set cursorline，简写 set cul</span><br><span class="line">禁用：set nocursorline</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-14加密"><a href="#1-2-4-14加密" class="headerlink" title="1.2.4.14加密"></a>1.2.4.14加密</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">启用： set key=password</span><br><span class="line">禁用： set key=</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-15了解更多"><a href="#1-2-4-15了解更多" class="headerlink" title="1.2.4.15了解更多"></a>1.2.4.15了解更多</h4><p>set帮助</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:help option-list</span><br><span class="line">:set or :set all</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3命令模式"><a href="#1-3命令模式" class="headerlink" title="1.3命令模式"></a>1.3命令模式</h2><h3 id="1-3-1退出vim"><a href="#1-3-1退出vim" class="headerlink" title="1.3.1退出vim"></a>1.3.1退出vim</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ZZ 保存退出</span><br><span class="line">ZQ	不保存退出</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-2光标跳转"><a href="#1-3-2光标跳转" class="headerlink" title="1.3.2光标跳转"></a>1.3.2光标跳转</h3><ul>
+<li>字符间跳转</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">h: 左</span><br><span class="line">l: 右</span><br><span class="line">j: 下</span><br><span class="line">k: 上</span><br><span class="line">#COMMAND：跳转由#指定的个数的字符	如：3l</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单词间跳转</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">w：下一个单词的词首</span><br><span class="line">e：当前或下一单词的词尾</span><br><span class="line">b：当前或前一个单词的词首</span><br><span class="line">#COMMAND：由#指定一次跳转的单词数</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当前页跳转</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">H：页首</span><br><span class="line">M：页中间行</span><br><span class="line">L：页底</span><br><span class="line">zt：将光标所在当前行移到屏幕顶端</span><br><span class="line">zz：将光标所在当前行移到屏幕中间</span><br><span class="line">zb：将光标所在当前行移到屏幕底端</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>行首行尾</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^ 跳转至行首的第一个非空白字符</span><br><span class="line">0 跳转至行首</span><br><span class="line">$ 跳转至行尾</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>行间移动</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#G 或者扩展命令模式下</span><br><span class="line">:# 跳转至由第#行</span><br><span class="line">G 最后一行</span><br><span class="line">1G, gg 第一行</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>句间移动</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">) 下一句</span><br><span class="line">( 上一句</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>段落间移动</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#125; 下一段</span><br><span class="line">&#123; 上一段</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>命令模式翻屏操作</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+f 向文件尾部翻一屏,相当于Pagedown</span><br><span class="line">Ctrl+b 向文件首部翻一屏,相当于Pageup</span><br><span class="line">Ctrl+d 向文件尾部翻半屏</span><br><span class="line">Ctrl+u 向文件首部翻半屏</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-3字符编辑"><a href="#1-3-3字符编辑" class="headerlink" title="1.3.3字符编辑"></a>1.3.3字符编辑</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x 剪切光标处的字符	# p键可复制剪切的字符</span><br><span class="line">#x 剪切光标处起始的#个字符</span><br><span class="line">xp 交换光标所在处的字符及其后面字符的位置</span><br><span class="line">~ 转换大小写</span><br><span class="line">J 删除当前行后的换行符</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-4替换"><a href="#1-3-4替换" class="headerlink" title="1.3.4替换"></a>1.3.4替换</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r 只替换光标所在处的一个字符</span><br><span class="line">R 切换成REPLACE模式（在末行出现-- REPLACE -- 提示）,按ESC回到命令模式</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-5删除命令"><a href="#1-3-5删除命令" class="headerlink" title="1.3.5删除命令"></a>1.3.5删除命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">d 删除命令，可结合光标跳转字符，实现范围删除</span><br><span class="line">d$ 删除到行尾</span><br><span class="line">d^ 删除到非空行首</span><br><span class="line">d0 删除到行首</span><br><span class="line">dw</span><br><span class="line">de</span><br><span class="line">db</span><br><span class="line">#COMMAND</span><br><span class="line">dd： 剪切光标所在的行</span><br><span class="line">#dd 多行删除</span><br><span class="line">D：从当前光标位置一直删除到行尾，等同于d$</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-6复制命令"><a href="#1-3-6复制命令" class="headerlink" title="1.3.6复制命令"></a>1.3.6复制命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">y 复制，行为相似于d命令</span><br><span class="line">y$</span><br><span class="line">y0</span><br><span class="line">y^</span><br><span class="line">ye</span><br><span class="line">yw</span><br><span class="line">yb</span><br><span class="line">#COMMAND</span><br><span class="line">yy：复制行</span><br><span class="line">#yy 复制多行</span><br><span class="line">Y：复制整行</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-7粘贴命令"><a href="#1-3-7粘贴命令" class="headerlink" title="1.3.7粘贴命令"></a>1.3.7粘贴命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p 缓冲区存的如果为整行，则粘贴当前光标所在行的下方；否则，则粘贴至当前光标所在处的后面</span><br><span class="line">P 缓冲区存的如果为整行，则粘贴当前光标所在行的上方；否则，则粘贴至当前光标所在处的前面</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-8查找"><a href="#1-3-8查找" class="headerlink" title="1.3.8查找"></a>1.3.8查找</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/PATTERN：从当前光标所在处向文件尾部查找</span><br><span class="line">?PATTERN：从当前光标所在处向文件首部查找</span><br><span class="line">n：与命令同方向</span><br><span class="line">N：与命令反方向</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-9撤销更改"><a href="#1-3-9撤销更改" class="headerlink" title="1.3.9撤销更改"></a>1.3.9撤销更改</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">u 撤销最近的更改，相当于windows中ctrl+z</span><br><span class="line">#u 撤销之前多次更改</span><br><span class="line">U 撤消光标落在这行后所有此行的更改</span><br><span class="line">Ctrl-r 重做最后的“撤消”更改，相当于windows中crtl+y</span><br><span class="line">. 重复前一个操作</span><br><span class="line">#. 重复前一个操作#次</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-10高级用法"><a href="#1-3-10高级用法" class="headerlink" title="1.3.10高级用法"></a>1.3.10高级用法</h4><p>常见Command：y 复制、d 删除、gU 变大写、gu 变小写<br>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0y$ 命令</span><br><span class="line">0 → 先到行头</span><br><span class="line">y → 从这里开始拷贝</span><br><span class="line">$ → 拷贝到本行最后一个字符</span><br></pre></td></tr></table></figure>
+
+<p>范例：粘贴“wang”100次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">100iwang [ESC]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">di&quot; 光标在” “之间，则删除” “之间的内容</span><br><span class="line">yi( 光标在()之间，则复制()之间的内容</span><br><span class="line">vi[ 光标在[]之间，则选中[]之间的内容</span><br><span class="line">dtx 删除字符直到遇见光标之后的第一个 x 字符</span><br><span class="line">ytx 复制字符直到遇见光标之后的第一个 x 字符</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4可视化模式"><a href="#1-4可视化模式" class="headerlink" title="1.4可视化模式"></a>1.4可视化模式</h2><p>在末行有”– VISUAL – “指示，表示在可视化模式<br>允许选择的文本块</p>
+<ul>
+<li>v 面向字符，– VISUAL –</li>
+<li>V 面向整行，– VISUAL LINE –</li>
+<li>ctrl-v 面向块，– VISUAL BLOCK –<br>可视化键可用于与移动键结合使用<br>w ) } 箭头等<br>突出显示的文字可被删除，复制，变更，过滤，搜索，替换等<br>范例：在文件指定行的行首插入#</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1、先将光标移动到指定的第一行的行首</span><br><span class="line">2、输入ctrl+v 进入可视化模式</span><br><span class="line">3、向下移动光标，选中希望操作的每一行的第一个字符</span><br><span class="line">4、输入大写字母 I 切换至插入模式</span><br><span class="line">5、输入 #</span><br><span class="line">6、按 ESC 键</span><br></pre></td></tr></table></figure>
+
+<p>范例：在指定的块位置插入相同的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1、光标定位到要操作的地方</span><br><span class="line">2、CTRL+v 进入“可视块”模式，选取这一列操作多少行</span><br><span class="line">3、SHIFT+i(I)</span><br><span class="line">4、输入要插入的内容</span><br><span class="line">5、按 ESC 键</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5多文件模式"><a href="#1-5多文件模式" class="headerlink" title="1.5多文件模式"></a>1.5多文件模式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim FILE1 FILE2 FILE3 ...</span><br><span class="line">:next 下一个</span><br><span class="line">:prev 前一个</span><br><span class="line">:first 第一个</span><br><span class="line">:last 最后一个</span><br><span class="line">:wall 保存所有</span><br><span class="line">:qall 不保存退出所有</span><br><span class="line">:wqall保存退出所有</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-6多窗口模式"><a href="#1-6多窗口模式" class="headerlink" title="1.6多窗口模式"></a>1.6多窗口模式</h2><h3 id="1-6-1多文件分割"><a href="#1-6-1多文件分割" class="headerlink" title="1.6.1多文件分割"></a>1.6.1多文件分割</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim -o|-O FILE1 FILE2 ...</span><br><span class="line">-o: 水平或上下分割</span><br><span class="line">-O: 垂直或左右分割（vim only）</span><br><span class="line">在窗口间切换：Ctrl+w, Arrow</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-6-2单文件窗口"><a href="#1-6-2单文件窗口" class="headerlink" title="1.6.2单文件窗口"></a>1.6.2单文件窗口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+w,s：split, 水平分割，上下分屏</span><br><span class="line">Ctrl+w,v：vertical, 垂直分割，左右分屏</span><br><span class="line">ctrl+w,q：取消相邻窗口</span><br><span class="line">ctrl+w,o：取消全部窗口</span><br><span class="line">:wqall 退出</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-7帮助"><a href="#1-7帮助" class="headerlink" title="1.7帮助"></a>1.7帮助</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:help</span><br><span class="line">:help topic</span><br><span class="line">Use :q to exit help</span><br><span class="line">#vimtutor</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-常见文本处理工具"><a href="#2-常见文本处理工具" class="headerlink" title="2.常见文本处理工具"></a>2.常见文本处理工具</h1><h2 id="2-1文件内容查看命令"><a href="#2-1文件内容查看命令" class="headerlink" title="2.1文件内容查看命令"></a>2.1文件内容查看命令</h2><h3 id="2-1-1查看文本文件内容"><a href="#2-1-1查看文本文件内容" class="headerlink" title="2.1.1查看文本文件内容"></a>2.1.1查看文本文件内容</h3><h4 id="2-1-1-1-cat"><a href="#2-1-1-1-cat" class="headerlink" title="2.1.1.1 cat"></a>2.1.1.1 cat</h4><p>cat可以查看文本内容</p>
+<p>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat [OPTION]... [FILE]...</span><br></pre></td></tr></table></figure>
+
+<p>常见选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-E：显示行结束符$</span><br><span class="line">-A：显示所有控制符</span><br><span class="line">-n：对显示出的每一行进行编号</span><br><span class="line">-b：非空行编号</span><br><span class="line">-s：压缩连续的空行成一行</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-1-2-nl"><a href="#2-1-1-2-nl" class="headerlink" title="2.1.1.2 nl"></a>2.1.1.2 nl</h4><p>显示行号，相当于cat -b</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 ~]# nl data.txt </span><br><span class="line">     1	1</span><br><span class="line">     2	2</span><br><span class="line">     3	3</span><br><span class="line">     4	4</span><br><span class="line">     5	5</span><br><span class="line">[root@rocky8 ~]# </span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-1-3-tac"><a href="#2-1-1-3-tac" class="headerlink" title="2.1.1.3 tac"></a>2.1.1.3 tac</h4><p>逆向显示文本内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 ~]# cat data.txt </span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">[root@rocky8 ~]# tac data.txt </span><br><span class="line">5</span><br><span class="line">4</span><br><span class="line">3</span><br><span class="line">2</span><br><span class="line">1</span><br><span class="line">[root@rocky8 ~]# </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-1-4-rev"><a href="#2-1-1-4-rev" class="headerlink" title="2.1.1.4 rev"></a>2.1.1.4 rev</h4><p>将同一行的内容逆向显示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 ~]# cat readme.txt </span><br><span class="line">1 2 3 4 5 6</span><br><span class="line">a b c d e f</span><br><span class="line">[root@rocky8 ~]# rev readme.txt </span><br><span class="line">6 5 4 3 2 1</span><br><span class="line">f e d c b a</span><br><span class="line">[root@rocky8 ~]#</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-1-2查看非文本文件内容"><a href="#2-1-2查看非文本文件内容" class="headerlink" title="2.1.2查看非文本文件内容"></a>2.1.2查看非文本文件内容</h3><p>范例：hexdump</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexdump -C -n 512 /dev/sda</span><br><span class="line">00000000 eb 63 90 10 8e d0 bc 00 b0 b8 00 00 8e d8 8e c0 |.c..............|</span><br><span class="line">echo &#123;a..z&#125; | tr -d &#x27; &#x27;|hexdump -C</span><br><span class="line">00000000 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70 |abcdefghijklmnop|</span><br><span class="line">00000010 71 72 73 74 75 76 77 78 79 7a 0a |qrstuvwxyz.|</span><br><span class="line">0000001b</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-分页查看文件内容"><a href="#2-2-分页查看文件内容" class="headerlink" title="2.2. 分页查看文件内容"></a>2.2. 分页查看文件内容</h2><h3 id="2-2-1-more"><a href="#2-2-1-more" class="headerlink" title="2.2.1 more"></a>2.2.1 more</h3><p>可以实现分页查看文件，可以配合管道符实现输出信息的分页</p>
+<p>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more [OPTIONS...] FILE...</span><br></pre></td></tr></table></figure>
+
+<p>选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-d: 显示翻页及退出提示</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more passwd</span><br></pre></td></tr></table></figure>
+
+<p>使用空格键往下查看，可显示进度百分比，“q”退出</p>
+<h3 id="2-2-2-less"><a href="#2-2-2-less" class="headerlink" title="2.2.2 less"></a>2.2.2 less</h3><p>less 也可以实现分页查看文件或STDIN输出，less 命令是man命令使用的分页器<br>查看时有用的命令包括：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/文本 搜索 文本</span><br><span class="line">n/N 跳到下一个 或 上一个匹配</span><br></pre></td></tr></table></figure>
+
+<p>范例：#less 配合管道对其它命令的执行结果进行分页显示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat passwd |less</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3显示文本前面的或后面的内容"><a href="#2-3显示文本前面的或后面的内容" class="headerlink" title="2.3显示文本前面的或后面的内容"></a>2.3显示文本前面的或后面的内容</h2><h3 id="2-3-1-head"><a href="#2-3-1-head" class="headerlink" title="2.3.1 head"></a>2.3.1 head</h3><p>可以显示文件或标准输入的前面行<br>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head [OPTION]... [FILE]...</span><br></pre></td></tr></table></figure>
+
+<p>选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-c # 指定获取前#字节</span><br><span class="line">-n # 指定获取前#行,#如果为负数,表示从文件头取到倒数第#前</span><br><span class="line">-# 同上</span><br></pre></td></tr></table></figure>
+
+<p>范例：查看passwd文件前三行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 ~]# head -n 3 passwd </span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">[root@rocky8 ~]# </span><br></pre></td></tr></table></figure>
+
+<p>范例：查看倒数三行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 ~]# head -3 passwd </span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">[root@rocky8 ~]# </span><br></pre></td></tr></table></figure>
+
+<p>范例：查看首行到倒数第三行内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head -n -3 passwd</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-2-tail"><a href="#2-3-2-tail" class="headerlink" title="2.3.2 tail"></a>2.3.2 tail</h3><p>tail 和head 相反，查看文件或标准输入的倒数行<br>格式:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail [OPTION]... [FILE]...</span><br></pre></td></tr></table></figure>
+
+<p>常用选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-c # 指定获取后#字节</span><br><span class="line">-n # 指定获取后#行,如果#是负数,表示从第#行开始到文件结束</span><br><span class="line">-# 同上</span><br><span class="line">-f 跟踪显示文件fd新追加的内容,常用日志监控，相当于 --follow=descriptor,当文件删除再新</span><br><span class="line">建同名文件,将无法继续跟踪文件</span><br><span class="line">-F 跟踪文件名，相当于--follow=name --retry，当文件删除再新建同名文件,将可以继续跟踪文</span><br><span class="line">件</span><br><span class="line">tailf 类似 tail –f，当文件不增长时并不访问文件,节约资源,CentOS8已经无此工具</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-4按列抽取文本-cut"><a href="#2-4按列抽取文本-cut" class="headerlink" title="2.4按列抽取文本 cut"></a>2.4按列抽取文本 cut</h2><p>cut 命令可以提取文本文件或STDIN数据的指定列<br>格式:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cut [OPTION]... [FILE]...</span><br></pre></td></tr></table></figure>
+
+<p>常用选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-d DELIMITER: 指明分隔符，默认tab</span><br><span class="line">-f FILEDS:</span><br><span class="line">#: 第#个字段,例如:3</span><br><span class="line">#,#[,#]：离散的多个字段，例如:1,3,6</span><br><span class="line">#-#：连续的多个字段, 例如:1-6</span><br><span class="line">混合使用：1-3,7</span><br><span class="line">-c 按字符切割</span><br><span class="line">--output-delimiter=STRING指定输出分隔符</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-5合并多个文件-paste"><a href="#2-5合并多个文件-paste" class="headerlink" title="2.5合并多个文件 paste"></a>2.5合并多个文件 paste</h2><p>paste 合并多个文件同行号的列到一行<br>格式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">paste [OPTION]... [FILE]...</span><br></pre></td></tr></table></figure>
+
+<p>常用选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-d #分隔符：指定分隔符，默认用TAB</span><br><span class="line">-s #所有行合成一行显示</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 ~]# echo &#123;a..d&#125;&gt;alpha.log</span><br><span class="line">[root@rocky8 ~]# cat alpha.log </span><br><span class="line">a b c d</span><br><span class="line">[root@rocky8 ~]# echo &#123;1..4&#125;&gt;seq.log</span><br><span class="line">[root@rocky8 ~]# cat seq.log </span><br><span class="line">1 2 3 4</span><br><span class="line">[root@rocky8 ~]# paste alpha.log seq.log </span><br><span class="line">a b c d	1 2 3 4</span><br><span class="line">[root@rocky8 ~]# </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 ~]# cat alpha.log </span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">[root@rocky8 ~]# echo &#123;1..4&#125; |tr &quot; &quot; &quot;\n&quot;&gt;seq.log</span><br><span class="line">[root@rocky8 ~]# cat seq.log </span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">[root@rocky8 ~]# paste -d: alpha.log seq.log </span><br><span class="line">a:1</span><br><span class="line">b:2</span><br><span class="line">c:3</span><br><span class="line">d:4</span><br><span class="line">[root@rocky8 ~]# </span><br></pre></td></tr></table></figure>
+
+<h2 id="2-6分析文本的工具"><a href="#2-6分析文本的工具" class="headerlink" title="2.6分析文本的工具"></a>2.6分析文本的工具</h2><p>文本数据统计：wc<br>整理文本：sort<br>比较文件：diff和patch</p>
+<h3 id="2-6-1-收集文本统计数据-wc"><a href="#2-6-1-收集文本统计数据-wc" class="headerlink" title="2.6.1 收集文本统计数据 wc"></a>2.6.1 收集文本统计数据 wc</h3><p>wc 命令可用于统计文件的行总数、单词总数、字节总数和字符总数<br>可以对文件或STDIN中的数据统计<br>常用选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-l 只计数行数</span><br><span class="line">-w 只计数单词总数</span><br><span class="line">-c 只计数字节总数</span><br><span class="line">-m 只计数字符总数</span><br><span class="line">-L 显示文件中最长行的长度</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 ~]# wc /etc/passwd</span><br><span class="line">  30   58 1511 /etc/passwd</span><br><span class="line">  行数  单词数  字节数</span><br><span class="line">  </span><br><span class="line"> [root@rocky8 ~]# wc -l /etc/passwd</span><br><span class="line">30 /etc/passwd</span><br><span class="line">[root@rocky8 ~]# wc -w /etc/passwd</span><br><span class="line">58 /etc/passwd</span><br><span class="line">[root@rocky8 ~]# wc -c /etc/passwd</span><br><span class="line">1511 /etc/passwd</span><br><span class="line">[root@rocky8 ~]# wc -m /etc/passwd</span><br><span class="line">1511 /etc/passwd</span><br><span class="line">[root@rocky8 ~]# wc -L /etc/passwd</span><br><span class="line">85 /etc/passwd</span><br><span class="line">[root@rocky8 ~]# </span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-2-文本排序-sort"><a href="#2-6-2-文本排序-sort" class="headerlink" title="2.6.2 文本排序 sort"></a>2.6.2 文本排序 sort</h3><p>把整理过的文本显示在STDOUT，不改变原始文件<br>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort [options] file(s)</span><br></pre></td></tr></table></figure>
+<p>常用选项:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-r 执行反方向（由上至下）整理</span><br><span class="line">-R 随机排序</span><br><span class="line">-n 执行按数字大小整理</span><br><span class="line">-h 人类可读排序,如: 2K 1G</span><br><span class="line">-f 选项忽略（fold）字符串中的字符大小写</span><br><span class="line">-u 选项（独特，unique），合并重复项，即去重</span><br><span class="line">-t c 选项使用c做为字段界定符</span><br><span class="line">-k # 选项按照使用c字符分隔的 # 列来整理能够使用多次</span><br></pre></td></tr></table></figure>
+<p>范例:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#统计日志访问量</span><br><span class="line">[root@centos8 data]#cut -d&quot; &quot; -f1 /var/log/nginx/access_log |sort -u|wc -l</span><br><span class="line">201</span><br></pre></td></tr></table></figure>
+
+<p>范例：统计分区利用率</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df| tr -s &#x27; &#x27; &#x27;%&#x27;|cut -d% -f5|sort -nr|head -n1</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-3-去重"><a href="#2-6-3-去重" class="headerlink" title="2.6.3 去重"></a>2.6.3 去重</h3><p>uniq命令从输入中删除前后相接的重复的行<br>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uniq [OPTION]... [FILE]...</span><br></pre></td></tr></table></figure>
+
+<p>常见选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-c: 显示每行重复出现的次数</span><br><span class="line">-d: 仅显示重复过的行</span><br><span class="line">-u: 仅显示不曾重复的行</span><br></pre></td></tr></table></figure>
+
+<p>uniq常和sort 命令一起配合使用：<br>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sort userlist.txt | uniq -c</span><br></pre></td></tr></table></figure>
+
+<p>范例：统计日志访问量最多的请求</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@centos8 data]#cut -d&quot; &quot; -f1 access_log |sort |uniq -c|sort -nr |head -3</span><br><span class="line">4870 172.20.116.228</span><br><span class="line">3429 172.20.116.208</span><br><span class="line">2834 172.20.0.222</span><br><span class="line">[root@centos8 data]#lastb -f btmp-34 | tr -s &#x27; &#x27; |cut -d &#x27; &#x27; -f3|sort |uniq -c</span><br><span class="line">|sort -nr | head -3</span><br><span class="line">86294 58.218.92.37</span><br><span class="line">43148 58.218.92.26</span><br><span class="line">18036 112.85.42.201</span><br></pre></td></tr></table></figure>
+
+<p>范例：并发连接最多的远程主机IP</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@centos8 ~]#ss -nt|tail -n+2 |tr -s &#x27; &#x27; : |cut -d: -f6|sort|uniq -c|sort -</span><br><span class="line">nr |head -n2</span><br><span class="line">7 10.0.0.1</span><br><span class="line">2 10.0.0.7</span><br></pre></td></tr></table></figure>
+
+<p>范例：取两个文件的相同和不同的行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@centos8 data]#cat test1.txt</span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">1</span><br><span class="line">c</span><br><span class="line">[root@centos8 data]#cat test2.txt</span><br><span class="line">b</span><br><span class="line">e</span><br><span class="line">f</span><br><span class="line">c</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">#取文件的共同行</span><br><span class="line">[root@centos8 data]#cat test1.txt test2.txt | sort |uniq -d</span><br><span class="line">1</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">#取文件的不同行</span><br><span class="line">[root@centos8 data]#cat test1.txt test2.txt | sort |uniq -u</span><br><span class="line">2</span><br><span class="line">a</span><br><span class="line">e</span><br><span class="line">f</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-6-4-比较文件"><a href="#2-6-4-比较文件" class="headerlink" title="2.6.4 比较文件"></a>2.6.4 比较文件</h3><h4 id="2-6-4-1-diff"><a href="#2-6-4-1-diff" class="headerlink" title="2.6.4.1 diff"></a>2.6.4.1 diff</h4><p>diff命令比较两个文件之间的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-u 选项来输出&quot;统一的(unified)&quot;diff格式文件，最适用于补丁文件</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# cat a.txt </span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">[root@rocky8 data]# cat b.txt </span><br><span class="line">a</span><br><span class="line">2</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">[root@rocky8 data]# diff a.txt b.txt </span><br><span class="line">2c2</span><br><span class="line">&lt; b</span><br><span class="line">---</span><br><span class="line">&gt; 2</span><br><span class="line">[root@rocky8 data]# </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-4-2-patch"><a href="#2-6-4-2-patch" class="headerlink" title="2.6.4.2 patch"></a>2.6.4.2 patch</h4><p><strong>patch 复制在其它文件中进行的改变（要谨慎使用）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-b 选项来自动备份改变了的文件</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">diff -u foo.conf foo2.conf &gt; foo.patch</span><br><span class="line">patch -b foo.conf foo.patch</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-4-3vimdiff"><a href="#2-6-4-3vimdiff" class="headerlink" title="2.6.4.3vimdiff"></a>2.6.4.3vimdiff</h4><p>相当于 vim -d</p>
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# cat a.txt</span><br><span class="line">a</span><br><span class="line">2</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">[root@rocky8 data]# cat b.txt </span><br><span class="line">a</span><br><span class="line">2</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">[root@rocky8 data]# vimdiff a.txt b.txt </span><br><span class="line">2 files to edit</span><br><span class="line">[root@rocky8 data]# </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-6-4-3cmp"><a href="#2-6-4-3cmp" class="headerlink" title="2.6.4.3cmp"></a>2.6.4.3cmp</h4><p>范例：查看二进制文件的不同</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@centos8 data]#ll /usr/bin/dir /usr/bin/ls</span><br><span class="line">-rwxr-xr-x. 1 root root 166448 May 12 2019 /usr/bin/dir</span><br><span class="line">-rwxr-xr-x. 1 root root 166448 May 12 2019 /usr/bin/ls</span><br><span class="line">[root@centos8 data]#ll /usr/bin/dir /usr/bin/ls -i</span><br><span class="line">201839444 -rwxr-xr-x. 1 root root 166448 May 12 2019 /usr/bin/dir</span><br><span class="line">201839465 -rwxr-xr-x. 1 root root 166448 May 12 2019 /usr/bin/ls</span><br><span class="line">[root@centos8 data]#diff /usr/bin/dir /usr/bin/ls</span><br><span class="line">Binary files /usr/bin/dir and /usr/bin/ls differ</span><br><span class="line">[root@centos8 ~]#cmp /bin/dir /bin/ls</span><br><span class="line">/bin/dir /bin/ls differ: byte 737, line 2</span><br><span class="line">#跳过前735个字节,观察后面30个字节</span><br><span class="line">[root@centos8 ~]#hexdump -s 735 -Cn 30 /bin/ls</span><br><span class="line">000002df 00 05 6d da 3f 1b 77 91 91 63 a7 de 55 63 a2 b9 |..m.?.w..c..Uc..|</span><br><span class="line">000002ef d9 d2 45 55 4c 00 00 00 00 03 00 00 00 7d |..EUL........&#125;|</span><br><span class="line">000002fd</span><br><span class="line">[root@centos8 ~]#hexdump -s 735 -Cn 30 /bin/dir</span><br><span class="line">000002df 00 f1 21 4e f2 19 7e ef 38 0d 9b 3e d7 54 08 39 |..!N..~.8..&gt;.T.9|</span><br><span class="line">000002ef e4 74 4d 69 25 00 00 00 00 03 00 00 00 7d |.tMi%........&#125;|</span><br><span class="line">000002fd</span><br></pre></td></tr></table></figure>
+
+<p>练习<br>1、找出ifconfig “网卡名” 命令结果中本机的IPv4地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# ifconfig | tail -n +2 |head -n1|tr -s &quot; &quot;|cut -d &quot; &quot; -f3</span><br><span class="line">192.168.37.13</span><br></pre></td></tr></table></figure>
+
+<p>2、查出分区空间使用率的最大百分比值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# df |tr -s &quot; &quot; | cut -d &quot; &quot; -f5|sort -nr|head -n1</span><br><span class="line">26%</span><br></pre></td></tr></table></figure>
+
+<p>3、查出用户UID最大值的用户名、UID及shell类型</p>
+<p>4、查出&#x2F;tmp的权限，以数字方式显示<br>5、统计当前连接本机的每个远程主机IP的连接数，并按从大到小排序</p>
+<h1 id="3-正则表达式"><a href="#3-正则表达式" class="headerlink" title="3 正则表达式"></a>3 正则表达式</h1><p>REGEXP： Regular Expressions，由一类特殊字符及文本字符所编写的模式，其中有些字符（元字符）<br>不表示字符字面意义，而表示控制或通配的功能，类似于增强版的通配符功能，但与通配符不同，通配<br>符功能是用来处理文件名，而正则表达式是处理文本内容中字符<br>正则表达式被很多程序和开发语言所广泛支持：vim, less,grep,sed,awk, nginx,mysql 等<br>正则表达式分两类：</p>
+<ul>
+<li><p>基本正则表达式：BRE Basic Regular Expressions</p>
+</li>
+<li><p>扩展正则表达式：ERE Extended Regular Expressions</p>
+</li>
+</ul>
+<p>正则表达式引擎：<br>采用不同算法，检查处理正则表达式的软件模块，如：PCRE（Perl Compatible Regular<br>Expressions）<br>正则表达式的元字符分类：字符匹配、匹配次数、位置锚定、分组<br>帮助：man 7 regex  </p>
+<h2 id="3-1基本正则表达式元字符"><a href="#3-1基本正则表达式元字符" class="headerlink" title="3.1基本正则表达式元字符"></a>3.1基本正则表达式元字符</h2><h3 id="3-1-1字符匹配"><a href="#3-1-1字符匹配" class="headerlink" title="3.1 .1字符匹配"></a>3.1 .1字符匹配</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">. 匹配任意单个字符(除了\n)，可以是一个汉字或其它国家的文字</span><br><span class="line">[] 匹配指定范围内的任意单个字符，示例：[wang] [0-9] [a-z] [a-zA-Z]</span><br><span class="line">[^] 匹配指定范围外的任意单个字符,示例：[^wang]</span><br><span class="line">[:alnum:] 字母和数字</span><br><span class="line">[:alpha:] 代表任何英文大小写字符，亦即 A-Z, a-z</span><br><span class="line">[:lower:] 小写字母,示例:[[:lower:]],相当于[a-z]</span><br><span class="line">[:upper:] 大写字母</span><br><span class="line">[:blank:] 空白字符（空格和制表符）</span><br><span class="line">[:space:] 包括空格、制表符(水平和垂直)、换行符、回车符等各种类型的空白,比[:blank:]包含的范围</span><br><span class="line">广</span><br><span class="line">[:cntrl:] 不可打印的控制字符（退格、删除、警铃...）</span><br><span class="line">[:digit:] 十进制数字</span><br><span class="line">[:xdigit:]十六进制数字</span><br><span class="line">[:graph:] 可打印的非空白字符</span><br><span class="line">[:print:] 可打印字符</span><br><span class="line">[:punct:] 标点符号</span><br><span class="line">-----------------</span><br><span class="line">\s #匹配任何空白字符，包括空格、制表符、换页符等等。等价于 [\f\r\t\v]。注意 Unicode</span><br><span class="line">正则表达式会匹配全角空格符</span><br><span class="line">\S #匹配任何非空白字符。等价于 [^\f\r\t\v]</span><br><span class="line">\w #匹配一个字母,数字,下划线,汉字,其它国家文字的字符，等价于[_[:alnum:]字]</span><br><span class="line">\W #匹配一个非字母,数字,下划线,汉字,其它国家文字的字符，等价于[^_[:alnum:]字]</span><br></pre></td></tr></table></figure>
+
+<p>案例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# ls /etc/ | grep &#x27;rc[.0-6]&#x27;</span><br><span class="line">rc0.d</span><br><span class="line">rc1.d</span><br><span class="line">rc2.d</span><br><span class="line">rc3.d</span><br><span class="line">rc4.d</span><br><span class="line">rc5.d</span><br><span class="line">rc6.d</span><br><span class="line">rc.d</span><br><span class="line">rc.local</span><br><span class="line">[root@rocky8 data]#</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-2-匹配次数"><a href="#3-1-2-匹配次数" class="headerlink" title="3.1.2 匹配次数"></a>3.1.2 匹配次数</h3><p>用在要指定次数的字符后面，用于指定前面的字符要出现的次数</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">* #匹配前面的字符任意次，包括0次，贪婪模式：尽可能长的匹配</span><br><span class="line">.* #任意长度的任意字符</span><br><span class="line">\? #匹配其前面的字符出现0次或1次,即:可有可无</span><br><span class="line">\+ #匹配其前面的字符出现最少1次,即:肯定有且 &gt;=1 次</span><br><span class="line">\&#123;n\&#125; #匹配前面的字符n次</span><br><span class="line">\&#123;m,n\&#125; #匹配前面的字符至少m次，至多n次</span><br><span class="line">\&#123;,n\&#125; #匹配前面的字符至多n次,&lt;=n</span><br><span class="line">\&#123;n,\&#125; #匹配前面的字符至少n次</span><br></pre></td></tr></table></figure>
+
+<p>范例: 取IP地址</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# ifconfig ens160 | grep -o &quot;[0-9]\&#123;1,3\&#125;\.[0-9]\&#123;1,3\&#125;\.[0-9]\&#123;1,3\&#125;\.[0-9]\&#123;1,3\&#125;&quot; | head -n1</span><br><span class="line">192.168.37.130</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-3-位置锚定"><a href="#3-1-3-位置锚定" class="headerlink" title="3.1.3 位置锚定"></a>3.1.3 位置锚定</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">^ 行首</span><br><span class="line">$ 行尾</span><br><span class="line">\&lt;或者\b 语首</span><br><span class="line">\&gt;,或者\b 语尾</span><br></pre></td></tr></table></figure>
+
+<p>案例： 行首</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# grep &quot;^root&quot; passwd </span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例： 行尾</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# grep &quot;bash$&quot; passwd </span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">yuankun:x:1000:1000:yuankun:/home/yuankun:/bin/bash</span><br><span class="line">test:x:1002:1001::/home/test:/bin/bash</span><br><span class="line">test1:x:1003:1003::/home/test1:/bin/bash</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例：语首</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# echo &#x27;yuankunsir&#x27; | grep &quot;\&lt;yuan&quot;</span><br><span class="line">yuankunsir</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例： 语尾</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# echo &#x27;yuankunsir&#x27; | grep &quot;sir\&gt;&quot;</span><br><span class="line">yuankunsir</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-4-分组其他"><a href="#3-1-4-分组其他" class="headerlink" title="3.1.4 分组其他"></a>3.1.4 分组其他</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">() 分组</span><br><span class="line">后向引用：\1, \2, ... 注意: \0 表示正则表达式匹配的所有字符</span><br><span class="line">| 或者</span><br><span class="line">a|b #a或b</span><br><span class="line">C|cat #C或cat</span><br><span class="line">(C|c)at #Cat或cat</span><br></pre></td></tr></table></figure>
+
+<p>案例：分组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># abc至少出现三次</span><br><span class="line">[root@rocky8 data]# echo &#x27;abcabcabc&#x27; | grep &quot;\(abc\)\&#123;3,\&#125;&quot;</span><br><span class="line">abcabcabc</span><br></pre></td></tr></table></figure>
+
+<p>案例：或者</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# echo &#x27;abc&#x27; |grep &#x27;a\|b&#x27;</span><br><span class="line">abc</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-文本处理三剑客"><a href="#4-文本处理三剑客" class="headerlink" title="4 文本处理三剑客"></a>4 文本处理三剑客</h1><p>grep 命令主要对文本的（正则表达式）行基于模式进行过滤<br>sed：stream editor，文本编辑工具<br>awk：Linux上的实现gawk，文本报告生成器</p>
+<h2 id="4-1-文本处理三剑客之grep"><a href="#4-1-文本处理三剑客之grep" class="headerlink" title="4.1 文本处理三剑客之grep"></a>4.1 文本处理三剑客之grep</h2><p>grep: Global search REgular expression and Print out the line<br>作用：文本搜索工具，根据用户指定的“模式”对目标文本逐行进行匹配检查；打印匹配到的行<br>模式：由正则表达式字符及文本字符所编写的过滤条件<br>帮助:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://man7.org/linux/man-pages/man1/grep.1.html</span><br></pre></td></tr></table></figure>
+
+<p>格式：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep [OPTIONS] PATTERN [FILE...]</span><br></pre></td></tr></table></figure>
+
+<p>常见选项：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">--color=auto 对匹配到的文本着色显示</span><br><span class="line">-m # 匹配#次后停止</span><br><span class="line">-v 显示不被pattern匹配到的行,即取反</span><br><span class="line">-i 忽略字符大小写</span><br><span class="line">-n 显示匹配的行号</span><br><span class="line">-c 统计匹配的行数</span><br><span class="line">-o 仅显示匹配到的字符串</span><br><span class="line">-q 静默模式，不输出任何信息</span><br><span class="line">-A # after, 后#行</span><br><span class="line">-B # before, 前#行</span><br><span class="line">-C # context, 前后各#行</span><br><span class="line">-e 实现多个选项间的逻辑or关系,如：grep –e ‘cat &#x27; -e ‘dog&#x27; file</span><br><span class="line">-w 匹配整个单词</span><br><span class="line">-E 使用ERE，相当于egrep</span><br><span class="line">-F 不支持正则表达式，相当于fgrep</span><br><span class="line">-P 支持Perl格式的正则表达式</span><br><span class="line">-f file 根据模式文件处理</span><br><span class="line">-r 递归目录，但不处理软链接</span><br><span class="line">-R 递归目录，但处理软链接</span><br></pre></td></tr></table></figure>
+
+<p>案例：-m</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# grep -m1 root passwd </span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例：-v</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -v root passwd</span><br></pre></td></tr></table></figure>
+
+<p>案例：-i</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# grep -i root passwd </span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">operator:x:11:0:operator:/root:/sbin/nologin</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例：-n</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# grep -n root passwd </span><br><span class="line">1:root:x:0:0:root:/root:/bin/bash</span><br><span class="line">10:operator:x:11:0:operator:/root:/sbin/nologin</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例：-o</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# grep -o bash passwd </span><br><span class="line">bash</span><br><span class="line">bash</span><br><span class="line">bash</span><br><span class="line">bash</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例：-q</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# grep -q root passwd </span><br><span class="line">[root@rocky8 data]# echo $?</span><br><span class="line">0</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例：-A</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# cat a.txt </span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">e</span><br><span class="line">f</span><br><span class="line">g</span><br><span class="line">h</span><br><span class="line">j</span><br><span class="line">k</span><br><span class="line">l</span><br><span class="line">[root@rocky8 data]# grep -A3 a a.txt </span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">[root@rocky8 data]#</span><br></pre></td></tr></table></figure>
+
+<p>案例: -B</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# cat a.txt </span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">e</span><br><span class="line">f</span><br><span class="line">g</span><br><span class="line">h</span><br><span class="line">j</span><br><span class="line">k</span><br><span class="line">l</span><br><span class="line">[root@rocky8 data]# grep -B3 f a.txt </span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">e</span><br><span class="line">f</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例： -C</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# cat a.txt </span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">e</span><br><span class="line">f</span><br><span class="line">g</span><br><span class="line">h</span><br><span class="line">j</span><br><span class="line">k</span><br><span class="line">l</span><br><span class="line">[root@rocky8 data]# grep -C2 f a.txt </span><br><span class="line">d</span><br><span class="line">e</span><br><span class="line">f</span><br><span class="line">g</span><br><span class="line">h</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例： -e</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# grep -e root -e yuankun  passwd </span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">operator:x:11:0:operator:/root:/sbin/nologin</span><br><span class="line">yuankun:x:1000:1000:yuankun:/home/yuankun:/bin/bash</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例： -w</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# grep -w root passwd </span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">operator:x:11:0:operator:/root:/sbin/nologin</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例： -f</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">取两个文件的相同行</span></span><br><span class="line">grep -f a.txt b.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-2-文本处理工具之sed"><a href="#4-2-文本处理工具之sed" class="headerlink" title="4.2 文本处理工具之sed"></a>4.2 文本处理工具之sed</h2><h3 id="4-2-1-sed基本用法"><a href="#4-2-1-sed基本用法" class="headerlink" title="4.2.1 sed基本用法"></a>4.2.1 sed基本用法</h3><p>格式:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed [option]... &#x27;script;script;...&#x27; [inputfile...]</span><br></pre></td></tr></table></figure>
+
+<p>常用选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-n 不输出模式空间内容到屏幕，即不自动打印</span><br><span class="line">-e 多点编辑</span><br><span class="line">-f FILE 从指定文件中读取编辑脚本</span><br><span class="line">-r, -E 使用扩展正则表达式</span><br><span class="line">-i.bak 备份文件并原处编辑</span><br><span class="line">-s 将多个文件视为独立文件，而不是单个连续的长文件流</span><br><span class="line">#说明:</span><br><span class="line">-ir 不支持</span><br><span class="line">-i -r 支持</span><br><span class="line">-ri 支持</span><br><span class="line">-ni 危险选项,会清空文件</span><br></pre></td></tr></table></figure>
+
+<p>script格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;地址命令&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>地址格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1. 不给地址：对全文进行处理</span><br><span class="line">2. 单地址：</span><br><span class="line">#：指定的行，$：最后一行</span><br><span class="line">/pattern/：被此处模式所能够匹配到的每一行</span><br><span class="line">3. 地址范围：</span><br><span class="line">#,# #从#行到第#行，3，6 从第3行到第6行</span><br><span class="line">#,+# #从#行到+#行，3,+4 表示从3行到第7行</span><br><span class="line">/pat1/,/pat2/</span><br><span class="line">#,/pat/</span><br><span class="line">/pat/,#</span><br><span class="line">4. 步进：~</span><br><span class="line">1~2 奇数行</span><br><span class="line">2~2 偶数行</span><br></pre></td></tr></table></figure>
+
+<p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">p 打印当前模式空间内容，追加到默认输出之后</span><br><span class="line">Ip 忽略大小写输出</span><br><span class="line">d 删除模式空间匹配的行，并立即启用下一轮循环</span><br><span class="line">a [\]text 在指定行后面追加文本，支持使用\n实现多行追加</span><br><span class="line">i [\]text 在行前面插入文本</span><br><span class="line">c [\]text 替换行为单行或多行文本</span><br><span class="line">w file 保存模式匹配的行至指定文件</span><br><span class="line">r file 读取指定文件的文本至模式空间中匹配到的行后</span><br><span class="line">= 为模式空间中的行打印行号</span><br><span class="line">! 模式空间中匹配行取反处理</span><br><span class="line">q 结束或退出sed</span><br></pre></td></tr></table></figure>
+
+<p>查找和替换：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s/pattern/string/修饰符 查找替换,支持使用其它分隔符，可以是其它形式：s@@@，s###</span><br><span class="line">替换修饰符：</span><br><span class="line">g 行内全局替换</span><br><span class="line">p 显示替换成功的行</span><br><span class="line">w /PATH/FILE 将替换成功的行保存至文件中</span><br><span class="line">I,i 忽略大小写</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># sed默认会将输入信息输出到屏幕</span><br><span class="line">[root@rocky8 data]# sed &quot;&quot;</span><br><span class="line">hello</span><br><span class="line">hello</span><br><span class="line">yuan</span><br><span class="line">yuan</span><br><span class="line">data</span><br><span class="line">data</span><br></pre></td></tr></table></figure>
+
+<p>案例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"># 打印第三行，默认会输出所有，-n选项不输出模式空间内容到屏幕，即不自动打印</span><br><span class="line">[root@rocky8 data]# seq 10 | sed &#x27;3p&#x27;</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line"># p 打印当前模式空间内容，追加到默认输出之后</span><br><span class="line">[root@rocky8 data]# seq 10 | sed -n &#x27;3p&#x27;</span><br><span class="line">3</span><br><span class="line">[root@rocky8 data]# </span><br><span class="line"></span><br><span class="line"># 删除第三行</span><br><span class="line">[root@rocky8 data]# seq 10 | sed  &#x27;3d&#x27;</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">[root@rocky8 data]# </span><br><span class="line"></span><br><span class="line"># 输出第三行至最后一行</span><br><span class="line">[root@rocky8 data]# seq 10 | sed -n  &#x27;3,$p&#x27;</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">[root@rocky8 data]# </span><br><span class="line"></span><br><span class="line"># 输出奇数行</span><br><span class="line">[root@rocky8 etc]# seq 10 | sed -n &#x27;1~2p&#x27;</span><br><span class="line">1</span><br><span class="line">3</span><br><span class="line">5</span><br><span class="line">7</span><br><span class="line">9</span><br><span class="line"></span><br><span class="line"># 输出偶数行</span><br><span class="line">[root@rocky8 etc]# seq 10 | sed -n &#x27;2~2p&#x27;</span><br><span class="line">2</span><br><span class="line">4</span><br><span class="line">6</span><br><span class="line">8</span><br><span class="line">10</span><br><span class="line">[root@rocky8 etc]# </span><br><span class="line"></span><br><span class="line"># 追加，在偶数行追加hello</span><br><span class="line">[root@rocky8 etc]# seq 10 | sed  &#x27;2~2ahello&#x27;</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">hello</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">hello</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">hello</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">hello</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+
+<p>案例：行前和行首添加文本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# cat data.txt </span><br><span class="line"></span><br><span class="line">hello my name is lihua</span><br><span class="line">[root@rocky8 data]# sed -i &#x27;/hello/a12138&#x27; data.txt </span><br><span class="line">[root@rocky8 data]# cat data.txt </span><br><span class="line"></span><br><span class="line">hello my name is lihua</span><br><span class="line">12138</span><br><span class="line">[root@rocky8 data]# sed -i &#x27;/hello/i12138&#x27; data.txt </span><br><span class="line">[root@rocky8 data]# cat data.txt </span><br><span class="line"></span><br><span class="line">12138</span><br><span class="line">hello my name is lihua</span><br><span class="line">12138</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1659531426952.png" alt="1659531426952"></p>
+<p>案例：替换行为单行或多行文本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# cat data.txt </span><br><span class="line"></span><br><span class="line">852   a</span><br><span class="line">852   b</span><br><span class="line">852   c</span><br><span class="line">[root@rocky8 data]# sed -i &#x27;/852/c hello&#x27; data.txt </span><br><span class="line">[root@rocky8 data]# cat data.txt </span><br><span class="line"></span><br><span class="line">hello</span><br><span class="line">hello</span><br><span class="line">hello</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例：保存模式匹配的行至指定文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# cat a.txt </span><br><span class="line"></span><br><span class="line">[root@rocky8 data]# seq 10 | sed -n &#x27;1~2w a.txt&#x27;</span><br><span class="line">[root@rocky8 data]# cat a.txt </span><br><span class="line">1</span><br><span class="line">3</span><br><span class="line">5</span><br><span class="line">7</span><br><span class="line">9</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<p>案例：读取指定文件的文本至模式空间中匹配到的行后</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky8 data]# seq 10 | sed &#x27;1~2r /etc/issue&#x27;</span><br><span class="line">1</span><br><span class="line">\S</span><br><span class="line">Kernel \r on an \m</span><br><span class="line"></span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">\S</span><br><span class="line">Kernel \r on an \m</span><br><span class="line"></span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">\S</span><br><span class="line">Kernel \r on an \m</span><br><span class="line"></span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">\S</span><br><span class="line">Kernel \r on an \m</span><br><span class="line"></span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">\S</span><br><span class="line">Kernel \r on an \m</span><br><span class="line"></span><br><span class="line">10</span><br><span class="line">[root@rocky8 data]#</span><br></pre></td></tr></table></figure>
+
+<p>案例：! 模式空间中匹配行取反处理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 1~2奇数行，加上！取反就是偶数行</span><br><span class="line">[root@rocky8 data]# seq 10 | sed -n &#x27;1~2!p&#x27;</span><br><span class="line">2</span><br><span class="line">4</span><br><span class="line">6</span><br><span class="line">8</span><br><span class="line">10</span><br><span class="line">[root@rocky8 data]# </span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3-文本处理工具之awk"><a href="#4-3-文本处理工具之awk" class="headerlink" title="4.3 文本处理工具之awk"></a>4.3 文本处理工具之awk</h2>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7%E4%B9%8B%E7%A5%9EVIM"><span class="toc-number">1.</span> <span class="toc-text">1.文本编辑工具之神VIM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1%E4%BD%BF%E7%94%A8vim%E5%88%9D%E6%AD%A5"><span class="toc-number">1.1.</span> <span class="toc-text">1.1使用vim初步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1vim%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1.1vim命令格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-2%E4%B8%89%E7%A7%8D%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.1.2三种主要模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2%E6%89%A9%E5%B1%95%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">1.2扩展命令模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1%E6%89%A9%E5%B1%95%E6%A8%A1%E5%BC%8F%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1扩展模式基本命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2%E5%9C%B0%E5%9D%80%E5%AE%9A%E7%95%8C"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2地址定界</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-1%E5%9C%B0%E5%9D%80%E5%AE%9A%E7%95%8C%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">1.2.2.1地址定界格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-2%E5%9C%B0%E5%9D%80%E5%AE%9A%E7%95%8C%E5%90%8E%E8%B7%9F%E4%B8%80%E4%B8%AA%E7%BC%96%E8%BE%91%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">1.2.2.2地址定界后跟一个编辑命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3%E6%9F%A5%E6%89%BE%E5%92%8C%E6%9B%BF%E6%8D%A2"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3查找和替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-4%E5%AE%9A%E5%88%B6vim%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%89%B9%E6%80%A7"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4定制vim的工作特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-1%E8%A1%8C%E5%8F%B7"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">1.2.4.1行号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-2%E5%BF%BD%E7%95%A5%E5%AD%97%E7%AC%A6%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">1.2.4.2忽略字符的大小写</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-3%E8%87%AA%E5%8A%A8%E7%BC%A9%E8%BF%9B"><span class="toc-number">1.2.4.3.</span> <span class="toc-text">1.2.4.3自动缩进</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-4%E5%A4%8D%E5%88%B6%E4%BF%9D%E7%95%99%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.4.4.</span> <span class="toc-text">1.2.4.4复制保留格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-5%E6%98%BE%E7%A4%BATab-I%E5%92%8C%E6%8D%A2%E8%A1%8C%E7%AC%A6-%E5%92%8C-%E6%98%BE%E7%A4%BA"><span class="toc-number">1.2.4.5.</span> <span class="toc-text">1.2.4.5显示Tab ^I和换行符 和$显示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-6%E9%AB%98%E4%BA%AE%E6%90%9C%E7%B4%A2"><span class="toc-number">1.2.4.6.</span> <span class="toc-text">1.2.4.6高亮搜索</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-7%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE"><span class="toc-number">1.2.4.7.</span> <span class="toc-text">1.2.4.7语法高亮</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-8%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.4.8.</span> <span class="toc-text">1.2.4.8文件格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-9Tab-%E7%94%A8%E7%A9%BA%E6%A0%BC%E4%BB%A3%E6%9B%BF"><span class="toc-number">1.2.4.9.</span> <span class="toc-text">1.2.4.9Tab 用空格代替</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-10Tab%E7%94%A8%E6%8C%87%E5%AE%9A%E7%A9%BA%E6%A0%BC%E7%9A%84%E4%B8%AA%E6%95%B0%E4%BB%A3%E6%9B%BF"><span class="toc-number">1.2.4.10.</span> <span class="toc-text">1.2.4.10Tab用指定空格的个数代替</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-11%E8%AE%BE%E7%BD%AE%E7%BC%A9%E8%BF%9B%E5%AE%BD%E5%BA%A6"><span class="toc-number">1.2.4.11.</span> <span class="toc-text">1.2.4.11设置缩进宽度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-12%E8%AE%BE%E7%BD%AE%E6%96%87%E6%9C%AC%E5%AE%BD%E5%BA%A6"><span class="toc-number">1.2.4.12.</span> <span class="toc-text">1.2.4.12设置文本宽度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-13-%E8%AE%BE%E7%BD%AE%E5%85%89%E6%A0%87%E6%89%80%E5%9C%A8%E8%A1%8C%E7%9A%84%E6%A0%87%E8%AF%86%E7%BA%BF"><span class="toc-number">1.2.4.13.</span> <span class="toc-text">1.2.4.13 设置光标所在行的标识线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-14%E5%8A%A0%E5%AF%86"><span class="toc-number">1.2.4.14.</span> <span class="toc-text">1.2.4.14加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-15%E4%BA%86%E8%A7%A3%E6%9B%B4%E5%A4%9A"><span class="toc-number">1.2.4.15.</span> <span class="toc-text">1.2.4.15了解更多</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">1.3命令模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-1%E9%80%80%E5%87%BAvim"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.3.1退出vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-2%E5%85%89%E6%A0%87%E8%B7%B3%E8%BD%AC"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.3.2光标跳转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-3%E5%AD%97%E7%AC%A6%E7%BC%96%E8%BE%91"><span class="toc-number">1.3.3.</span> <span class="toc-text">1.3.3字符编辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-4%E6%9B%BF%E6%8D%A2"><span class="toc-number">1.3.4.</span> <span class="toc-text">1.3.4替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-5%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.5.</span> <span class="toc-text">1.3.5删除命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-6%E5%A4%8D%E5%88%B6%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.6.</span> <span class="toc-text">1.3.6复制命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-7%E7%B2%98%E8%B4%B4%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.7.</span> <span class="toc-text">1.3.7粘贴命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-8%E6%9F%A5%E6%89%BE"><span class="toc-number">1.3.8.</span> <span class="toc-text">1.3.8查找</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-9%E6%92%A4%E9%94%80%E6%9B%B4%E6%94%B9"><span class="toc-number">1.3.8.1.</span> <span class="toc-text">1.3.9撤销更改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-10%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95"><span class="toc-number">1.3.8.2.</span> <span class="toc-text">1.3.10高级用法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4%E5%8F%AF%E8%A7%86%E5%8C%96%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">1.4可视化模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5%E5%A4%9A%E6%96%87%E4%BB%B6%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.5.</span> <span class="toc-text">1.5多文件模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6%E5%A4%9A%E7%AA%97%E5%8F%A3%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.6.</span> <span class="toc-text">1.6多窗口模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-1%E5%A4%9A%E6%96%87%E4%BB%B6%E5%88%86%E5%89%B2"><span class="toc-number">1.6.1.</span> <span class="toc-text">1.6.1多文件分割</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-2%E5%8D%95%E6%96%87%E4%BB%B6%E7%AA%97%E5%8F%A3"><span class="toc-number">1.6.2.</span> <span class="toc-text">1.6.2单文件窗口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-7%E5%B8%AE%E5%8A%A9"><span class="toc-number">1.7.</span> <span class="toc-text">1.7帮助</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E5%B8%B8%E8%A7%81%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">2.常见文本处理工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.</span> <span class="toc-text">2.1文件内容查看命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1%E6%9F%A5%E7%9C%8B%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.1.1查看文本文件内容</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-1-cat"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">2.1.1.1 cat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-2-nl"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">2.1.1.2 nl</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-3-tac"><span class="toc-number">2.1.1.3.</span> <span class="toc-text">2.1.1.3 tac</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-4-rev"><span class="toc-number">2.1.1.4.</span> <span class="toc-text">2.1.1.4 rev</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2%E6%9F%A5%E7%9C%8B%E9%9D%9E%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.1.2查看非文本文件内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%88%86%E9%A1%B5%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="toc-number">2.2.</span> <span class="toc-text">2.2. 分页查看文件内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-more"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.2.1 more</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-less"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2.2 less</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3%E6%98%BE%E7%A4%BA%E6%96%87%E6%9C%AC%E5%89%8D%E9%9D%A2%E7%9A%84%E6%88%96%E5%90%8E%E9%9D%A2%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-number">2.3.</span> <span class="toc-text">2.3显示文本前面的或后面的内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-head"><span class="toc-number">2.3.1.</span> <span class="toc-text">2.3.1 head</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-tail"><span class="toc-number">2.3.2.</span> <span class="toc-text">2.3.2 tail</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4%E6%8C%89%E5%88%97%E6%8A%BD%E5%8F%96%E6%96%87%E6%9C%AC-cut"><span class="toc-number">2.4.</span> <span class="toc-text">2.4按列抽取文本 cut</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6-paste"><span class="toc-number">2.5.</span> <span class="toc-text">2.5合并多个文件 paste</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-6%E5%88%86%E6%9E%90%E6%96%87%E6%9C%AC%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-number">2.6.</span> <span class="toc-text">2.6分析文本的工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-1-%E6%94%B6%E9%9B%86%E6%96%87%E6%9C%AC%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE-wc"><span class="toc-number">2.6.1.</span> <span class="toc-text">2.6.1 收集文本统计数据 wc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-2-%E6%96%87%E6%9C%AC%E6%8E%92%E5%BA%8F-sort"><span class="toc-number">2.6.2.</span> <span class="toc-text">2.6.2 文本排序 sort</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-3-%E5%8E%BB%E9%87%8D"><span class="toc-number">2.6.3.</span> <span class="toc-text">2.6.3 去重</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-4-%E6%AF%94%E8%BE%83%E6%96%87%E4%BB%B6"><span class="toc-number">2.6.4.</span> <span class="toc-text">2.6.4 比较文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-4-1-diff"><span class="toc-number">2.6.4.1.</span> <span class="toc-text">2.6.4.1 diff</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-4-2-patch"><span class="toc-number">2.6.4.2.</span> <span class="toc-text">2.6.4.2 patch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-4-3vimdiff"><span class="toc-number">2.6.4.3.</span> <span class="toc-text">2.6.4.3vimdiff</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-4-3cmp"><span class="toc-number">2.6.4.4.</span> <span class="toc-text">2.6.4.3cmp</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">3 正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1%E5%9F%BA%E6%9C%AC%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%83%E5%AD%97%E7%AC%A6"><span class="toc-number">3.1.</span> <span class="toc-text">3.1基本正则表达式元字符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D"><span class="toc-number">3.1.1.</span> <span class="toc-text">3.1 .1字符匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-%E5%8C%B9%E9%85%8D%E6%AC%A1%E6%95%B0"><span class="toc-number">3.1.2.</span> <span class="toc-text">3.1.2 匹配次数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-%E4%BD%8D%E7%BD%AE%E9%94%9A%E5%AE%9A"><span class="toc-number">3.1.3.</span> <span class="toc-text">3.1.3 位置锚定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-4-%E5%88%86%E7%BB%84%E5%85%B6%E4%BB%96"><span class="toc-number">3.1.4.</span> <span class="toc-text">3.1.4 分组其他</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E4%B8%89%E5%89%91%E5%AE%A2"><span class="toc-number">4.</span> <span class="toc-text">4 文本处理三剑客</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bgrep"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 文本处理三剑客之grep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E4%B9%8Bsed"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 文本处理工具之sed</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-1-sed%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 sed基本用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E4%B9%8Bawk"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 文本处理工具之awk</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&text=文本处理工具和正则表达式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&title=文本处理工具和正则表达式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&is_video=false&description=文本处理工具和正则表达式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=文本处理工具和正则表达式&body=Check out this article: http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&title=文本处理工具和正则表达式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&title=文本处理工具和正则表达式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&title=文本处理工具和正则表达式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&title=文本处理工具和正则表达式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&name=文本处理工具和正则表达式&description=本文将介绍Linux下使用Shell处理文本时最常用的工具并结合正则表达式处理文本。"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/&t=文本处理工具和正则表达式"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    yuan kun
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

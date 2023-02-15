@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Linux 是一套免费使用、开源的类 Unix 操作系统。 Linux 存在着许多不同的发行版本，但它们都使用了 Linux 内核 。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux基础和常用命令">
+<meta property="og:url" content="http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="勾三股四">
+<meta property="og:description" content="Linux 是一套免费使用、开源的类 Unix 操作系统。 Linux 存在着许多不同的发行版本，但它们都使用了 Linux 内核 。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image.assets/1658235191431.png">
+<meta property="og:image" content="http://example.com/image.assets/1658241769096.png">
+<meta property="og:image" content="http://example.com/image.assets/1658410435937.png">
+<meta property="og:image" content="http://example.com/image.assets/1658410871193.png">
+<meta property="og:image" content="http://example.com/image.assets/1658411472195.png">
+<meta property="og:image" content="http://example.com/image.assets/1658469211139.png">
+<meta property="og:image" content="http://example.com/image.assets/1658493609190.png">
+<meta property="og:image" content="http://example.com/image.assets/1658494268286.png">
+<meta property="og:image" content="http://example.com/image.assets/1658494603337.png">
+<meta property="og:image" content="http://example.com/image.assets/1658494650023.png">
+<meta property="og:image" content="http://example.com/image.assets/1658495293952.png#pic_left">
+<meta property="og:image" content="http://example.com/image.assets/1658494753358.png">
+<meta property="og:image" content="http://example.com/image.assets/1658495063470.png#pic_left">
+<meta property="og:image" content="http://example.com/image.assets/1658496336793.png">
+<meta property="og:image" content="http://example.com/image.assets/1658499412357.png">
+<meta property="og:image" content="http://example.com/image.assets/1658499521622.png">
+<meta property="og:image" content="http://example.com/image.assets/1658499933136.png">
+<meta property="og:image" content="http://example.com/image.assets/1658501366408.png">
+<meta property="og:image" content="http://example.com/image.assets/1658501682712.png">
+<meta property="og:image" content="http://example.com/image.assets/1658502390672.png">
+<meta property="og:image" content="http://example.com/image.assets/1658503779919.png">
+<meta property="og:image" content="http://example.com/image.assets/1658504083814.png">
+<meta property="og:image" content="http://example.com/image.assets/1658504188384.png">
+<meta property="og:image" content="http://example.com/image.assets/1658504368189.png">
+<meta property="og:image" content="http://example.com/image.assets/1658504429024.png">
+<meta property="og:image" content="http://example.com/image.assets/1658543618611.png">
+<meta property="og:image" content="http://example.com/image.assets/1658543863373.png">
+<meta property="og:image" content="http://example.com/image.assets/1658544469113.png">
+<meta property="article:published_time" content="2022-07-18T13:12:03.000Z">
+<meta property="article:modified_time" content="2022-12-16T14:58:08.468Z">
+<meta property="article:author" content="yuan kun">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image.assets/1658235191431.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>linux基础和常用命令</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/07/23/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/07/13/git-ssh/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&text=linux基础和常用命令"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=linux基础和常用命令"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&is_video=false&description=linux基础和常用命令"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux基础和常用命令&body=Check out this article: http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=linux基础和常用命令"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=linux基础和常用命令"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=linux基础和常用命令"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=linux基础和常用命令"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&name=linux基础和常用命令&description=Linux 是一套免费使用、开源的类 Unix 操作系统。 Linux 存在着许多不同的发行版本，但它们都使用了 Linux 内核 。"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&t=linux基础和常用命令"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%86%AF%E8%AF%BA%E4%BE%9D%E6%9B%BC%E4%BD%93%E7%B3%BB"><span class="toc-number">1.</span> <span class="toc-text">1.冯诺依曼体系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%89%E5%A4%96%E8%A7%82%E7%B1%BB%E5%9E%8B%E5%88%86%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">2.服务器按外观类型分类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8CLinux%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">3.操作系统和Linux安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">4.常见面试题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">5 .基础使用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E6%9F%A5%E7%9C%8B%E7%BD%91%E7%BB%9Cip%E5%9C%B0%E5%9D%80"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 查看网络ip地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E9%87%8D%E5%90%AF"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 重启</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-ubuntu-roo%E8%B4%A6%E6%88%B7%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95%E4%BF%AE%E6%94%B9%E6%96%B9%E6%B3%95"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 ubuntu roo账户进行远程登录修改方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E6%89%80%E5%9C%A8%E7%BB%88%E7%AB%AF"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 查看当前所在终端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-5-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E8%B4%A6%E6%88%B7"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 查看当前账户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-6-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4"><span class="toc-number">5.6.</span> <span class="toc-text">5.6 查看当前时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-7-%E4%BF%AE%E6%94%B9%E6%97%B6%E5%8C%BA-%E4%BF%AE%E6%94%B9%E4%B8%BA%E5%8C%97%E4%BA%AC%E6%97%B6%E9%97%B4"><span class="toc-number">5.7.</span> <span class="toc-text">5.7 修改时区 ,修改为北京时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-8-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E7%9A%84shell"><span class="toc-number">5.8.</span> <span class="toc-text">5.8 查看当前系统使用的shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-9-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="toc-number">5.9.</span> <span class="toc-text">5.9 查看当前主机名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-10%E4%BF%AE%E6%94%B9%E5%BD%93%E5%89%8D%E4%B8%BB%E6%9C%BA%E5%90%8D%E7%A7%B0%EF%BC%8C%E6%B0%B8%E4%B9%85%E4%BF%AE%E6%94%B9"><span class="toc-number">5.10.</span> <span class="toc-text">5.10修改当前主机名称，永久修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-11-%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%86%85%E9%83%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">5.11.</span> <span class="toc-text">5.11 查看所有内部命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-12-%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%E4%B8%BA%E5%86%85%E9%83%A8%E8%BF%98%E6%98%AF%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">5.12.</span> <span class="toc-text">5.12 查看命令为内部还是外部命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-13-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%89%80%E6%9C%89%E5%88%AB%E5%90%8D"><span class="toc-number">5.13.</span> <span class="toc-text">5.13 查看系统中所有别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-14-%E8%AE%BE%E7%BD%AE%E5%88%AB%E5%90%8D"><span class="toc-number">5.14.</span> <span class="toc-text">5.14 设置别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-15-%E5%88%A0%E9%99%A4%E5%88%AB%E5%90%8D"><span class="toc-number">5.15.</span> <span class="toc-text">5.15 删除别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-16-%E5%86%85%E9%83%A8%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8B%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.16.</span> <span class="toc-text">5.16 内部命令查看帮助</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-17-%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.17.</span> <span class="toc-text">5.17 外部命令使用帮助</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-18-man"><span class="toc-number">5.18.</span> <span class="toc-text">5.18 man</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">6.查看硬件信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1%E6%9F%A5%E7%9C%8BCPU%E4%BF%A1%E6%81%AF"><span class="toc-number">6.0.1.</span> <span class="toc-text">6.1查看CPU信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E6%9F%A5%E7%9C%8B%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF"><span class="toc-number">6.0.2.</span> <span class="toc-text">6.2 查看内存信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E6%9F%A5%E7%9C%8B%E7%A1%AC%E7%9B%98%E4%BF%A1%E6%81%AF%E5%92%8C%E5%88%86%E5%8C%BA%E6%83%85%E5%86%B5"><span class="toc-number">6.0.3.</span> <span class="toc-text">6.3 查看硬盘信息和分区情况</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF"><span class="toc-number">7.</span> <span class="toc-text">7.查看系统信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="toc-number">7.0.1.</span> <span class="toc-text">7.1 查看系统架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E6%9F%A5%E7%9C%8B%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC"><span class="toc-number">7.0.2.</span> <span class="toc-text">7.2 查看内核版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E6%9F%A5%E7%9C%8B%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8F%91%E8%A1%8C%E7%89%88%E6%9C%AC"><span class="toc-number">7.0.3.</span> <span class="toc-text">7.3 查看操作系统发行版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E4%BF%AE%E6%94%B9%E7%99%BB%E5%BD%95%E5%90%8E%E6%98%BE%E7%A4%BA%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-number">7.0.4.</span> <span class="toc-text">7.4 修改登录后显示的内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E6%97%B6%E9%97%B4"><span class="toc-number">7.0.5.</span> <span class="toc-text">7.5 查看硬件时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-6%E9%87%8D%E5%90%AF%E5%92%8C%E5%85%B3%E6%9C%BA"><span class="toc-number">7.0.6.</span> <span class="toc-text">7.6重启和关机</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#7-6-1%E9%87%8D%E5%90%AF"><span class="toc-number">7.0.6.0.0.1.</span> <span class="toc-text">7.6.1重启</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-6-2-%E5%85%B3%E6%9C%BA%E6%88%96%E9%87%8D%E5%90%AF"><span class="toc-number">7.0.6.0.0.2.</span> <span class="toc-text">7.6.2 关机或重启</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        linux基础和常用命令
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">yuankun</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-07-18T13:12:03.000Z" itemprop="datePublished">2022-07-18</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="1-冯诺依曼体系"><a href="#1-冯诺依曼体系" class="headerlink" title="1.冯诺依曼体系"></a>1.冯诺依曼体系</h1><p>1946年美籍匈牙利数学家冯·诺依曼于提出存储程序原理，把程序本身当作数据来对待，程序和该程序处<br>理的数据用同样的方式储存。 冯·诺依曼体系的要点是：</p>
+<ul>
+<li><p>数字计算机的数制采用二进制，bit 位, byte 字节 1 byte &#x3D;8 bit</p>
+</li>
+<li><p>计算机应该按照程序顺序执行</p>
+</li>
+<li><p>计算机硬件由运算器、控制器、存储器、输入设备和输出设备五大部分组成</p>
+</li>
+</ul>
+<p><strong>计算机的硬件五个组件</strong></p>
+<ul>
+<li><p>控制器: 指挥系统</p>
+</li>
+<li><p>运算器: 数学和逻辑运算</p>
+</li>
+<li><p>存储器: 存储信息</p>
+</li>
+<li><p>输入设备: 接收外部信息</p>
+</li>
+<li><p>输出设备: 输出计算机内部信息到外部设备</p>
+</li>
+</ul>
+<h1 id="2-服务器按外观类型分类"><a href="#2-服务器按外观类型分类" class="headerlink" title="2.服务器按外观类型分类"></a>2.服务器按外观类型分类</h1><p><strong>PC服务器常见的三种外观</strong>  </p>
+<ul>
+<li><p>塔式服务器</p>
+</li>
+<li><p>刀片式服务器</p>
+</li>
+<li><p>机架式服务器</p>
+</li>
+</ul>
+<h1 id="3-操作系统和Linux安装"><a href="#3-操作系统和Linux安装" class="headerlink" title="3.操作系统和Linux安装"></a>3.操作系统和Linux安装</h1><p>**操作系统的作用  **</p>
+<p><img src="/../image.assets/1658235191431.png" alt="1658235191431"></p>
+<p>**主要作用 **</p>
+<ul>
+<li><p>硬件驱动</p>
+</li>
+<li><p>进程管理</p>
+</li>
+<li><p>内存管理</p>
+</li>
+<li><p>网络管理</p>
+</li>
+<li><p>安全管理</p>
+</li>
+<li><p>文件管理</p>
+</li>
+</ul>
+<p>**unix哲学思想 ** </p>
+<ul>
+<li>一切都是一个文件(包括硬件)</li>
+<li>小型，单一用途的程序  </li>
+<li>链接程序，共同完成复杂的任务(shell脚本)</li>
+<li>避免令人困惑的用户界面  </li>
+<li>配置数据存储在文本中</li>
+</ul>
+<h1 id="4-常见面试题"><a href="#4-常见面试题" class="headerlink" title="4.常见面试题"></a>4.常见面试题</h1><p><img src="/../image.assets/1658241769096.png" alt="1658241769096"></p>
+<h1 id="5-基础使用命令"><a href="#5-基础使用命令" class="headerlink" title="5 .基础使用命令"></a>5 .基础使用命令</h1><h2 id="5-1-查看网络ip地址"><a href="#5-1-查看网络ip地址" class="headerlink" title="5.1 查看网络ip地址"></a>5.1 查看网络ip地址</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip a</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658410435937.png" alt="Rocky8.6"></p>
+<p><img src="/../image.assets/1658410871193.png" alt="ubuntu2004"></p>
+<h2 id="5-2-重启"><a href="#5-2-重启" class="headerlink" title="5.2 重启"></a>5.2 重启</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-3-ubuntu-roo账户进行远程登录修改方法"><a href="#5-3-ubuntu-roo账户进行远程登录修改方法" class="headerlink" title="5.3 ubuntu roo账户进行远程登录修改方法"></a>5.3 ubuntu roo账户进行远程登录修改方法</h2><ul>
+<li>切换到root账户</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -i	</span><br></pre></td></tr></table></figure>
+
+<p> <img src="/../image.assets/1658411472195.png" alt="1658411472195"></p>
+<ul>
+<li>设置密码</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd 用户名  </span><br></pre></td></tr></table></figure>
+
+<p> <img src="/../image.assets/1658469211139.png" alt="1658469211139"></p>
+<ul>
+<li>修改&#x2F;etc&#x2F;ssh&#x2F;sshd_config  ,PermitRootlogin yes</li>
+</ul>
+<p> <img src="/../image.assets/1658493609190.png" alt="1658493609190"></p>
+<ul>
+<li>重启sshd</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>
+<h2 id="5-4-查看当前所在终端"><a href="#5-4-查看当前所在终端" class="headerlink" title="5.4 查看当前所在终端"></a>5.4 查看当前所在终端</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tty</span><br></pre></td></tr></table></figure>
+<p> <img src="/../image.assets/1658494268286.png" alt="1658494268286"></p>
+<h2 id="5-5-查看当前账户"><a href="#5-5-查看当前账户" class="headerlink" title="5.5 查看当前账户"></a>5.5 查看当前账户</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">whoami</span><br><span class="line"></span><br><span class="line">who am i  </span><br><span class="line"></span><br><span class="line">who</span><br></pre></td></tr></table></figure>
+
+<p> <img src="/../image.assets/1658494603337.png" alt="1658494603337"></p>
+<p> <img src="/../image.assets/1658494650023.png" alt="1658494650023"></p>
+<p> <img src="/../image.assets/1658495293952.png#pic_left" alt="1658495293952"></p>
+<h2 id="5-6-查看当前时间"><a href="#5-6-查看当前时间" class="headerlink" title="5.6 查看当前时间"></a>5.6 查看当前时间</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658494753358.png" alt="1658494753358"></p>
+<h2 id="5-7-修改时区-修改为北京时间"><a href="#5-7-修改时区-修改为北京时间" class="headerlink" title="5.7 修改时区 ,修改为北京时间"></a>5.7 修改时区 ,修改为北京时间</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-timezone Asia/Shanghai</span><br><span class="line">date	# 查看当前时间</span><br></pre></td></tr></table></figure>
+<p> <img src="/../image.assets/1658495063470.png#pic_left" alt="1658495063470"></p>
+<h2 id="5-8-查看当前系统使用的shell"><a href="#5-8-查看当前系统使用的shell" class="headerlink" title="5.8 查看当前系统使用的shell"></a>5.8 查看当前系统使用的shell</h2><img src= '../image.assets/1658495913197.png' style='float:left'>
+
+<h2 id="5-9-查看当前主机名"><a href="#5-9-查看当前主机名" class="headerlink" title="5.9 查看当前主机名"></a>5.9 查看当前主机名</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostname</span><br></pre></td></tr></table></figure>
+
+<p>   <img src="/../image.assets/1658496336793.png" alt="1658496336793"></p>
+<h2 id="5-10修改当前主机名称，永久修改"><a href="#5-10修改当前主机名称，永久修改" class="headerlink" title="5.10修改当前主机名称，永久修改"></a>5.10修改当前主机名称，永久修改</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname 名称</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 临时修改，重启后变为修改前的主机名称</span><br><span class="line">hostname 主机名</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-11-查看所有内部命令"><a href="#5-11-查看所有内部命令" class="headerlink" title="5.11 查看所有内部命令"></a>5.11 查看所有内部命令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">help</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658499412357.png" alt="1658499412357"></p>
+<h2 id="5-12-查看命令为内部还是外部命令"><a href="#5-12-查看命令为内部还是外部命令" class="headerlink" title="5.12 查看命令为内部还是外部命令"></a>5.12 查看命令为内部还是外部命令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type 命令名称</span><br><span class="line"># 示例</span><br><span class="line">type cd</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658499521622.png" alt="1658499521622"></p>
+<h2 id="5-13-查看系统中所有别名"><a href="#5-13-查看系统中所有别名" class="headerlink" title="5.13 查看系统中所有别名"></a>5.13 查看系统中所有别名</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658499933136.png" alt="1658499933136"></p>
+<h2 id="5-14-设置别名"><a href="#5-14-设置别名" class="headerlink" title="5.14 设置别名"></a>5.14 设置别名</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alias 别名名称 = &#x27;被设置别名的行为&#x27;</span><br><span class="line"># 示例</span><br><span class="line">alias cdnt = &#x27;cd /root&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-15-删除别名"><a href="#5-15-删除别名" class="headerlink" title="5.15 删除别名"></a>5.15 删除别名</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unalisa 别名名称</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>命令种类</p>
+<ul>
+<li>alias(优先级最高)</li>
+<li>内部命令(优先级低于alias)</li>
+<li>外部命令(优先级最低)</li>
+</ul>
+</li>
+<li><p>whatis</p>
+</li>
+</ul>
+<p>whatis使用数据库来显示命令的简短描述  </p>
+<p>此工具在系统刚安装后不可立即使用，需要制作数据库后才可使用  </p>
+<p>执行下面的命令生成数据库  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># centos7版本以后</span><br><span class="line">mandb</span><br><span class="line"># centos6版本之前</span><br><span class="line">makewhatis</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658501366408.png" alt="1658501366408"></p>
+<h2 id="5-16-内部命令查看帮助"><a href="#5-16-内部命令查看帮助" class="headerlink" title="5.16 内部命令查看帮助"></a>5.16 内部命令查看帮助</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 使用type命令查看是否为内部命令，不是内部命令不能使用该命令</span><br><span class="line">help history</span><br></pre></td></tr></table></figure>
+
+<p>范例  </p>
+<p><img src="/../image.assets/1658501682712.png" alt="1658501682712"></p>
+<h2 id="5-17-外部命令使用帮助"><a href="#5-17-外部命令使用帮助" class="headerlink" title="5.17 外部命令使用帮助"></a>5.17 外部命令使用帮助</h2><p>COMMAND –help 或者 COMMAND -h  </p>
+<p>范例  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date --help</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658502390672.png" alt="1658502390672"></p>
+<h2 id="5-18-man"><a href="#5-18-man" class="headerlink" title="5.18 man"></a>5.18 man</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">man date</span><br><span class="line">man 1 date</span><br></pre></td></tr></table></figure>
+
+<h1 id="6-查看硬件信息"><a href="#6-查看硬件信息" class="headerlink" title="6.查看硬件信息"></a>6.查看硬件信息</h1><h3 id="6-1查看CPU信息"><a href="#6-1查看CPU信息" class="headerlink" title="6.1查看CPU信息"></a>6.1查看CPU信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lscpu</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658503779919.png" alt="1658503779919"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 该命令也可以</span><br><span class="line">cat /proc/cpuinfo</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-查看内存信息"><a href="#6-2-查看内存信息" class="headerlink" title="6.2 查看内存信息"></a>6.2 查看内存信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">free -h</span><br><span class="line"># 或者</span><br><span class="line">cat /proc/meminfo</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658504083814.png" alt="1658504083814"></p>
+<h3 id="6-3-查看硬盘信息和分区情况"><a href="#6-3-查看硬盘信息和分区情况" class="headerlink" title="6.3 查看硬盘信息和分区情况"></a>6.3 查看硬盘信息和分区情况</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsblk</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658504188384.png" alt="1658504188384"></p>
+<h1 id="7-查看系统信息"><a href="#7-查看系统信息" class="headerlink" title="7.查看系统信息"></a>7.查看系统信息</h1><h3 id="7-1-查看系统架构"><a href="#7-1-查看系统架构" class="headerlink" title="7.1 查看系统架构"></a>7.1 查看系统架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arch</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658504368189.png" alt="1658504368189"></p>
+<h3 id="7-2-查看内核版本"><a href="#7-2-查看内核版本" class="headerlink" title="7.2 查看内核版本"></a>7.2 查看内核版本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658504429024.png" alt="1658504429024"></p>
+<h3 id="7-3-查看操作系统发行版本"><a href="#7-3-查看操作系统发行版本" class="headerlink" title="7.3 查看操作系统发行版本"></a>7.3 查看操作系统发行版本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/os-releases</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658543618611.png" alt="1658543618611"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/issue</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658543863373.png" alt="1658543863373"></p>
+<h3 id="7-4-修改登录后显示的内容"><a href="#7-4-修改登录后显示的内容" class="headerlink" title="7.4 修改登录后显示的内容"></a>7.4 修改登录后显示的内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 修改/etc/motd文件内容</span><br><span class="line">vi /etc/motd</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-5-查看硬件时间"><a href="#7-5-查看硬件时间" class="headerlink" title="7.5 查看硬件时间"></a>7.5 查看硬件时间</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clock</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../image.assets/1658544469113.png" alt="1658544469113"></p>
+<h3 id="7-6重启和关机"><a href="#7-6重启和关机" class="headerlink" title="7.6重启和关机"></a>7.6重启和关机</h3><h6 id="7-6-1重启"><a href="#7-6-1重启" class="headerlink" title="7.6.1重启"></a>7.6.1重启</h6><ul>
+<li><p>halt</p>
+</li>
+<li><p>reboot</p>
+</li>
+</ul>
+<h6 id="7-6-2-关机或重启"><a href="#7-6-2-关机或重启" class="headerlink" title="7.6.2 关机或重启"></a>7.6.2 关机或重启</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">shutdown  </span><br><span class="line">- r :重启</span><br><span class="line">- h :关机</span><br><span class="line">指定时间关机或重启</span><br><span class="line">shutdown -r 15:00  # 15:00重启</span><br><span class="line">shutdown -h 15:00  # 15:00关机</span><br><span class="line"></span><br><span class="line">shutdown -c # 取消</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%86%AF%E8%AF%BA%E4%BE%9D%E6%9B%BC%E4%BD%93%E7%B3%BB"><span class="toc-number">1.</span> <span class="toc-text">1.冯诺依曼体系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%89%E5%A4%96%E8%A7%82%E7%B1%BB%E5%9E%8B%E5%88%86%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">2.服务器按外观类型分类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8CLinux%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">3.操作系统和Linux安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">4.常见面试题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">5 .基础使用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E6%9F%A5%E7%9C%8B%E7%BD%91%E7%BB%9Cip%E5%9C%B0%E5%9D%80"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 查看网络ip地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E9%87%8D%E5%90%AF"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 重启</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-ubuntu-roo%E8%B4%A6%E6%88%B7%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95%E4%BF%AE%E6%94%B9%E6%96%B9%E6%B3%95"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 ubuntu roo账户进行远程登录修改方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E6%89%80%E5%9C%A8%E7%BB%88%E7%AB%AF"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 查看当前所在终端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-5-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E8%B4%A6%E6%88%B7"><span class="toc-number">5.5.</span> <span class="toc-text">5.5 查看当前账户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-6-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4"><span class="toc-number">5.6.</span> <span class="toc-text">5.6 查看当前时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-7-%E4%BF%AE%E6%94%B9%E6%97%B6%E5%8C%BA-%E4%BF%AE%E6%94%B9%E4%B8%BA%E5%8C%97%E4%BA%AC%E6%97%B6%E9%97%B4"><span class="toc-number">5.7.</span> <span class="toc-text">5.7 修改时区 ,修改为北京时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-8-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E7%9A%84shell"><span class="toc-number">5.8.</span> <span class="toc-text">5.8 查看当前系统使用的shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-9-%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="toc-number">5.9.</span> <span class="toc-text">5.9 查看当前主机名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-10%E4%BF%AE%E6%94%B9%E5%BD%93%E5%89%8D%E4%B8%BB%E6%9C%BA%E5%90%8D%E7%A7%B0%EF%BC%8C%E6%B0%B8%E4%B9%85%E4%BF%AE%E6%94%B9"><span class="toc-number">5.10.</span> <span class="toc-text">5.10修改当前主机名称，永久修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-11-%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%86%85%E9%83%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">5.11.</span> <span class="toc-text">5.11 查看所有内部命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-12-%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%E4%B8%BA%E5%86%85%E9%83%A8%E8%BF%98%E6%98%AF%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">5.12.</span> <span class="toc-text">5.12 查看命令为内部还是外部命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-13-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%89%80%E6%9C%89%E5%88%AB%E5%90%8D"><span class="toc-number">5.13.</span> <span class="toc-text">5.13 查看系统中所有别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-14-%E8%AE%BE%E7%BD%AE%E5%88%AB%E5%90%8D"><span class="toc-number">5.14.</span> <span class="toc-text">5.14 设置别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-15-%E5%88%A0%E9%99%A4%E5%88%AB%E5%90%8D"><span class="toc-number">5.15.</span> <span class="toc-text">5.15 删除别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-16-%E5%86%85%E9%83%A8%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8B%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.16.</span> <span class="toc-text">5.16 内部命令查看帮助</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-17-%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.17.</span> <span class="toc-text">5.17 外部命令使用帮助</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-18-man"><span class="toc-number">5.18.</span> <span class="toc-text">5.18 man</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">6.查看硬件信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1%E6%9F%A5%E7%9C%8BCPU%E4%BF%A1%E6%81%AF"><span class="toc-number">6.0.1.</span> <span class="toc-text">6.1查看CPU信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E6%9F%A5%E7%9C%8B%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF"><span class="toc-number">6.0.2.</span> <span class="toc-text">6.2 查看内存信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E6%9F%A5%E7%9C%8B%E7%A1%AC%E7%9B%98%E4%BF%A1%E6%81%AF%E5%92%8C%E5%88%86%E5%8C%BA%E6%83%85%E5%86%B5"><span class="toc-number">6.0.3.</span> <span class="toc-text">6.3 查看硬盘信息和分区情况</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF"><span class="toc-number">7.</span> <span class="toc-text">7.查看系统信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="toc-number">7.0.1.</span> <span class="toc-text">7.1 查看系统架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E6%9F%A5%E7%9C%8B%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC"><span class="toc-number">7.0.2.</span> <span class="toc-text">7.2 查看内核版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E6%9F%A5%E7%9C%8B%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8F%91%E8%A1%8C%E7%89%88%E6%9C%AC"><span class="toc-number">7.0.3.</span> <span class="toc-text">7.3 查看操作系统发行版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E4%BF%AE%E6%94%B9%E7%99%BB%E5%BD%95%E5%90%8E%E6%98%BE%E7%A4%BA%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-number">7.0.4.</span> <span class="toc-text">7.4 修改登录后显示的内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E6%97%B6%E9%97%B4"><span class="toc-number">7.0.5.</span> <span class="toc-text">7.5 查看硬件时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-6%E9%87%8D%E5%90%AF%E5%92%8C%E5%85%B3%E6%9C%BA"><span class="toc-number">7.0.6.</span> <span class="toc-text">7.6重启和关机</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#7-6-1%E9%87%8D%E5%90%AF"><span class="toc-number">7.0.6.0.0.1.</span> <span class="toc-text">7.6.1重启</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-6-2-%E5%85%B3%E6%9C%BA%E6%88%96%E9%87%8D%E5%90%AF"><span class="toc-number">7.0.6.0.0.2.</span> <span class="toc-text">7.6.2 关机或重启</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&text=linux基础和常用命令"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=linux基础和常用命令"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&is_video=false&description=linux基础和常用命令"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=linux基础和常用命令&body=Check out this article: http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=linux基础和常用命令"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=linux基础和常用命令"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=linux基础和常用命令"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&title=linux基础和常用命令"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&name=linux基础和常用命令&description=Linux 是一套免费使用、开源的类 Unix 操作系统。 Linux 存在着许多不同的发行版本，但它们都使用了 Linux 内核 。"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/07/18/linux%E5%9F%BA%E7%A1%80%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/&t=linux基础和常用命令"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    yuan kun
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

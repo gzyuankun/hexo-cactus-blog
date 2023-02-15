@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="OpenSSL计划在1998年开始，其目标是发明一套自由的加密工具，在互联网上使用。OpenSSL以Eric Young以及Tim Hudson两人开发的SSLeay为基础，随着两人前往RSA公司任职，SSLeay在1998年12月停止开发。因此在1998年12月，社群另外分支出OpenSSL，继续开发下去">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rocky上实现私有CA和证书申请">
+<meta property="og:url" content="http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/index.html">
+<meta property="og:site_name" content="勾三股四">
+<meta property="og:description" content="OpenSSL计划在1998年开始，其目标是发明一套自由的加密工具，在互联网上使用。OpenSSL以Eric Young以及Tim Hudson两人开发的SSLeay为基础，随着两人前往RSA公司任职，SSLeay在1998年12月停止开发。因此在1998年12月，社群另外分支出OpenSSL，继续开发下去">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image.assets/1662984286147.png">
+<meta property="og:image" content="http://example.com/image.assets/1662984391511.png">
+<meta property="og:image" content="http://example.com/image.assets/1662988208721.png">
+<meta property="article:published_time" content="2022-09-11T13:56:35.000Z">
+<meta property="article:modified_time" content="2022-12-17T04:15:50.954Z">
+<meta property="article:author" content="yuan kun">
+<meta property="article:tag" content="Linux从入门到放弃">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image.assets/1662984286147.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Rocky上实现私有CA和证书申请</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/09/12/ssh%E6%9C%8D%E5%8A%A1/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&text=Rocky上实现私有CA和证书申请"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&title=Rocky上实现私有CA和证书申请"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&is_video=false&description=Rocky上实现私有CA和证书申请"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Rocky上实现私有CA和证书申请&body=Check out this article: http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&title=Rocky上实现私有CA和证书申请"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&title=Rocky上实现私有CA和证书申请"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&title=Rocky上实现私有CA和证书申请"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&title=Rocky上实现私有CA和证书申请"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&name=Rocky上实现私有CA和证书申请&description=&lt;p class= &#34;note note-success&#34;&gt; OpenSSL计划在1998年开始，其目标是发明一套自由的加密工具，在互联网上使用。OpenSSL以Eric Young以及Tim Hudson两人开发的SSLeay为基础，随着两人前往RSA公司任职，SSLeay在1998年12月停止开发。因此在1998年12月，社群另外分支出OpenSSL，继续开发下去&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&t=Rocky上实现私有CA和证书申请"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9C%A8rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7"><span class="toc-number">1.</span> <span class="toc-text">在rocky上实现私有CA和证书申请</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Rocky上实现私有CA和证书申请
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">yuankun</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-09-11T13:56:35.000Z" itemprop="datePublished">2022-09-11</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/" rel="tag">Linux从入门到放弃</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p class= "note note-success"> OpenSSL计划在1998年开始，其目标是发明一套自由的加密工具，在互联网上使用。OpenSSL以Eric Young以及Tim Hudson两人开发的SSLeay为基础，随着两人前往RSA公司任职，SSLeay在1998年12月停止开发。因此在1998年12月，社群另外分支出OpenSSL，继续开发下去</p>
+<span id="more"></span>  
+
+<h1 id="在rocky上实现私有CA和证书申请"><a href="#在rocky上实现私有CA和证书申请" class="headerlink" title="在rocky上实现私有CA和证书申请"></a>在rocky上实现私有CA和证书申请</h1><ul>
+<li><strong>创建CA相关目录和文件&#x2F;etc&#x2F;pki&#x2F;CA</strong></li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky pki]# mkdir -pv /etc/pki/CA/&#123;certs,crl,newcerts,private&#125;</span><br><span class="line">mkdir: created directory &#x27;/etc/pki/CA&#x27;</span><br><span class="line">mkdir: created directory &#x27;/etc/pki/CA/certs&#x27;</span><br><span class="line">mkdir: created directory &#x27;/etc/pki/CA/crl&#x27;</span><br><span class="line">mkdir: created directory &#x27;/etc/pki/CA/newcerts&#x27;</span><br><span class="line">mkdir: created directory &#x27;/etc/pki/CA/private&#x27;</span><br><span class="line">[root@rocky pki]#</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>创建index.txt文件(&#x2F;etc&#x2F;pki&#x2F;CA目录下)</strong></li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky CA]# touch index.txt</span><br><span class="line"></span><br><span class="line">#指定第一个颁发证书的序列号，为16进制数</span><br><span class="line">[root@rocky CA]# echo 01 &gt; /etc/pki/CA/serial</span><br><span class="line">0F /etc/pki/CA/certs</span><br><span class="line">[root@rocky CA]# </span><br><span class="line"></span><br><span class="line">[root@rocky CA]# tree</span><br><span class="line">.</span><br><span class="line">├── certs</span><br><span class="line">├── crl</span><br><span class="line">├── index.txt</span><br><span class="line">├── newcerts</span><br><span class="line">└── private</span><br><span class="line"></span><br><span class="line">4 directories, 1 file</span><br><span class="line">[root@rocky CA]# </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>创建CA的私钥</strong></li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky CA]# pwd</span><br><span class="line">/etc/pki/CA</span><br><span class="line"></span><br><span class="line">#因为加了小括号，因此是在子进程中运行的，umask的值不会影响当前进程</span><br><span class="line">[root@rocky CA]# (umask 066;openssl genrsa -out private/cakey.pem 2048)</span><br><span class="line">Generating RSA private key, 2048 bit long modulus (2 primes)</span><br><span class="line">.................................................................................................................................+++++</span><br><span class="line">.............+++++</span><br><span class="line">e is 65537 (0x010001)</span><br><span class="line">[root@rocky CA]# </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p> <img src="/../image.assets/1662984286147.png" alt="1662984286147"> </p>
+<p> <img src="/../image.assets/1662984391511.png" alt="1662984391511"> </p>
+<ul>
+<li><strong>给CA颁发自签名证书</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky pki]# openssl req -new -x509 -key /etc/pki/CA/private/cakey.pem -days 3650 -out /etc/pki/CA/cacert.pem</span><br><span class="line"></span><br><span class="line">You are about to be asked to enter information that will be incorporated</span><br><span class="line">into your certificate request.</span><br><span class="line">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="line">There are quite a few fields but you can leave some blank</span><br><span class="line">For some fields there will be a default value,</span><br><span class="line">If you enter &#x27;.&#x27;, the field will be left blank.</span><br><span class="line">-----</span><br><span class="line">Country Name (2 letter code) [XX]:CN   # 指定国家</span><br><span class="line">State or Province Name (full name) []:guizhou   # 指定省</span><br><span class="line">Locality Name (eg, city) [Default City]:duyun   # 指定城市</span><br><span class="line">Organization Name (eg, company) [Default Company Ltd]:magedu     # 公司</span><br><span class="line">Organizational Unit Name (eg, section) []:it   # 部门</span><br><span class="line">Common Name (eg, your name or your server&#x27;s hostname) []:m48   # 指定给颁发者</span><br><span class="line">Email Address []:    # 邮箱地址</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数说明</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-new：生成新证书签署请求；</span><br><span class="line"></span><br><span class="line">-x509：专用用于CA生成字签证书</span><br><span class="line"></span><br><span class="line">-key：生成请求时用到的私钥文件</span><br><span class="line"></span><br><span class="line">-day：证书的有效期限</span><br><span class="line"></span><br><span class="line">-out：证书的保存路径（在配置文件当中有固定路径，该文件可以自动生成）</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>用户生成私钥和证书申请</strong></li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky CA]# mkdir -pv /data/app1</span><br><span class="line">mkdir: created directory &#x27;/data&#x27;</span><br><span class="line">mkdir: created directory &#x27;/data/app1&#x27;</span><br><span class="line">[root@rocky CA]# </span><br><span class="line"># 生成私钥文件  </span><br><span class="line">[root@rocky app1]# (umask 066;openssl genrsa -out  /data/app1/app1.key 2048)</span><br><span class="line">Generating RSA private key, 2048 bit long modulus (2 primes)</span><br><span class="line">.......................+++++</span><br><span class="line">.............+++++</span><br><span class="line">e is 65537 (0x010001)</span><br><span class="line">[root@rocky app1]# </span><br><span class="line"></span><br><span class="line">#生成证书申请文件</span><br><span class="line">[root@rocky app1]# openssl req -new -key /data/app1/app1.key -out /data/app1/app1.csr</span><br><span class="line">You are about to be asked to enter information that will be incorporated</span><br><span class="line">into your certificate request.</span><br><span class="line">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="line">There are quite a few fields but you can leave some blank</span><br><span class="line">For some fields there will be a default value,</span><br><span class="line">If you enter &#x27;.&#x27;, the field will be left blank.</span><br><span class="line">-----</span><br><span class="line">Country Name (2 letter code) [XX]:guizhou</span><br><span class="line">string is too long, it needs to be no more than 2 bytes long</span><br><span class="line">Country Name (2 letter code) [XX]:duyun^C</span><br><span class="line">[root@rocky app1]# openssl req -new -key /data/app1/app1.key -out /data/app1/app1.csr</span><br><span class="line">You are about to be asked to enter information that will be incorporated</span><br><span class="line">into your certificate request.</span><br><span class="line">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="line">There are quite a few fields but you can leave some blank</span><br><span class="line">For some fields there will be a default value,</span><br><span class="line">If you enter &#x27;.&#x27;, the field will be left blank.</span><br><span class="line">-----</span><br><span class="line">Country Name (2 letter code) [XX]:CN</span><br><span class="line">State or Province Name (full name) []:guizhou</span><br><span class="line">Locality Name (eg, city) [Default City]:duyun</span><br><span class="line">Organization Name (eg, company) [Default Company Ltd]:magedu</span><br><span class="line">Organizational Unit Name (eg, section) []:it</span><br><span class="line">Common Name (eg, your name or your server&#x27;s hostname) []:m48</span><br><span class="line">Email Address []:</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：默认要求 国家，省，公司名称三项必须和CA一致</strong></p>
+<ul>
+<li><strong>CA颁发证书</strong></li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky CA]# openssl  ca -in /data/app1/app1.csr -out /etc/pki/CA/certs/app1.crt -days 1000</span><br><span class="line">Using configuration from /etc/pki/tls/openssl.cnf</span><br><span class="line">Check that the request matches the signature</span><br><span class="line">Signature ok</span><br><span class="line">Certificate Details:</span><br><span class="line">        Serial Number: 1 (0x1)</span><br><span class="line">        Validity</span><br><span class="line">            Not Before: Sep 12 04:28:42 2022 GMT</span><br><span class="line">            Not After : Jun  8 04:28:42 2025 GMT</span><br><span class="line">        Subject:</span><br><span class="line">            countryName               = CN</span><br><span class="line">            stateOrProvinceName       = guizhou</span><br><span class="line">            organizationName          = magedu</span><br><span class="line">            organizationalUnitName    = it</span><br><span class="line">            commonName                = m48</span><br><span class="line">        X509v3 extensions:</span><br><span class="line">            X509v3 Basic Constraints: </span><br><span class="line">                CA:FALSE</span><br><span class="line">            Netscape Comment: </span><br><span class="line">                OpenSSL Generated Certificate</span><br><span class="line">            X509v3 Subject Key Identifier: </span><br><span class="line">                F9:E4:5D:C9:C7:70:0C:E9:17:CC:90:88:7E:78:20:57:38:04:EC:69</span><br><span class="line">            X509v3 Authority Key Identifier: </span><br><span class="line">                keyid:EA:34:E4:C1:8C:1B:F2:F9:22:D5:A2:AE:BD:2F:EA:13:28:24:43:60</span><br><span class="line"></span><br><span class="line">Certificate is to be certified until Jun  8 04:28:42 2025 GMT (1000 days)</span><br><span class="line">Sign the certificate? [y/n]:y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1 out of 1 certificate requests certified, commit? [y/n]y</span><br><span class="line">Write out database with 1 new entries</span><br><span class="line">Data Base Updated</span><br><span class="line">[root@rocky CA]# </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p> <img src="/../image.assets/1662988208721.png" alt="1662988208721"> </p>
+<ul>
+<li><strong>查看证书</strong></li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky CA]# cat /etc/pki/CA/certs/app1.crt </span><br><span class="line">Certificate:</span><br><span class="line">    Data:</span><br><span class="line">        Version: 3 (0x2)</span><br><span class="line">        Serial Number: 1 (0x1)</span><br><span class="line">        Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">        Issuer: C=CN, ST=guizhou, L=duyun, O=magedu, OU=it, CN=m48</span><br><span class="line">        Validity</span><br><span class="line">            Not Before: Sep 12 04:28:42 2022 GMT</span><br><span class="line">            Not After : Jun  8 04:28:42 2025 GMT</span><br><span class="line">        Subject: C=CN, ST=guizhou, O=magedu, OU=it, CN=m48</span><br><span class="line">        Subject Public Key Info:</span><br><span class="line">            Public Key Algorithm: rsaEncryption</span><br><span class="line">                RSA Public-Key: (2048 bit)</span><br><span class="line">                Modulus:</span><br><span class="line">                    00:b1:d4:eb:6e:8d:32:db:5e:ce:5d:6c:43:73:ef:</span><br><span class="line">                    28:d3:08:8b:ae:8b:42:bf:6a:57:27:76:03:fe:ac:</span><br><span class="line">                    55:62:2f:7a:9c:97:37:aa:53:40:df:35:6c:be:28:</span><br><span class="line">                    c1:c2:b5:e0:af:f0:d3:be:40:3c:15:1e:59:47:40:</span><br><span class="line">                    f0:85:20:c2:da:ca:83:a2:6f:7a:89:3d:35:ba:cf:</span><br><span class="line">                    03:cb:cd:e0:15:96:76:56:23:30:ce:be:c6:1e:d0:</span><br><span class="line">                    a1:fb:27:0c:0f:cf:19:1b:03:9a:08:c8:a2:f1:46:</span><br><span class="line">                    18:b6:f0:08:ef:10:26:12:2b:de:ba:a3:9b:8e:f5:</span><br><span class="line">                    13:ab:6a:4d:08:8c:59:30:ef:78:d1:29:6d:3a:4e:</span><br><span class="line">                    df:c0:cc:d8:04:84:e8:3d:5f:90:67:45:b5:a8:22:</span><br><span class="line">                    8f:6f:ad:83:c9:04:ba:5e:98:3f:f8:2b:49:45:31:</span><br><span class="line">                    01:0e:7d:60:b3:ad:44:5f:9d:90:6c:34:9d:5c:31:</span><br><span class="line">                    26:01:d3:75:fe:58:66:81:b5:d9:b3:83:99:e0:10:</span><br><span class="line">                    62:26:37:62:0e:6c:ea:06:ff:3e:b6:a1:c0:e2:27:</span><br><span class="line">                    0e:85:4c:44:eb:84:16:b6:36:b9:4f:74:fa:c7:89:</span><br><span class="line">                    32:a2:c4:e3:d4:11:a2:7c:61:2d:82:a8:3d:2c:e3:</span><br><span class="line">                    17:c4:ec:de:ae:28:07:07:94:3c:62:1d:49:c0:c0:</span><br><span class="line">                    12:41</span><br><span class="line">                Exponent: 65537 (0x10001)</span><br><span class="line">        X509v3 extensions:</span><br><span class="line">            X509v3 Basic Constraints: </span><br><span class="line">                CA:FALSEs</span><br><span class="line">            Netscape Comment: </span><br><span class="line">                OpenSSL Generated Certificate</span><br><span class="line">            X509v3 Subject Key Identifier: </span><br><span class="line">                F9:E4:5D:C9:C7:70:0C:E9:17:CC:90:88:7E:78:20:57:38:04:EC:69</span><br><span class="line">            X509v3 Authority Key Identifier: </span><br><span class="line">                keyid:EA:34:E4:C1:8C:1B:F2:F9:22:D5:A2:AE:BD:2F:EA:13:28:24:43:60</span><br><span class="line"></span><br><span class="line">    Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">         0c:90:51:c2:89:75:d7:e1:92:e7:a3:90:cb:f0:c0:96:a7:0f:</span><br><span class="line">         9f:e6:b5:2b:45:ed:be:ee:86:cf:0c:f9:06:9c:21:27:25:f8:</span><br><span class="line">         6c:d9:1c:84:87:8f:df:c2:c9:8f:65:7a:e9:84:2c:13:a8:1d:</span><br><span class="line">         d9:ab:65:02:c4:d5:8f:b3:17:a1:7c:d3:e3:06:83:06:43:5c:</span><br><span class="line">         f6:a1:1a:b8:f4:98:7c:28:a9:4e:44:f5:82:ac:9f:77:b7:2f:</span><br><span class="line">         cd:a6:c7:df:8c:24:84:0c:36:ad:2e:69:24:b7:0f:17:80:7d:</span><br><span class="line">         f5:57:4c:df:8d:fb:7d:9e:27:22:bb:7e:b9:e4:aa:45:63:63:</span><br><span class="line">         41:00:64:c6:ff:69:47:1c:b2:ca:49:2a:56:3a:9c:c0:3b:19:</span><br><span class="line">         58:64:22:c2:e2:6c:27:bb:c1:d6:8f:55:a0:77:a0:a8:10:6d:</span><br><span class="line">         5c:cb:01:50:91:ab:86:ac:88:ee:dc:0e:9d:6c:35:c4:7b:fe:</span><br><span class="line">         33:52:a3:f8:a8:25:1d:51:51:ed:2c:25:cf:c7:d3:18:73:81:</span><br><span class="line">         42:0f:6f:b7:e6:3f:87:2a:12:4b:71:9c:a1:c2:07:91:a6:10:</span><br><span class="line">         5f:5f:c2:28:59:f6:2b:ba:ff:d6:56:69:03:c2:49:36:f0:35:</span><br><span class="line">         b4:38:70:7c:29:b8:f6:7d:72:c7:6f:cf:23:ef:e2:5f:d3:73:</span><br><span class="line">         fc:26:9a:ec</span><br><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">MIIDnDCCAoSgAwIBAgIBATANBgkqhkiG9w0BAQsFADBbMQswCQYDVQQGEwJDTjEQ</span><br><span class="line">MA4GA1UECAwHZ3VpemhvdTEOMAwGA1UEBwwFZHV5dW4xDzANBgNVBAoMBm1hZ2Vk</span><br><span class="line">dTELMAkGA1UECwwCaXQxDDAKBgNVBAMMA200ODAeFw0yMjA5MTIwNDI4NDJaFw0y</span><br><span class="line">NTA2MDgwNDI4NDJaMEsxCzAJBgNVBAYTAkNOMRAwDgYDVQQIDAdndWl6aG91MQ8w</span><br><span class="line">DQYDVQQKDAZtYWdlZHUxCzAJBgNVBAsMAml0MQwwCgYDVQQDDANtNDgwggEiMA0G</span><br><span class="line">CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCx1OtujTLbXs5dbENz7yjTCIuui0K/</span><br><span class="line">alcndgP+rFViL3qclzeqU0DfNWy+KMHCteCv8NO+QDwVHllHQPCFIMLayoOib3qJ</span><br><span class="line">PTW6zwPLzeAVlnZWIzDOvsYe0KH7JwwPzxkbA5oIyKLxRhi28AjvECYSK966o5uO</span><br><span class="line">9ROrak0IjFkw73jRKW06Tt/AzNgEhOg9X5BnRbWoIo9vrYPJBLpemD/4K0lFMQEO</span><br><span class="line">fWCzrURfnZBsNJ1cMSYB03X+WGaBtdmzg5ngEGImN2IObOoG/z62ocDiJw6FTETr</span><br><span class="line">hBa2NrlPdPrHiTKixOPUEaJ8YS2CqD0s4xfE7N6uKAcHlDxiHUnAwBJBAgMBAAGj</span><br><span class="line">ezB5MAkGA1UdEwQCMAAwLAYJYIZIAYb4QgENBB8WHU9wZW5TU0wgR2VuZXJhdGVk</span><br><span class="line">IENlcnRpZmljYXRlMB0GA1UdDgQWBBT55F3Jx3AM6RfMkIh+eCBXOATsaTAfBgNV</span><br><span class="line">HSMEGDAWgBTqNOTBjBvy+SLVoq69L+oTKCRDYDANBgkqhkiG9w0BAQsFAAOCAQEA</span><br><span class="line">DJBRwol11+GS56OQy/DAlqcPn+a1K0Xtvu6Gzwz5BpwhJyX4bNkchIeP38LJj2V6</span><br><span class="line">6YQsE6gd2atlAsTVj7MXoXzT4waDBkNc9qEauPSYfCipTkT1gqyfd7cvzabH34wk</span><br><span class="line">hAw2rS5pJLcPF4B99VdM3437fZ4nIrt+ueSqRWNjQQBkxv9pRxyyykkqVjqcwDsZ</span><br><span class="line">WGQiwuJsJ7vB1o9VoHegqBBtXMsBUJGrhqyI7twOnWw1xHv+M1Kj+KglHVFR7Swl</span><br><span class="line">z8fTGHOBQg9vt+Y/hyoSS3GcocIHkaYQX1/CKFn2K7r/1lZpA8JJNvA1tDhwfCm4</span><br><span class="line">9n1yx2/PI+/iX9Nz/Caa7A==</span><br><span class="line">-----END CERTIFICATE-----</span><br><span class="line">[root@rocky CA]# </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky CA]# openssl x509 -in /etc/pki/CA/certs/app1.crt -noout -issuer</span><br><span class="line">issuer=C = CN, ST = guizhou, L = duyun, O = magedu, OU = it, CN = m48</span><br><span class="line">[root@rocky CA]# </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 验证指定编号对应证书的有效性</span><br><span class="line">[root@rocky CA]# openssl ca -status 01</span><br><span class="line">Using configuration from /etc/pki/tls/openssl.cnf</span><br><span class="line">01=Valid (V)</span><br><span class="line">[root@rocky CA]# </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>证书的吊销</strong></li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky newcerts]# openssl ca -revoke /etc/pki/CA/newcerts/01.pem </span><br><span class="line">Using configuration from /etc/pki/tls/openssl.cnf</span><br><span class="line">Revoking Certificate 01.</span><br><span class="line">Data Base Updated</span><br><span class="line"></span><br><span class="line">[root@rocky newcerts]# openssl ca -status 01</span><br><span class="line">Using configuration from /etc/pki/tls/openssl.cnf</span><br><span class="line">01=Revoked (R)</span><br><span class="line">[root@rocky newcerts]# </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>生成证书吊销列表文件</strong></li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky newcerts]#echo 01 &gt; /etc/pki/CA/crlnumber</span><br><span class="line">[root@rocky newcerts]#openssl ca -gencrl -out /etc/pki/CA/crl.pem</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9C%A8rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7"><span class="toc-number">1.</span> <span class="toc-text">在rocky上实现私有CA和证书申请</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&text=Rocky上实现私有CA和证书申请"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&title=Rocky上实现私有CA和证书申请"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&is_video=false&description=Rocky上实现私有CA和证书申请"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Rocky上实现私有CA和证书申请&body=Check out this article: http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&title=Rocky上实现私有CA和证书申请"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&title=Rocky上实现私有CA和证书申请"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&title=Rocky上实现私有CA和证书申请"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&title=Rocky上实现私有CA和证书申请"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&name=Rocky上实现私有CA和证书申请&description=&lt;p class= &#34;note note-success&#34;&gt; OpenSSL计划在1998年开始，其目标是发明一套自由的加密工具，在互联网上使用。OpenSSL以Eric Young以及Tim Hudson两人开发的SSLeay为基础，随着两人前往RSA公司任职，SSLeay在1998年12月停止开发。因此在1998年12月，社群另外分支出OpenSSL，继续开发下去&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/&t=Rocky上实现私有CA和证书申请"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    yuan kun
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

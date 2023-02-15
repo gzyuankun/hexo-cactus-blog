@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="收集运维面试题目，减少试错成本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux运维面试葵花宝典">
+<meta property="og:url" content="http://example.com/2022/07/23/TheInterviewQuestions/index.html">
+<meta property="og:site_name" content="勾三股四">
+<meta property="og:description" content="收集运维面试题目，减少试错成本">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/1662383968738.png">
+<meta property="og:image" content="http://example.com/img/1662383968738.png">
+<meta property="og:image" content="http://example.com/img/1662386034301.png">
+<meta property="og:image" content="http://example.com/image.assets/1668916687561.png">
+<meta property="og:image" content="http://example.com/image.assets/1668916735065.png">
+<meta property="article:published_time" content="2022-07-23T12:57:17.000Z">
+<meta property="article:modified_time" content="2022-12-16T14:59:19.737Z">
+<meta property="article:author" content="yuan kun">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/1662383968738.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux运维面试葵花宝典</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/07/25/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E5%8F%8A%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/07/23/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/07/23/TheInterviewQuestions/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/07/23/TheInterviewQuestions/&text=Linux运维面试葵花宝典"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/07/23/TheInterviewQuestions/&title=Linux运维面试葵花宝典"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/07/23/TheInterviewQuestions/&is_video=false&description=Linux运维面试葵花宝典"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux运维面试葵花宝典&body=Check out this article: http://example.com/2022/07/23/TheInterviewQuestions/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/07/23/TheInterviewQuestions/&title=Linux运维面试葵花宝典"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/07/23/TheInterviewQuestions/&title=Linux运维面试葵花宝典"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/07/23/TheInterviewQuestions/&title=Linux运维面试葵花宝典"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/07/23/TheInterviewQuestions/&title=Linux运维面试葵花宝典"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/07/23/TheInterviewQuestions/&name=Linux运维面试葵花宝典&description=收集运维面试题目，减少试错成本"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/07/23/TheInterviewQuestions/&t=Linux运维面试葵花宝典"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7"><span class="toc-number">1.</span> <span class="toc-text">性能监控</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables%E6%9C%89%E5%87%A0%E4%B8%AA%E8%A1%A8%E4%BB%A5%E5%8F%8A%E6%AF%8F%E4%B8%AA%E8%A1%A8%E6%9C%89%E5%87%A0%E4%B8%AA%E9%93%BE%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">iptables有几个表以及每个表有几个链？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">MySQL相关面试题</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Linux运维面试葵花宝典
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">勒马听风</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-07-23T12:57:17.000Z" itemprop="datePublished">2022-07-23</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><strong>df和du的区别？</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df 查看是文件系统的空间使用，包括元数据和数据，删除文件后，如果此文件正在使用，不会立即释放空间</span><br><span class="line">du 查看是文件数据空间使用，不包括元数据，删除文件后空间立即释放</span><br></pre></td></tr></table></figure>
+
+<p><strong>RAID0，1，5，6，10,01级别区别</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 磁盘利用率</span><br><span class="line">2 最少几盘硬盘实现</span><br><span class="line">3 容错性，防止几块硬盘损坏</span><br><span class="line">4 性能好坏？</span><br></pre></td></tr></table></figure>
+
+<p><strong>如何判断linux系统网线是联通的还是断了</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">link</span> ok 说明网线是联通的</span></span><br><span class="line">root@ubuntu200404:~# mii-tool ens33</span><br><span class="line">ens33: negotiated 1000baseT-FD flow-control, link ok</span><br><span class="line">root@ubuntu200404:~# </span><br></pre></td></tr></table></figure>
+
+<p><strong>三次握手过程以及为什么是三次握手</strong></p>
+<p><strong>探测ip冲突arping命令</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 /]# arping 192.168.179.129</span><br><span class="line">ARPING 192.168.179.129 from 192.168.179.130 ens33</span><br><span class="line">Unicast reply from 192.168.179.129 [00:0C:29:7C:80:CD]  0.689ms</span><br><span class="line">Unicast reply from 192.168.179.129 [00:0C:29:7C:80:CD]  0.797ms</span><br><span class="line">Unicast reply from 192.168.179.129 [00:0C:29:7C:80:CD]  0.746ms</span><br><span class="line">Unicast reply from 192.168.179.129 [00:0C:29:7C:80:CD]  0.874ms</span><br><span class="line">Unicast reply from 192.168.179.129 [00:0C:29:7C:80:CD]  0.712ms</span><br><span class="line">Unicast reply from 192.168.179.129 [00:0C:29:7C:80:CD]  0.845ms</span><br><span class="line">Unicast reply from 192.168.179.129 [00:0C:29:7C:80:CD]  0.706ms</span><br><span class="line">Unicast reply from 192.168.179.129 [00:0C:29:7C:80:CD]  0.741ms</span><br></pre></td></tr></table></figure>
+
+<p><strong>简述 TCP&#x2F;IP三次握手和四次挥手的工作原理?</strong><br><strong>Centos7,8 Linux操作系统如何临时和永久配置IP地址?请写出操作步骤</strong><br><strong>用一行命令找出ifconfig命令结果中的IP地址?</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig | grep inet |grep -v inet6 | tr -s &quot; &quot; | cut -d&quot; &quot; -f3</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用tcpdump 监听主机为192.168.1.1,tcp端口为80的数据,同时将输出结果保存成文件?</strong><br><strong>写一个She11脚本,实现判断192.168.1.0&#x2F;24网络里,当前在线的IP有哪些，能ping 通则认为在线</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">变量</span></span><br><span class="line">NET=192.168.1.0</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清空文件内容</span></span><br><span class="line">cat /dev/null &gt; hosts.txt</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">循环</span></span><br><span class="line">for i in &#123;1..254&#125;;do</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ping 1秒钟不回应则认为不通</span></span><br><span class="line">  if ping -c1 -W1 $NET.$i;then</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">屏幕打印，并将结果重定向到hosts.txt中</span></span><br><span class="line">    echo $NET.$i is up | tee -a hosts.txt</span><br><span class="line">  fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<p><strong>写一个扫描某个主机端口的状态的脚本</strong></p>
+<h1 id="性能监控"><a href="#性能监控" class="headerlink" title="性能监控"></a>性能监控</h1><p><strong>解释uptime top w命令第一行</strong></p>
+<ul>
+<li>uptime</li>
+</ul>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># uptime命令</span><br><span class="line">[root@rocky ~]# uptime</span><br><span class="line"> 21:14:45 up  1:31,  2 users,  load average: 0.02, 0.01, 0.00</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>w命令</li>
+</ul>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># w命令</span><br><span class="line">[root@rocky ~]# w </span><br><span class="line"> 21:15:57 up  1:32,  2 users,  load average: 0.00, 0.00, 0.00</span><br><span class="line">USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT</span><br><span class="line">root     tty1     -                06Aug22  1:19m  0.10s  0.10s -bash</span><br><span class="line">root     pts/0    192.168.179.1    19:45    1.00s  0.06s  0.00s w</span><br><span class="line">[root@rocky ~]# </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>top命令</li>
+</ul>
+<p><img src="/../img/1662383968738.png" alt="1662383968738"></p>
+<table>
+<thead>
+<tr>
+<th>21:15:57</th>
+<th>up  1:32</th>
+<th>2 users</th>
+<th>load average: 0.00, 0.00, 0.00</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>当前系统时间</td>
+<td>系统运行了多长时间</td>
+<td>登录的用户数</td>
+<td>系统1分钟、5分钟、15分钟的平均负载，一般不会超过1，超过5时建议警报</td>
+</tr>
+</tbody></table>
+<p><strong>top命令详解</strong></p>
+<p><img src="/../img/1662383968738.png" alt="1662383968738"></p>
+<p><img src="/../img/1662386034301.png" alt="1662386034301"></p>
+<p><strong>面试题</strong><br>4.1 解释top命令每一行的意义<br>4.2 如果查看一个进程的是否是多线程<br>4.3 如果实现秒级的计划任务<br>4.4 说明cron计划任务的格式</p>
+<h1 id="iptables有几个表以及每个表有几个链？"><a href="#iptables有几个表以及每个表有几个链？" class="headerlink" title="iptables有几个表以及每个表有几个链？"></a>iptables有几个表以及每个表有几个链？</h1><p>五表五链</p>
+<h1 id="MySQL相关面试题"><a href="#MySQL相关面试题" class="headerlink" title="MySQL相关面试题"></a>MySQL相关面试题</h1><p> <strong>面试题: VARCHAR(50) 能存放几个 UTF8 编码的汉字？</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">存放的汉字个数与版本相关。</span><br><span class="line">mysql 4.0以下版本，varchar(50) 指的是 50 字节，如果存放 UTF8 格式编码的汉字时（每个汉字3字</span><br><span class="line">节），只能存放16 个。</span><br><span class="line">mysql 5.0以上版本，varchar(50) 指的是 50 字符，无论存放的是数字、字母还是 UTF8 编码的汉字，</span><br><span class="line">都可以存放 50 个。</span><br></pre></td></tr></table></figure>
+
+<p><strong>MyISAM与MyISAM 的区别</strong></p>
+<p><strong>面试题: InnoDB中一颗的B+树可以存放多少行数据？</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">假设定义一颗B+树高度为2，即一个根节点和若干叶子节点。那么这棵B+树的存放总行记录数=根节点指针数*</span><br><span class="line">单个叶子记录的行数。这里先计算叶子节点，B+树中的单个叶子节点的大小为16K，假设每一条目为1K，那么</span><br><span class="line">记录数即为16(16k/1K=16)，然后计算非叶子节点能够存放多少个指针，假设主键ID为bigint类型，那么长</span><br><span class="line">度为8字节，而指针大小在InnoDB中是设置为6个字节，这样加起来一共是14个字节。那么通过页大小/(主键</span><br><span class="line">ID大小+指针大小），即16384/14=1170个指针，所以一颗高度为2的B+树能存放16*1170=18720条这样的</span><br><span class="line">记录。根据这个原理就可以算出一颗高度为3的B+树可以存放16*1170*1170=21902400条记录。所以在</span><br><span class="line">InnoDB中B+树高度一般为2-3层，它就能满足千万级的数据存储</span><br></pre></td></tr></table></figure>
+
+<p><strong>事务特性</strong></p>
+<p>ACID特性：<br>A：atomicity 原子性；整个事务中的所有操作要么全部成功执行，要么全部失败后回滚<br>C：consistency一致性；数据库总是从一个一致性状态转换为另一个一致性状态,类似于能量守恒定<br>律(N50周启皓语录)<br>I：Isolation隔离性；一个事务所做出的操作在提交之前，是不能为其它事务所见；隔离有多种隔离<br>级别，实现并发<br>D：durability持久性；一旦事务提交，其所做的修改会永久保存于数据库中</p>
+<p><strong>事务隔离级别</strong></p>
+<p><img src="/../image.assets/1668916687561.png" alt="1668916687561"></p>
+<p><img src="/../image.assets/1668916735065.png" alt="1668916735065"></p>
+<p><strong>MySQL 主从数据不一致</strong><br><strong>造成主从不一致的原因</strong>**</p>
+<ul>
+<li>主库binlog格式为Statement，同步到从库执行后可能造成主从不一致。</li>
+<li>主库执行更改前有执行set sql_log_bin&#x3D;0，会使主库不记录binlog，从库也无法变更这部分数据。</li>
+<li>从节点未设置只读，误操作写入数据</li>
+<li>主库或从库意外宕机，宕机可能会造成binlog或者relaylog文件出现损坏，导致主从不一致</li>
+<li>主从实例版本不一致，特别是高版本是主，低版本为从的情况下，主数据库上面支持的功能，从数</li>
+<li>据库上面可能不支持该功能</li>
+<li>主从sql_mode 不一致</li>
+<li>MySQL自身bug导致</li>
+</ul>
+<p><strong>主从不一致修复方法</strong></p>
+<ul>
+<li>将从库重新实现<br>虽然这也是一种解决方法，但是这个方案恢复时间比较慢，而且有时候从库也是承担一部分的查询<br>操作的，不能贸然重建。</li>
+<li>使用percona-toolkit工具辅助<br>PT工具包中包含pt-table-checksum和pt-table-sync两个工具，主要用于检测主从是否一致以及修<br>复数据不一致情况。这种方案优点是修复速度快，不需要停止主从辅助，缺点是需要知识积累，需<br>要时间去学习，去测试，特别是在生产环境，还是要小心使用<br>关于使用方法，可以参考下面链接：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/feiren/p/7777218.html">https://www.cnblogs.com/feiren/p/7777218.html</a></li>
+<li>手动重建不一致的表<br>在从库发现某几张表与主库数据不一致，而这几张表数据量也比较大，手工比对数据不现实，并且<br>重做整个库也比较慢，这个时候可以只重做这几张表来修复主从不一致<br>这种方案缺点是在执行导入期间需要暂时停止从库复制，不过也是可以接受的</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7"><span class="toc-number">1.</span> <span class="toc-text">性能监控</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iptables%E6%9C%89%E5%87%A0%E4%B8%AA%E8%A1%A8%E4%BB%A5%E5%8F%8A%E6%AF%8F%E4%B8%AA%E8%A1%A8%E6%9C%89%E5%87%A0%E4%B8%AA%E9%93%BE%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">iptables有几个表以及每个表有几个链？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">MySQL相关面试题</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/07/23/TheInterviewQuestions/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/07/23/TheInterviewQuestions/&text=Linux运维面试葵花宝典"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/07/23/TheInterviewQuestions/&title=Linux运维面试葵花宝典"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/07/23/TheInterviewQuestions/&is_video=false&description=Linux运维面试葵花宝典"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux运维面试葵花宝典&body=Check out this article: http://example.com/2022/07/23/TheInterviewQuestions/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/07/23/TheInterviewQuestions/&title=Linux运维面试葵花宝典"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/07/23/TheInterviewQuestions/&title=Linux运维面试葵花宝典"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/07/23/TheInterviewQuestions/&title=Linux运维面试葵花宝典"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/07/23/TheInterviewQuestions/&title=Linux运维面试葵花宝典"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/07/23/TheInterviewQuestions/&name=Linux运维面试葵花宝典&description=收集运维面试题目，减少试错成本"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/07/23/TheInterviewQuestions/&t=Linux运维面试葵花宝典"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    yuan kun
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的;RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件管理">
+<meta property="og:url" content="http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="勾三股四">
+<meta property="og:description" content="Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的;RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image.assets/1660220348105.png">
+<meta property="article:published_time" content="2022-08-08T13:05:59.000Z">
+<meta property="article:modified_time" content="2022-12-16T14:56:58.112Z">
+<meta property="article:author" content="yuan kun">
+<meta property="article:tag" content="Linux从入门到放弃">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image.assets/1660220348105.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>软件管理</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/08/21/network/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/08/08/homework/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&text=软件管理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&title=软件管理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&is_video=false&description=软件管理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=软件管理&body=Check out this article: http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&title=软件管理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&title=软件管理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&title=软件管理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&title=软件管理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&name=软件管理&description=Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的;RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能。"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&t=软件管理"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">1、软件管理简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">2、软件包管理器简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E8%81%8C%E8%B4%A3"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 软件包管理器的职责</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 软件包管理器的核心功能</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%80%E4%BB%8B"><span class="toc-number">3.</span> <span class="toc-text">3、软件包简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%BB%84%E6%88%90"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 软件包组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%88%86%E7%B1%BB"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 软件包分类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81rpm%E7%AE%80%E4%BB%8B"><span class="toc-number">4.</span> <span class="toc-text">4、rpm简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5%E3%80%81%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%9A%84%E8%8E%B7%E5%8F%96%E9%80%94%E5%BE%84"><span class="toc-number">5.</span> <span class="toc-text">5、软件包的获取途径</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E7%B3%BB%E7%BB%9F%E5%8F%91%E8%A1%8C%E7%9A%84%E5%85%89%E7%9B%98"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 系统发行的光盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E5%BC%80%E6%BA%90%E9%95%9C%E5%83%8F%E7%AB%99"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 开源镜像站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 搜索引擎</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6%E3%80%81rpm%E5%8C%85%E7%AE%A1%E7%90%86"><span class="toc-number">6.</span> <span class="toc-text">6、rpm包管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-RPM%E5%8C%85%E5%AE%89%E8%A3%85"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 RPM包安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-RPM%E5%8C%85%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 RPM包查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-RPM%E5%8C%85%E5%8D%87%E7%BA%A7"><span class="toc-number">6.3.</span> <span class="toc-text">6.4 RPM包升级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5-RPM%E5%8C%85%E5%8D%B8%E8%BD%BD"><span class="toc-number">6.4.</span> <span class="toc-text">6.5 RPM包卸载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-6-RPM%E5%8C%85%E6%A0%A1%E9%AA%8C"><span class="toc-number">6.5.</span> <span class="toc-text">6.6 RPM包校验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-7-RPM%E9%87%8D%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">6.6.</span> <span class="toc-text">6.7 RPM重建数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-8-%E6%A3%80%E6%9F%A5%E8%BD%AF%E4%BB%B6%E5%8C%85%E6%9D%A5%E6%BA%90%E5%90%88%E6%B3%95%E6%80%A7"><span class="toc-number">6.7.</span> <span class="toc-text">6.8 检查软件包来源合法性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7%E3%80%81yum%E5%92%8Cdnf"><span class="toc-number">7.</span> <span class="toc-text">7、yum和dnf</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-1-yum-x2F-dnf-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 yum&#x2F;dnf 工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-2-yum%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 yum客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-3-yum%E5%91%BD%E4%BB%A4"><span class="toc-number">7.3.</span> <span class="toc-text">7.3 yum命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-1-%E6%98%BE%E7%A4%BA%E4%BB%93%E5%BA%93%E5%88%97%E8%A1%A8"><span class="toc-number">7.3.1.</span> <span class="toc-text">7.3.1 显示仓库列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-2-%E6%98%BE%E7%A4%BA%E7%A8%8B%E5%BA%8F%E5%8C%85"><span class="toc-number">7.3.2.</span> <span class="toc-text">7.3.2 显示程序包</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        软件管理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">勒马听风</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-08-08T13:05:59.000Z" itemprop="datePublished">2022-08-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/" rel="tag">Linux从入门到放弃</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="1、软件管理简介"><a href="#1、软件管理简介" class="headerlink" title="1、软件管理简介"></a>1、软件管理简介</h1><p>Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的</p>
+<p>RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能</p>
+<h1 id="2、软件包管理器简介"><a href="#2、软件包管理器简介" class="headerlink" title="2、软件包管理器简介"></a>2、软件包管理器简介</h1><h2 id="2-1-软件包管理器的职责"><a href="#2-1-软件包管理器的职责" class="headerlink" title="2.1 软件包管理器的职责"></a>2.1 软件包管理器的职责</h2><ul>
+<li>将二进制文件、库文件、配置文件、帮助文件打包成一个文件</li>
+<li>安装软件时按需将二进制、库文件、配置文件、帮助文件放到相应的位置</li>
+<li>生成数据库，追踪所安装的每一个文件</li>
+<li>软件卸载时根据安装时生成的数据库将相应的文件删除</li>
+</ul>
+<h2 id="2-2-软件包管理器的核心功能"><a href="#2-2-软件包管理器的核心功能" class="headerlink" title="2.2 软件包管理器的核心功能"></a>2.2 软件包管理器的核心功能</h2><ul>
+<li>制作软件包</li>
+<li>安装软件</li>
+<li>卸载软件</li>
+<li>升级软件</li>
+<li>查询软件</li>
+<li>校验软件</li>
+</ul>
+<h1 id="3、软件包简介"><a href="#3、软件包简介" class="headerlink" title="3、软件包简介"></a>3、软件包简介</h1><h2 id="3-1-软件包组成"><a href="#3-1-软件包组成" class="headerlink" title="3.1 软件包组成"></a>3.1 软件包组成</h2><ul>
+<li>软件包的组成清单<ul>
+<li>文件清单</li>
+<li>安装或卸载的运行脚本</li>
+</ul>
+</li>
+<li>数据库<ul>
+<li>程序包名称及版本</li>
+<li>依赖关系</li>
+<li>功能说明</li>
+<li>安装生成的各个文件的路径及校验码信息</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-2-软件包分类"><a href="#3-2-软件包分类" class="headerlink" title="3.2 软件包分类"></a>3.2 软件包分类</h2><p><strong>源码格式</strong><br>特点：需要编译成二进制格式才能进行</p>
+<ul>
+<li>命名方式：name-VERSION.tar.gz<ul>
+<li>VERSION：主版本号.次版本号.系统发行版本</li>
+</ul>
+</li>
+</ul>
+<p><strong>二进制格式</strong><br>特点：编译好的，安装之后可以直接运行</p>
+<ul>
+<li>软件的作者下载软件的源码，编译配置为二进制软件包</li>
+<li>Redhat和Centos中使用的二进制包为rpm包</li>
+</ul>
+<p><strong>源码格式和二进制格式的区别</strong></p>
+<ul>
+<li>源码格式的包编译为二进制包时可以选择需要的特性，如果未选择，则编译后安装后的软件就不会有相应的功能</li>
+<li>源码包在编译成为二进制包时可以实现软件功能的定制</li>
+<li>二进制包的本版落后于源码包。</li>
+</ul>
+<h1 id="4、rpm简介"><a href="#4、rpm简介" class="headerlink" title="4、rpm简介"></a>4、rpm简介</h1><p>Redhat和Centos中二进制包的扩展包为.rpm，这是由红帽公司最先发布的一种用来打包软件的文件格式，我们叫做rpm包；RPM软件包管理器就是管理rpm包</p>
+<p>4.1 rpm包命名规范</p>
+<h1 id="5、软件包的获取途径"><a href="#5、软件包的获取途径" class="headerlink" title="5、软件包的获取途径"></a>5、软件包的获取途径</h1><h2 id="5-1-系统发行的光盘"><a href="#5-1-系统发行的光盘" class="headerlink" title="5.1 系统发行的光盘"></a>5.1 系统发行的光盘</h2><p>Linux的IOS镜像文件自带了非常多的系统扩展RPM安装包，且这些软件版本最适合当前Linux系统<br>IOS镜像文件自带的扩展RPM安装包的存放目录为：Packages<br>使用IOS镜像文件自带的扩展RPM安装包前必须先挂载ISO镜像，挂在方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 创建挂载点，挂载光盘镜像到挂载点</span><br><span class="line">[root@jlin ~]# mkdir /mnt/cdrom</span><br><span class="line">[root@jlin ~]# mount /dev/sr0 /mnt/cdrom/</span><br><span class="line"></span><br><span class="line"># 复制挂载点里面所有的文件到/media/目录，避免光盘断开连接就读取不到扩展RPM安装包</span><br><span class="line">[root@jlin ~]# cp -r /mnt/cdrom/ /media/</span><br><span class="line">[root@jlin ~]# cd /media/cdrom/</span><br><span class="line">[root@jlin cdrom]# ll</span><br><span class="line">总用量 320</span><br><span class="line">-rw-r--r-- 1 root root     14 7月  10 08:27 CentOS_BuildTag</span><br><span class="line">drwxr-xr-x 3 root root     35 7月  10 08:27 EFI</span><br><span class="line">-rw-r--r-- 1 root root    227 7月  10 08:27 EULA</span><br><span class="line">-rw-r--r-- 1 root root  18009 7月  10 08:27 GPL</span><br><span class="line">drwxr-xr-x 3 root root     57 7月  10 08:27 images</span><br><span class="line">drwxr-xr-x 2 root root    198 7月  10 08:27 isolinux</span><br><span class="line">drwxr-xr-x 2 root root     43 7月  10 08:27 LiveOS</span><br><span class="line">drwxr-xr-x 2 root root 221184 7月  10 08:29 Packages</span><br><span class="line">drwxr-xr-x 2 root root   4096 7月  10 08:29 repodata</span><br><span class="line">-rw-r--r-- 1 root root   1690 7月  10 08:29 RPM-GPG-KEY-CentOS-7</span><br><span class="line">-rw-r--r-- 1 root root   1690 7月  10 08:29 RPM-GPG-KEY-CentOS-Testing-7</span><br><span class="line">-r--r--r-- 1 root root   2883 7月  10 08:29 TRANS.TBL</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-开源镜像站"><a href="#5-2-开源镜像站" class="headerlink" title="5.2 开源镜像站"></a>5.2 开源镜像站</h2><p>开源镜像站上会存放RPM安装包</p>
+<ul>
+<li>阿里巴巴开源镜像站</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/">http://mirrors.aliyun.com</a></p>
+</blockquote>
+<ul>
+<li>网易开源镜像站</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://mirrors.163.com/">http://mirrors.163.com</a></p>
+</blockquote>
+<ul>
+<li>清华大学开源镜像站</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/">https://mirrors.tuna.tsinghua.edu.cn</a></p>
+</blockquote>
+<h2 id="5-3-搜索引擎"><a href="#5-3-搜索引擎" class="headerlink" title="5.3 搜索引擎"></a>5.3 搜索引擎</h2><p>有一些搜索引擎直接提供rpm包搜索功能</p>
+<ul>
+<li>rpmfind</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://rpmfind.net/">http://rpmfind.net</a></p>
+</blockquote>
+<ul>
+<li>rpm pbone</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://rpm.pbone.net/">http://rpm.pbone.net</a></p>
+</blockquote>
+<ul>
+<li>pkgs</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://pkgs.org/">http://pkgs.org/</a></p>
+</blockquote>
+<h1 id="6、rpm包管理"><a href="#6、rpm包管理" class="headerlink" title="6、rpm包管理"></a>6、rpm包管理</h1><h2 id="6-1-RPM包安装"><a href="#6-1-RPM包安装" class="headerlink" title="6.1 RPM包安装"></a>6.1 RPM包安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">// 语法：rpm -ivh /PATH/TO/PACKAGE_FILE ...</span><br><span class="line">// 选项：</span><br><span class="line">-i：安装</span><br><span class="line">-v：显示详细信息</span><br><span class="line">-h：显示安装进度条</span><br><span class="line">--test：测试安装，但不真正执行安装过程</span><br><span class="line">--nodeps：忽略依赖关系</span><br><span class="line">--force：强行安装，可以实现重装或降级</span><br><span class="line">--replacepkgs：重新安装，替换原有安装</span><br><span class="line">--oldpackage：降级</span><br><span class="line">--nodigest：不检查包的完整性</span><br><span class="line">--nosignature：不检查报的来源合法性</span><br><span class="line">--noscripts：不执行rpm包自带的四类脚本：</span><br><span class="line">	--nopre：不执行rpm包自带的preinstall脚本</span><br><span class="line">	--nopost：不执行rpm包自带的postinstall脚本</span><br><span class="line">	--nopreun：不执行rpm包自带的preuninstall脚本</span><br><span class="line">	--nopostun：不执行rpm包自带的postuninstall脚本</span><br><span class="line">	preinstall：安装过程开始之前运行的脚本，标记为%pre：--nopre</span><br><span class="line">	postinstall：安装过程完成之后运行的脚本，标记为%post：--nopost</span><br><span class="line">	preuninstall：卸载过程开始执行之前运行的脚本，标记为%preun：--nopreun</span><br><span class="line">	postunistall：写在过程完成之后运行的脚本，标记为%postrun：--nopostun</span><br><span class="line"></span><br><span class="line">// 安装软件包，需要指定软件包绝对路径</span><br><span class="line">[root@jlin ~]# rpm -ivh /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line">// 在软件包所在目录下可以不指定绝对路径</span><br><span class="line">[root@jlin ~]# cd /mnt/cdrom/Packages/</span><br><span class="line">[root@jlin Packages]# rpm -ivh tree-1.6.0-10.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line">// 测试一个软件包是否能在该系统上安装</span><br><span class="line">[root@jlin ~]# rpm -ivh --test /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line">// 如果软件包已经安装，强制再次安装</span><br><span class="line">[root@jlin ~]# rpm -ivh --force /mnt/cdrom/Packages/tree-1.6.0-10.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line">// 安装httpd服务需要依赖其他组件，使用--nodeps可忽略以来强制安装</span><br><span class="line">[root@jlin ~]# rpm -ivh --nodeps /mnt/cdrom/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-2-RPM包查询"><a href="#6-2-RPM包查询" class="headerlink" title="6.2 RPM包查询"></a>6.2 RPM包查询</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// 查询httpd的rpm包是否安装</span><br><span class="line">[root@jlin ~]# rpm -q httpd</span><br><span class="line"></span><br><span class="line">// 模糊查找系统已安装的rpm包</span><br><span class="line">[root@jlin ~]# rpm -qa | grep ftp</span><br><span class="line"></span><br><span class="line">// 查询已安装的httpd软件包相关信息</span><br><span class="line">[root@jlin ~]# rpm -qi httpd</span><br><span class="line"></span><br><span class="line">// 查询已安装的rpm包生成的文件</span><br><span class="line">[root@jlin ~]# rpm -ql httpd</span><br><span class="line"></span><br><span class="line">// 查询已安装的rpm包生成的配置文件</span><br><span class="line">所有</span><br><span class="line">[root@jlin ~]# rpm -qc httpd</span><br><span class="line"></span><br><span class="line">// 查询配置文件或命令来自于哪个rpm包</span><br><span class="line">[root@jlin ~]# rpm -qf /etc/httpd/httpd.conf</span><br><span class="line">[root@jlin ~]# rpm -qf /usr/sbin/httpd</span><br><span class="line"></span><br><span class="line">// 查询未安装的软件包会产生哪些文件</span><br><span class="line">[root@jlin ~]# rpm -qpl / mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm</span><br><span class="line"></span><br><span class="line">// 查询未安装的软件包的说明信息</span><br><span class="line">[root@jlin ~]# rpm -qpi /mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-4-RPM包升级"><a href="#6-4-RPM包升级" class="headerlink" title="6.4 RPM包升级"></a>6.4 RPM包升级</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 升级tree软件包</span><br><span class="line">[root@jlin ~]# rpm -Uvh /mnt/Packages/httpd-2.4.6-80.el7.centos.x86_64.rpm</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-5-RPM包卸载"><a href="#6-5-RPM包卸载" class="headerlink" title="6.5 RPM包卸载"></a>6.5 RPM包卸载</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 先查询，然后卸载</span><br><span class="line">[root@jlin ~]# rpm -qa lgrep httpd</span><br><span class="line">[root@jlin ~]# rpm -e httpd</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-6-RPM包校验"><a href="#6-6-RPM包校验" class="headerlink" title="6.6 RPM包校验"></a>6.6 RPM包校验</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 校验已经安装的软件包的文件是否被修改；如果执行以下命令无内容输出说明安装的软件</span><br><span class="line">[root@jlin ~]# rpm -v vsftpd</span><br><span class="line"></span><br><span class="line">S #文件的容量大小是否被改变</span><br><span class="line">M #文件的类型或者文件的属性是否被修改</span><br><span class="line">5 #MD5加密的内容已经不同</span><br><span class="line">D #装置的主/次代码已经改变</span><br><span class="line">L #路径已经被改变</span><br><span class="line">U #文件的所属主已被修改</span><br><span class="line">G #文件的所属组已被修改</span><br><span class="line">T #文件的创建时间已被改变</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-7-RPM重建数据库"><a href="#6-7-RPM重建数据库" class="headerlink" title="6.7 RPM重建数据库"></a>6.7 RPM重建数据库</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 数据库信息在/var/lib/rpm目录</span><br><span class="line"></span><br><span class="line">// 重建数据库，重建Packages数据库，一定会重建</span><br><span class="line">rpm --rebuilddb</span><br><span class="line"></span><br><span class="line">// 初始化数据库，重建所有数据库，没有才建立，有就不建立</span><br><span class="line">rpm --initdb</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-8-检查软件包来源合法性"><a href="#6-8-检查软件包来源合法性" class="headerlink" title="6.8 检查软件包来源合法性"></a>6.8 检查软件包来源合法性</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">加密类型:</span><br><span class="line">	对称加密 #加密解密使用同一个密钥</span><br><span class="line">	公钥加密 #一对密钥，公钥和私钥。公钥隐含于私钥中，可以提取出来并公布出去</span><br><span class="line">	单向加密 #只能加密不能解密</span><br><span class="line"></span><br><span class="line">// 红帽官方公钥存放位置</span><br><span class="line">/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release</span><br><span class="line"></span><br><span class="line">// 检查指定rpm包合法性，出现oK字样表示包没问题</span><br><span class="line">rpm -K PACKAGE_FILE</span><br><span class="line"></span><br><span class="line">// 导入密钥文件</span><br><span class="line">rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release1</span><br><span class="line"></span><br><span class="line">Centos 7发行版光盘提供的密钥文件名为:RPM-GPG-KEY-Centos-7</span><br></pre></td></tr></table></figure>
+
+<h1 id="7、yum和dnf"><a href="#7、yum和dnf" class="headerlink" title="7、yum和dnf"></a>7、yum和dnf</h1><p>CentOS 使用 yum, dnf 解决rpm的包依赖关系<br>YUM: Yellowdog Update Modifier，rpm的前端程序，可解决软件包相关依赖性，可在多个库之间定位<br>软件包，up2date的替代工具，CentOS 8 用dnf 代替了yum ,不过保留了和yum的兼容性，配置也是通<br>用的</p>
+<h2 id="7-1-yum-x2F-dnf-工作原理"><a href="#7-1-yum-x2F-dnf-工作原理" class="headerlink" title="7.1 yum&#x2F;dnf 工作原理"></a>7.1 yum&#x2F;dnf 工作原理</h2><p><strong>yum&#x2F;dnf 是基于C&#x2F;S 模式</strong><br>yum 服务器存放rpm包和相关包的元数据库<br>yum 客户端访问yum服务器进行安装或查询等<br><strong>yum 实现过程</strong><br>先在yum服务器上创建 yum repository（仓库），在仓库中事先存储了众多rpm包，以及包的相关的<br>元数据文件（放置于特定目录repodata下），当yum客户端利用yum&#x2F;dnf工具进行安装时包时，会自动<br>下载repodata中的元数据，查询远数据是否存在相关的包及依赖关系，自动从仓库中找到相关包下载并<br>安装。</p>
+<h2 id="7-2-yum客户端配置"><a href="#7-2-yum客户端配置" class="headerlink" title="7.2 yum客户端配置"></a>7.2 yum客户端配置</h2><p><strong>yum客户端配置文件</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/yum.conf #为所有仓库提供公共配置</span><br><span class="line">/etc/yum.repos.d/*.repo： #为每个仓库的提供配置文件</span><br></pre></td></tr></table></figure>
+
+<p><strong>帮助参考： man 5 yum.conf</strong><br><strong>repo仓库配置文件指向的定义：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[repositoryID]</span><br><span class="line">name=Some name for this repository</span><br><span class="line">baseurl=url://path/to/repository/</span><br><span class="line">enabled=&#123;1|0&#125;</span><br><span class="line">gpgcheck=&#123;1|0&#125;</span><br><span class="line">gpgkey=URL</span><br><span class="line">enablegroups=&#123;1|0&#125;</span><br><span class="line">failovermethod=&#123;roundrobin|priority&#125;</span><br><span class="line">roundrobin：意为随机挑选，默认值</span><br><span class="line">priority:按顺序访问</span><br><span class="line">cost= 默认为1000</span><br></pre></td></tr></table></figure>
+
+<p><strong>yum服务器的baseurl形式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">file:// 本地路径</span><br><span class="line">http://</span><br><span class="line">https://</span><br><span class="line">ftp://</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：yum仓库指向的路径一定必须是repodata目录所在目录</strong><br><strong>相关变量</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum的repo配置文件中可用的变量：</span><br><span class="line">$releasever: 当前OS的发行版的主版本号，如：8，7，6</span><br><span class="line">$arch: CPU架构，如：aarch64, i586, i686，x86_64等</span><br><span class="line">$basearch：系统基础平台；i386, x86_64</span><br><span class="line">$contentdir：表示目录，比如：centos-8，centos-7</span><br><span class="line">$YUM0-$YUM9:自定义变量</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-3-yum命令"><a href="#7-3-yum命令" class="headerlink" title="7.3 yum命令"></a>7.3 yum命令</h2><p><strong>yum命令的用法</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum [options] [command] [package ...]</span><br></pre></td></tr></table></figure>
+
+<p><strong>yum的命令行选项</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-y #自动回答为&quot;yes&quot;</span><br><span class="line">-q #静默模式</span><br><span class="line">--nogpgcheck #禁止进行gpg check</span><br><span class="line">--enablerepo=repoidglob #临时启用此处指定的repo，支持通配符，如：&quot;*&quot;</span><br><span class="line">--disablerepo=repoidglob #临时禁用此处指定的repo,和上面语句同时使用，放在后面的生效</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-3-1-显示仓库列表"><a href="#7-3-1-显示仓库列表" class="headerlink" title="7.3.1 显示仓库列表"></a>7.3.1 显示仓库列表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum repolist [all|enabled|disabled]</span><br></pre></td></tr></table></figure>
+
+<p><strong>范例</strong></p>
+<p><img src="/../image.assets/1660220348105.png" alt="1660220348105"></p>
+<h3 id="7-3-2-显示程序包"><a href="#7-3-2-显示程序包" class="headerlink" title="7.3.2 显示程序包"></a>7.3.2 显示程序包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum list</span><br><span class="line">yum list [all | glob_exp1] [glob_exp2] [...]</span><br><span class="line">yum list &#123;available|installed|updates&#125; [glob_exp1] [...]</span><br></pre></td></tr></table></figure>
+
+<p><strong>范例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum list</span><br><span class="line">yum list [all | glob_exp1] [glob_exp2] [...]</span><br><span class="line">yum list &#123;available|installed|updates&#125; [glob_exp1] [...]</span><br></pre></td></tr></table></figure>
+
+<p><strong>范例：只查看安装的包</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky ~]# yum list installed|head</span><br><span class="line">Installed Packages</span><br><span class="line">NetworkManager.x86_64                1:1.32.10-4.el8                   @anaconda</span><br><span class="line">NetworkManager-config-server.noarch  1:1.32.10-4.el8                   @anaconda</span><br><span class="line">NetworkManager-libnm.x86_64          1:1.32.10-4.el8                   @anaconda</span><br><span class="line">NetworkManager-team.x86_64           1:1.32.10-4.el8                   @anaconda</span><br><span class="line">NetworkManager-tui.x86_64            1:1.32.10-4.el8                   @anaconda</span><br><span class="line">acl.x86_64                           2.2.53-1.el8.1                    @anaconda</span><br><span class="line">adcli.x86_64                         0.8.2-12.el8                      @anaconda</span><br><span class="line">alsa-sof-firmware.noarch             1.8-1.el8                         @anaconda</span><br><span class="line">at.x86_64                            3.1.20-11.el8                     @anaconda</span><br><span class="line">[root@rocky ~]# </span><br></pre></td></tr></table></figure>
+
+<p><strong>范例：查看可以安装的包</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky ~]# yum list available | head</span><br><span class="line">Last metadata expiration check: 2:21:04 ago on Tue 09 Aug 2022 09:50:19 AM CST.</span><br><span class="line">Available Packages</span><br><span class="line">CUnit.i686                                             2.1.3-17.el8                                              appstream</span><br><span class="line">CUnit.x86_64                                           2.1.3-17.el8                                              appstream</span><br><span class="line">GConf2.i686                                            3.2.6-22.el8                                              appstream</span><br><span class="line">GConf2.x86_64                                          3.2.6-22.el8                                              appstream</span><br><span class="line">HdrHistogram.noarch                                    2.1.11-3.module+el8.4.0+405+66dfe7da                      appstream</span><br><span class="line">HdrHistogram-javadoc.noarch                            2.1.11-3.module+el8.4.0+405+66dfe7da                      appstream</span><br><span class="line">HdrHistogram_c.i686                                    0.9.13-2.el8                                              appstream</span><br><span class="line">HdrHistogram_c.x86_64                                  0.9.13-2.el8                                              appstream</span><br><span class="line">[root@rocky ~]# </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>范例：查看可以升级的包</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list updates</span><br></pre></td></tr></table></figure>
+
+<p><strong>范例：查看指定的包</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@centos8 ~]#yum list exim</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">1、软件管理简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">2、软件包管理器简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E8%81%8C%E8%B4%A3"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 软件包管理器的职责</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 软件包管理器的核心功能</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%80%E4%BB%8B"><span class="toc-number">3.</span> <span class="toc-text">3、软件包简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%BB%84%E6%88%90"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 软件包组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%88%86%E7%B1%BB"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 软件包分类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81rpm%E7%AE%80%E4%BB%8B"><span class="toc-number">4.</span> <span class="toc-text">4、rpm简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5%E3%80%81%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%9A%84%E8%8E%B7%E5%8F%96%E9%80%94%E5%BE%84"><span class="toc-number">5.</span> <span class="toc-text">5、软件包的获取途径</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E7%B3%BB%E7%BB%9F%E5%8F%91%E8%A1%8C%E7%9A%84%E5%85%89%E7%9B%98"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 系统发行的光盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E5%BC%80%E6%BA%90%E9%95%9C%E5%83%8F%E7%AB%99"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 开源镜像站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 搜索引擎</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6%E3%80%81rpm%E5%8C%85%E7%AE%A1%E7%90%86"><span class="toc-number">6.</span> <span class="toc-text">6、rpm包管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-RPM%E5%8C%85%E5%AE%89%E8%A3%85"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 RPM包安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-RPM%E5%8C%85%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 RPM包查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-RPM%E5%8C%85%E5%8D%87%E7%BA%A7"><span class="toc-number">6.3.</span> <span class="toc-text">6.4 RPM包升级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5-RPM%E5%8C%85%E5%8D%B8%E8%BD%BD"><span class="toc-number">6.4.</span> <span class="toc-text">6.5 RPM包卸载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-6-RPM%E5%8C%85%E6%A0%A1%E9%AA%8C"><span class="toc-number">6.5.</span> <span class="toc-text">6.6 RPM包校验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-7-RPM%E9%87%8D%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">6.6.</span> <span class="toc-text">6.7 RPM重建数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-8-%E6%A3%80%E6%9F%A5%E8%BD%AF%E4%BB%B6%E5%8C%85%E6%9D%A5%E6%BA%90%E5%90%88%E6%B3%95%E6%80%A7"><span class="toc-number">6.7.</span> <span class="toc-text">6.8 检查软件包来源合法性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7%E3%80%81yum%E5%92%8Cdnf"><span class="toc-number">7.</span> <span class="toc-text">7、yum和dnf</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-1-yum-x2F-dnf-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 yum&#x2F;dnf 工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-2-yum%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 yum客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-3-yum%E5%91%BD%E4%BB%A4"><span class="toc-number">7.3.</span> <span class="toc-text">7.3 yum命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-1-%E6%98%BE%E7%A4%BA%E4%BB%93%E5%BA%93%E5%88%97%E8%A1%A8"><span class="toc-number">7.3.1.</span> <span class="toc-text">7.3.1 显示仓库列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-2-%E6%98%BE%E7%A4%BA%E7%A8%8B%E5%BA%8F%E5%8C%85"><span class="toc-number">7.3.2.</span> <span class="toc-text">7.3.2 显示程序包</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&text=软件管理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&title=软件管理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&is_video=false&description=软件管理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=软件管理&body=Check out this article: http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&title=软件管理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&title=软件管理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&title=软件管理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&title=软件管理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&name=软件管理&description=Redhat和Centos中软件管理是依靠软件包管理器(RPM)来实现的;RPM(Redhat Package Manager)软件包管理器提供了在Linux操作系统中安装、升级、卸载的方法，并提供对系统中的软件状态信息的查询；除了这些功能外，RPM软件包管理器还提供了制作软件包的功能。"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/08/08/%E8%BD%AF%E4%BB%B6%E7%AE%A1%E7%90%86/&t=软件管理"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    yuan kun
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

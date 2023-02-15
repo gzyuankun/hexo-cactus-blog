@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="收集软件测试一些基础面试题!欢迎补充.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件测试面试题">
+<meta property="og:url" content="http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
+<meta property="og:site_name" content="勾三股四">
+<meta property="og:description" content="收集软件测试一些基础面试题!欢迎补充.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/question_20220523002610.jpg">
+<meta property="og:image" content="http://example.com/img/UI01202205191303315.jpg">
+<meta property="og:image" content="http://example.com/img/20201103223433596.png">
+<meta property="article:published_time" content="2022-07-31T17:30:11.000Z">
+<meta property="article:modified_time" content="2022-11-15T10:06:27.979Z">
+<meta property="article:author" content="yuan kun">
+<meta property="article:tag" content="软件测试工程师面试基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/question_20220523002610.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>软件测试面试题</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/08/01/%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E5%92%8C%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/07/26/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E5%92%8C%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&text=软件测试面试题"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&title=软件测试面试题"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&is_video=false&description=软件测试面试题"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=软件测试面试题&body=Check out this article: http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&title=软件测试面试题"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&title=软件测试面试题"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&title=软件测试面试题"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&title=软件测试面试题"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&name=软件测试面试题&description=收集软件测试一些基础面试题!欢迎补充."><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&t=软件测试面试题"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">1、软件测试流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E7%BC%BA%E9%99%B7%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">2、缺陷定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">3、黑盒测试用例设计方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81%E5%85%AD%E5%A4%A7%E6%B5%8B%E8%AF%95%E5%88%86%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text">4、六大测试分类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5%E3%80%81%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E5%8C%85%E5%90%AB%E9%82%A3%E4%BA%9B%E5%86%85%E5%AE%B9"><span class="toc-number">5.</span> <span class="toc-text">5、测试用例包含那些内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6%E3%80%81%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87"><span class="toc-number">6.</span> <span class="toc-text">6、怎么保证测试覆盖率</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7%E3%80%81%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">7、软件测试方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8%E3%80%81%E5%BC%80%E5%8F%91%E5%AF%B9%E7%BC%BA%E9%99%B7%E4%B8%8D%E8%AE%A4%E5%8F%AF%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86"><span class="toc-number">8.</span> <span class="toc-text">8、开发对缺陷不认可如何处理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9%E3%80%81BUG%E4%B8%8D%E5%8F%AF%E5%A4%8D%E7%8E%B0%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-number">9.</span> <span class="toc-text">9、BUG不可复现怎么办</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#10%E3%80%81%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADBUG%E6%98%AF%E5%89%8D%E7%AB%AF%E8%BF%98%E6%98%AF%E5%90%8E%E7%AB%AF%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">10、如何判断BUG是前端还是后端问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#11%E3%80%81%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B"><span class="toc-number">11.</span> <span class="toc-text">11、接口测试流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#12%E3%80%81%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E5%86%85%E5%AE%B9"><span class="toc-number">12.</span> <span class="toc-text">12、测试报告内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#13%E3%80%81%E8%81%8C%E4%B8%9A%E8%A7%84%E5%88%92"><span class="toc-number">13.</span> <span class="toc-text">13、职业规划</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#14%E3%80%81%E8%AF%B4%E5%87%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">14.</span> <span class="toc-text">14、说出自己的缺点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#15%E3%80%81%E5%81%9A%E6%B5%8B%E8%AF%95%E8%87%AA%E5%B7%B1%E6%9C%80%E5%A4%A7%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">15.</span> <span class="toc-text">15、做测试自己最大的优势</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#16%E3%80%81UI%E8%87%AA%E5%8A%A8%E5%8C%96%E5%85%83%E7%B4%A0%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%AE%9A%E4%BD%8D%E4%B8%8D%E5%88%B0%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">16.</span> <span class="toc-text">16、UI自动化元素过程中定位不到的原因</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#17%E3%80%81UI%E8%87%AA%E5%8A%A8%E5%8C%96%E5%85%AB%E7%A7%8D%E5%AE%9A%E4%BD%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">17.</span> <span class="toc-text">17、UI自动化八种定位方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#18%E3%80%81UI%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B8%89%E7%A7%8D%E7%AD%89%E5%BE%85%E6%96%B9%E5%BC%8F"><span class="toc-number">18.</span> <span class="toc-text">18、UI自动化三种等待方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#19%E3%80%81UI%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84"><span class="toc-number">19.</span> <span class="toc-text">19、UI自动化测试框架组成结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#20%E3%80%81PO%E6%A8%A1%E5%BC%8F"><span class="toc-number">20.</span> <span class="toc-text">20、PO模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#21%E3%80%81linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">21.</span> <span class="toc-text">21、linux常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#22%E3%80%81%E5%8D%B0%E8%B1%A1%E6%9C%80%E6%B7%B1%E7%9A%84BUG"><span class="toc-number">22.</span> <span class="toc-text">22、印象最深的BUG</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#23%E3%80%81%E9%97%AE%E9%9D%A2%E8%AF%95%E5%AE%98%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">23.</span> <span class="toc-text">23、问面试官的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#24%E3%80%81%E4%BA%A7%E5%93%81%E4%B8%8A%E7%BA%BF%E6%A0%87%E5%87%86"><span class="toc-number">23.1.</span> <span class="toc-text">24、产品上线标准</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#25%E3%80%81%E9%81%87%E5%88%B0frame%E6%A1%86%E6%9E%B6%E9%A1%B5%E9%9D%A2%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86"><span class="toc-number">23.2.</span> <span class="toc-text">25、遇到frame框架页面怎么处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#26%E3%80%81UI%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1"><span class="toc-number">23.3.</span> <span class="toc-text">26、UI自动化测试用例怎么设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#27%E3%80%81%E5%A6%82%E4%BD%95%E5%8E%BB%E6%8F%90%E5%8D%87UI%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E7%A8%B3%E5%AE%9A%E6%80%A7"><span class="toc-number">23.4.</span> <span class="toc-text">27、如何去提升UI自动化测试用例的稳定性?</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#28%E3%80%81%E5%85%83%E7%B4%A0%E5%AE%9A%E4%BD%8D%E5%88%B0%E4%BA%86%EF%BC%8C%E5%8D%B4%E7%82%B9%E5%87%BB%E6%97%A0%E6%95%88-%E4%B9%9F%E6%B2%A1%E6%8A%A5%E9%94%99%EF%BC%89%EF%BC%8C%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3"><span class="toc-number">24.</span> <span class="toc-text">28、元素定位到了，却点击无效(也没报错），如何解决?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#29%E3%80%81%E5%BE%AE%E4%BF%A1%E8%A7%86%E9%A2%91%E8%81%8A%E5%A4%A9%E6%B5%8B%E8%AF%95%E7%82%B9"><span class="toc-number">25.</span> <span class="toc-text">29、微信视频聊天测试点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#30%E3%80%81unittest%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">26.</span> <span class="toc-text">30、unittest是什么？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#31%E3%80%81unitest%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">27.</span> <span class="toc-text">31、unitest的工作原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80"><span class="toc-number">28.</span> <span class="toc-text">计算机网络基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%8F%8F%E8%BF%B0%E7%94%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BF%E9%97%AE-www-baidu-com-%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">28.1.</span> <span class="toc-text">1.描述用浏览器访问 www.baidu.com 的过程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#API%E6%B5%8B%E8%AF%95"><span class="toc-number">29.</span> <span class="toc-text">API测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql%E7%9B%B8%E5%85%B3"><span class="toc-number">30.</span> <span class="toc-text">mysql相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL-%E7%9A%84-select-%E8%AF%AD%E5%8F%A5%E5%AE%8C%E6%95%B4%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%EF%BC%9F"><span class="toc-number">30.1.</span> <span class="toc-text">SQL 的 select 语句完整的执行顺序？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="toc-number">31.</span> <span class="toc-text">自动化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Selenium%E6%9C%89%E4%BB%A5%E4%B8%8B%E5%8A%9F%E8%83%BD%E7%89%B9%E6%80%A7"><span class="toc-number">31.1.</span> <span class="toc-text">Selenium有以下功能特性:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Selenium-Webdriver-%E5%8E%9F%E7%90%86%EF%BC%9F"><span class="toc-number">31.2.</span> <span class="toc-text">Selenium Webdriver 原理？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E7%BC%96%E5%86%99%E8%A6%81%E7%82%B9%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number">31.3.</span> <span class="toc-text">接口测试用例的编写要点有哪些？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E5%B8%B8%E8%A7%81bug%EF%BC%9A"><span class="toc-number">31.4.</span> <span class="toc-text">接口测试常见bug：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#APP%E4%B8%93%E9%A1%B9%E6%B5%8B%E8%AF%95"><span class="toc-number">31.5.</span> <span class="toc-text">APP专项测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AE%E4%BF%A1%E5%8F%91%E7%BA%A2%E5%8C%85%E7%9A%84%E6%B5%8B%E8%AF%95%E7%82%B9%EF%BC%9A"><span class="toc-number">32.</span> <span class="toc-text">微信发红包的测试点：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%8A%9F%E8%83%BD%EF%BC%9A"><span class="toc-number">33.</span> <span class="toc-text">1.功能：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E6%80%A7%E8%83%BD%EF%BC%9A"><span class="toc-number">34.</span> <span class="toc-text">2.性能：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-UI%E7%95%8C%E9%9D%A2%EF%BC%9A"><span class="toc-number">35.</span> <span class="toc-text">3.UI界面：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E5%AE%89%E5%85%A8%EF%BC%9A"><span class="toc-number">36.</span> <span class="toc-text">4.安全：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E6%98%93%E7%94%A8%EF%BC%9A"><span class="toc-number">37.</span> <span class="toc-text">5.易用：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E5%85%BC%E5%AE%B9%E6%80%A7%EF%BC%9A"><span class="toc-number">38.</span> <span class="toc-text">6.兼容性：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-%E5%BC%B1%E7%BD%91"><span class="toc-number">39.</span> <span class="toc-text">7.弱网</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        软件测试面试题
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">yuankun</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-07-31T17:30:11.000Z" itemprop="datePublished">2022-08-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E7%BB%8F/">软件测试面经</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80/" rel="tag">软件测试工程师面试基础</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="1、软件测试流程"><a href="#1、软件测试流程" class="headerlink" title="1、软件测试流程"></a>1、软件测试流程</h1><ul>
+<li>需求评审</li>
+<li>测试计划编写</li>
+<li>测试用例编写</li>
+<li>测试用例评审</li>
+<li>执行测试用例(搭建测试环境)</li>
+<li>编写测试报告</li>
+</ul>
+<h1 id="2、缺陷定义"><a href="#2、缺陷定义" class="headerlink" title="2、缺陷定义"></a>2、缺陷定义</h1><ul>
+<li>需求要求的功能没有实现</li>
+<li>实现了需求没有要求的功能（画蛇添足）  </li>
+<li>软件中出现了指明不应出现的错误  </li>
+<li>需求虽未明确指明，但是应该实现的功能没有实现</li>
+</ul>
+<h1 id="3、黑盒测试用例设计方法"><a href="#3、黑盒测试用例设计方法" class="headerlink" title="3、黑盒测试用例设计方法"></a>3、黑盒测试用例设计方法</h1><ul>
+<li>等价类划分法 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用户名长度为6-10位</span><br><span class="line">有效输入：6-10    可以穷举</span><br><span class="line">无效输入：&lt;6   可以穷举，&gt;10   穷举？？？？ </span><br></pre></td></tr></table></figure></li>
+<li>边界值  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用户名长度为6-10位</span><br><span class="line">有效边界值：6、7、8、9、10</span><br><span class="line">无效边界值：&lt;6   和 &gt;10</span><br></pre></td></tr></table></figure></li>
+<li>场景分析法(ATM取款)  </li>
+<li>正交表法  </li>
+<li>状态迁移法<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">明确需求中有多少个状态  </span><br><span class="line">比如订单状态：待发货、已发货、签收、申请取消、拒收等</span><br></pre></td></tr></table></figure></li>
+<li>判定表  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">某系统对修改密码有如下要求：首先输入原密码，原密码正确后才能输入新密码与确认密码，否则系统提示原密码错误。输入新密码与确认密码，检查通过后修改密码成功。新密码要求6-10位，由字母+数字组成，如果不合法提示新密码不满足复杂度要求；如果确认密码与新密码不一致，提示确认密码必须与新密码一致。请使用判定表法编写测试用例。</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="4、六大测试分类"><a href="#4、六大测试分类" class="headerlink" title="4、六大测试分类"></a>4、六大测试分类</h1><ul>
+<li>功能性测试（Functionality）：关注功能是否正确。  </li>
+<li>可用性测试（Usability）：关注产品是否好用。  </li>
+<li>兼容性测试（Compatibility）：关注产品是否适用多种平台。  </li>
+<li>可靠性测试（Reliability）：关注产品是否稳定可靠。  </li>
+<li>安全性测试（Security）：关注产品是否存在漏洞。  </li>
+<li>性能测试（Performance）：关注产品是否能够高效运行。</li>
+</ul>
+<h1 id="5、测试用例包含那些内容"><a href="#5、测试用例包含那些内容" class="headerlink" title="5、测试用例包含那些内容"></a>5、测试用例包含那些内容</h1><ul>
+<li>测试用例编号  </li>
+<li>测试用例标题  </li>
+<li>前置条件    </li>
+<li>测试用例操作步骤  </li>
+<li>预期结果  </li>
+<li>优先级</li>
+</ul>
+<h1 id="6、怎么保证测试覆盖率"><a href="#6、怎么保证测试覆盖率" class="headerlink" title="6、怎么保证测试覆盖率"></a>6、怎么保证测试覆盖率</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">测试用例覆盖率很难达到100%，越复杂的功能越难保证，只能说尽量提高测试覆盖率。</span><br><span class="line">通过以下手段可以提高覆盖率：</span><br><span class="line">(1)编写测试用例前，检查相关需求、设计文档是否有问题（功能描述不清，设计逻辑缺陷），如有问题找相关设计或者产品问清楚。</span><br><span class="line">(2)功能列表包含新增和修改功能点，性能需求也要列出来（因为要整理对应的性能测试用例），同时还需要对既有功能进行一个梳理，检查是否会与其他功能有交互，整理出影响点。</span><br><span class="line">(3)把功能列表发给组员，并找时间进行会议评审，主要对功能等进行查漏补缺。</span><br><span class="line">(4)最后才行进测试用例编写，注意编写规范。</span><br><span class="line">(5)编写完毕后，把测试用例发给组员，开会进行评审，主要对检查点、用例规范进行查漏补缺。</span><br><span class="line">(6)执行测试用例过程中，发现用例不完善或者错误，需对测试用例进行及时的修改与调优</span><br><span class="line">(7)测试完毕后对漏测的bug进行测试用例补充。</span><br></pre></td></tr></table></figure>
+
+<h1 id="7、软件测试方法"><a href="#7、软件测试方法" class="headerlink" title="7、软件测试方法"></a>7、软件测试方法</h1><ul>
+<li>按是否清楚程序的内部逻辑：白盒测试、灰盒测试、黑盒测试</li>
+<li>按测试执行的方式：手工测试、自动化测试</li>
+<li>按是否允许被测软件：静态测试、动态测试</li>
+</ul>
+<h1 id="8、开发对缺陷不认可如何处理"><a href="#8、开发对缺陷不认可如何处理" class="headerlink" title="8、开发对缺陷不认可如何处理"></a>8、开发对缺陷不认可如何处理</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(1)检查提交的BUG描述是否清楚、是否复现</span><br><span class="line">(2)查阅需求、设计文档看是否有对该问题有描述，如果没有查看类似软件是否存在该问题</span><br><span class="line">(3)如果还是不能将情况汇报给领导，并说明BUG的情况以及自己认为是BUG的理由</span><br></pre></td></tr></table></figure>
+<h1 id="9、BUG不可复现怎么办"><a href="#9、BUG不可复现怎么办" class="headerlink" title="9、BUG不可复现怎么办"></a>9、BUG不可复现怎么办</h1><p>先在出现该问题上的环境上尽量重现，保持浏览器、账号、操作步骤环境一致。如果还是不能重现，把bug记录到BUG管理平台，详细记录BUG的操作步骤、特征、环境账号、操作截图、出现错误截图和日志截图等，并注明是偶现。如果BUG优先级比较高，项目时间允许，让开发协助重现。如果项目时间不允许，记录到BUG管理平台后续跟进。</p>
+<h1 id="10、如何判断BUG是前端还是后端问题"><a href="#10、如何判断BUG是前端还是后端问题" class="headerlink" title="10、如何判断BUG是前端还是后端问题"></a>10、如何判断BUG是前端还是后端问题</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(1)界面：文字错误、排版混乱、兼容问题前端问题</span><br><span class="line">(2)通过抓包对接口返回信息进行分析，分析出缺陷一般为后端问题</span><br><span class="line">(3)后端查看日志</span><br></pre></td></tr></table></figure>
+<h1 id="11、接口测试流程"><a href="#11、接口测试流程" class="headerlink" title="11、接口测试流程"></a>11、接口测试流程</h1><ul>
+<li>获取接口文档、分析接口</li>
+<li>编写接口测试用例</li>
+<li>测试用例评审</li>
+<li>执行测试用例(添加线程组、添加HTTP请求，根据接口文档填写相关请求参数、参数值，断言、添加查看结果树，看接口返回信息以预期信息是否一致)</li>
+<li>提交、跟踪缺陷和回归测试</li>
+<li>编写测试报告</li>
+</ul>
+<h1 id="12、测试报告内容"><a href="#12、测试报告内容" class="headerlink" title="12、测试报告内容"></a>12、测试报告内容</h1><ul>
+<li>测试范围  </li>
+<li>测试时间</li>
+<li>测试人员</li>
+<li>测试策略</li>
+<li>缺陷统计与分析</li>
+<li>上线风险</li>
+<li>遗留问题</li>
+<li>测试是否通过</li>
+</ul>
+<h1 id="13、职业规划"><a href="#13、职业规划" class="headerlink" title="13、职业规划"></a>13、职业规划</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 短期学习公司的业务，然后上手自己的工作，做好自己的本职工作，适应公司节奏</span><br><span class="line">- 长期来看，我会根据公司的发展需要继续提升自己的某项专业能力，把学习到的测试技能更好的应用到工作中去</span><br></pre></td></tr></table></figure>
+<h1 id="14、说出自己的缺点"><a href="#14、说出自己的缺点" class="headerlink" title="14、说出自己的缺点"></a>14、说出自己的缺点</h1><p>虽然已经有两年的工作经历，但是还是认为自己的经验还不是很丰富，后期呢我也会多多加深自己的测试技术。</p>
+<h1 id="15、做测试自己最大的优势"><a href="#15、做测试自己最大的优势" class="headerlink" title="15、做测试自己最大的优势"></a>15、做测试自己最大的优势</h1><p>(1)站在客户的角度思考问题，好的技术人员除了技术过硬外，还要懂得从用户的角度出发，要了解用户，所以我在工作中，揣摩用户的使用习惯，表达自己对产品的使用感受，在测试过程中除了提交BUG，也会偶尔反馈一些优化建议。  </p>
+<p>(2)比较有责任心。领导交付给我一个任务。每天下班之前反馈进度，保证项目进度。遇到问题主动去协调不同部门的同事解决问题。</p>
+<h1 id="16、UI自动化元素过程中定位不到的原因"><a href="#16、UI自动化元素过程中定位不到的原因" class="headerlink" title="16、UI自动化元素过程中定位不到的原因"></a>16、UI自动化元素过程中定位不到的原因</h1><ul>
+<li>元素表达式编写错误  </li>
+<li>元素未完全加载出来 </li>
+<li>元素嵌套在iframe中  </li>
+<li>元素在新窗口中</li>
+<li>脚本流程与实际流程不符合</li>
+<li>元素不在当前页</li>
+</ul>
+<h1 id="17、UI自动化八种定位方式"><a href="#17、UI自动化八种定位方式" class="headerlink" title="17、UI自动化八种定位方式"></a>17、UI自动化八种定位方式</h1><ul>
+<li>id</li>
+<li>name</li>
+<li>class_name、</li>
+<li>tag_name(标签名称)、</li>
+<li>link_text(定位a标签)、</li>
+<li>partial_link_text(定位a标签模糊)、</li>
+<li>Xpath(基于路径定位)</li>
+<li>css(元素选择器)</li>
+</ul>
+<h1 id="18、UI自动化三种等待方式"><a href="#18、UI自动化三种等待方式" class="headerlink" title="18、UI自动化三种等待方式"></a>18、UI自动化三种等待方式</h1><ul>
+<li><p>强制等待<br>如sleep(5)，一定会等待5秒才会继续执行下面的代码</p>
+</li>
+<li><p>显示等待<br>只针对当前元素，在指定条件内不断查找元素，直到找到元素或者超时报错</p>
+</li>
+<li><p>隐式等待<br>在指定的时间范围内查找元素，直到找到元素或者超时(报错 no suchelement)，特点是全局的</p>
+</li>
+</ul>
+<h1 id="19、UI自动化测试框架组成结构"><a href="#19、UI自动化测试框架组成结构" class="headerlink" title="19、UI自动化测试框架组成结构"></a>19、UI自动化测试框架组成结构</h1><ul>
+<li>测试用例&#x2F;测试数据</li>
+<li>基础方法（包含PO分层，数据驱动）</li>
+<li>工具包</li>
+<li>测试报告</li>
+<li>测试日志</li>
+</ul>
+<h1 id="20、PO模式"><a href="#20、PO模式" class="headerlink" title="20、PO模式"></a>20、PO模式</h1><p>减少代码重复，增加代码可读性，更容易维护。包含对象层、操作层、业务层。</p>
+<ul>
+<li>封装driver</li>
+<li>封装页面元素定位方法  </li>
+<li>封装页面元素操作，如输入用户名、密码等</li>
+<li>根据封装页面元素操作方法组合成业务</li>
+</ul>
+<h1 id="21、linux常用命令"><a href="#21、linux常用命令" class="headerlink" title="21、linux常用命令"></a>21、linux常用命令</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">tail -f #查看日志文件</span><br><span class="line">cd #切换目录</span><br><span class="line">ls #查看当前目录文件</span><br><span class="line">df #查看磁盘使用情况</span><br><span class="line">top #查看服务器资源使用情况</span><br><span class="line">ps  #查看进程使用情况</span><br><span class="line">netstat #查看端口占用情况</span><br><span class="line">find #查找</span><br><span class="line">cp #复制</span><br><span class="line">tar #解压缩</span><br><span class="line">mv #重命名</span><br><span class="line">kill #</span><br><span class="line">gerp #查找文档</span><br><span class="line">vi #功能强大的纯文本编辑器</span><br><span class="line">unzip #解压缩</span><br><span class="line">mkdir #创建文件</span><br><span class="line">touch #创建新的空文件</span><br><span class="line">tail -n 100 filename #查看文件100行</span><br><span class="line">head -n 200filename |tail -n 100  #查看文件100行到200行</span><br><span class="line">chmod #用来变更文件或目录的权限</span><br><span class="line">cat  #显示文件内容</span><br></pre></td></tr></table></figure>
+<h1 id="22、印象最深的BUG"><a href="#22、印象最深的BUG" class="headerlink" title="22、印象最深的BUG"></a>22、印象最深的BUG</h1><p>(1)登录页面，输入密码后，点击密码明文显示后，点击登录提示密码错误。前端页面发现密码并没有错误。后通过抓包将密码MD5解密后发现密码少了一位。最后得出输入密码后点击密码明文显示后密码会自动减少一位</p>
+<p>(2)最近测试的商城项目，员工为销售的订单管理页面，查看订单详情，将URL中的订单更改为其他销售下的订单号，然后可以成功查看其他销售下的订单详情。  </p>
+<h1 id="23、问面试官的问题"><a href="#23、问面试官的问题" class="headerlink" title="23、问面试官的问题"></a>23、问面试官的问题</h1><ul>
+<li>薪资组成结构</li>
+<li>试用期缴纳社保吗</li>
+<li>12薪还是13薪等</li>
+<li>工作内容是啥</li>
+<li>入职是否有培训？公司是否提供专业学习机会</li>
+<li>请问您在贵公司工作多久了</li>
+<li>考核方式</li>
+<li>问团队气氛，了解你的公司<ul>
+<li>比如:咱们团队多少人？工作年限大概是多久呀？<br><img src="/../img/question_20220523002610.jpg" alt="question"><br>问题：面试的最后，面试官会说你有什么要问我的吗？那么我们需要注意哪些？<br>答：<br>1）不要问跟工作无关的问题。<br>2）问工作内容，明确你的职能。<br>比如：如果得到这份工作，以后谁来带我呢？<br>如果成为贵公司的一员，你们希望我短期内解决什么问题呢？<br>未来一年，我们部门的工作目标是什么？<br>岗位的主要职责我已经明白了，公司对我还有什么其他的要求吗？<br>3)问工作潜力，打听你的未来<br>比如:入职后的几个月，我会参加哪些培训呢？<br>这个岗位在咱们公司的晋升路径是什么样的？<br>您对我这个岗位三到五年的职责规划有什么建议吗？<br>4)问团队气氛，了解你的公司<br>比如:咱们团队多少人？工作年限大概是多久呀？<br>您觉得最能代表咱们公司的员工是怎样的呢？<br>能带我参观一下咱们的办公区域吗？<br>5)问工作体验，拉近跟面试官的距离<br>您在这里工作多久了？<br>您最喜欢这家公司的什么地方？最不喜欢什么地方？<br>能给我大概讲讲公司的企业文化吗？<br>能给我举一个公司团队合作的例子吗？<br>如果再给您一次机会，您还会选择这家公司吗？</li>
+</ul>
+</li>
+</ul>
+<h2 id="24、产品上线标准"><a href="#24、产品上线标准" class="headerlink" title="24、产品上线标准"></a>24、产品上线标准</h2><ul>
+<li>测试用例是否全部百分之百执行完毕，如果还有未执行完毕的用例，是什么原因没有全部执行完，例如时间的原因，或者是优先级比较低的一个应用性测试用例</li>
+<li>剩余的bug数量和严重程度的这个等级要达到一定的标准，比如说不存在致命性、严重程度的这样一个bug，建议或不影响使用的遗留问题需要经过产品经理和测试经理协同制定这个可用的一个数量</li>
+<li>上线前的最后回归测试是否完成</li>
+</ul>
+<h2 id="25、遇到frame框架页面怎么处理"><a href="#25、遇到frame框架页面怎么处理" class="headerlink" title="25、遇到frame框架页面怎么处理"></a>25、遇到frame框架页面怎么处理</h2><p>问:遇到frame框架页面怎么处理?<br>答:<br>1.先定位到frame;<br>2.再用driver.switch_to.frame()跳转进frame进行操作;<br>3.操作完后使用<br>driver.swith_to.default_content()跳转出来frame  </p>
+<h2 id="26、UI自动化测试用例怎么设计"><a href="#26、UI自动化测试用例怎么设计" class="headerlink" title="26、UI自动化测试用例怎么设计"></a>26、UI自动化测试用例怎么设计</h2><p><img src="/../img/UI01202205191303315.jpg" alt="UI自动化测试用例怎么设计"></p>
+<h2 id="27、如何去提升UI自动化测试用例的稳定性"><a href="#27、如何去提升UI自动化测试用例的稳定性" class="headerlink" title="27、如何去提升UI自动化测试用例的稳定性?"></a>27、如何去提升UI自动化测试用例的稳定性?</h2><p>答:<br>1.使用xpath表达式定位元素时，使用相对路径;<br>2.定位元素时尽量使用显式等待，等要操作的元素出现之后再执行下面的操作;<br>3.多用try捕获异常、处理异常;<br>4.降低用例间的耦合;<br>5.尽量使用单独的测试环境，避免其他类型的测试同步进行，对数据造成干扰;<br>6.脚本执行失败后加入重试机制;<br>7.用例执行结束后对测试场景进行还原，避免影响其他测试用例的执行  </p>
+<h1 id="28、元素定位到了，却点击无效-也没报错），如何解决"><a href="#28、元素定位到了，却点击无效-也没报错），如何解决" class="headerlink" title="28、元素定位到了，却点击无效(也没报错），如何解决?"></a>28、元素定位到了，却点击无效(也没报错），如何解决?</h1><p>答:可以使用js进行点击操作例如:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">js = &#x27;document.getElementByld(&quot;baidu&quot;).click()&#x27;</span><br><span class="line">driver.execute_script(js)</span><br></pre></td></tr></table></figure>
+
+<h1 id="29、微信视频聊天测试点"><a href="#29、微信视频聊天测试点" class="headerlink" title="29、微信视频聊天测试点"></a>29、微信视频聊天测试点</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44369212/article/details/109481014">传送门</a><br><img src="/../img/20201103223433596.png">  </p>
+<h1 id="30、unittest是什么？"><a href="#30、unittest是什么？" class="headerlink" title="30、unittest是什么？"></a>30、unittest是什么？</h1><p>unittest是python内置的单元测试框架，具备编写用例、组织用例、执行用例、输出报告等自动化框架的条件。使用unittest前需要了解该框架的五个概念:</p>
+<p>即test case,test suite,testLoader，test runner,test fixture。</p>
+<p>test case  ：一个完整的测试单元，执行该测试单元可以完成对某一个问题的验证，完整体现在：测试前环境准备(setUp)，执行测试代码(run)，及测试后环境还原(tearDown)；</p>
+<p>test suite  ：多个测试用例的集合，测试套件或测试计划；</p>
+<p>testLoader  ：加载TestCase到TestSuite中的，其中loadTestsFrom__()方法用于寻找TestCase，并创建它们的实例，然后添加到TestSuite中，返回TestSuite实例；</p>
+<p>test runner ：执行测试用例，并将测试结果保存到TextTestResult实例中，包括运行了多少测试用例， 成功了多少，失败了多少等信息；</p>
+<p>test fixture：一个测试用例的初始化准备及环境还原，主要是setUp() 和 setDown()方法；</p>
+<h1 id="31、unitest的工作原理"><a href="#31、unitest的工作原理" class="headerlink" title="31、unitest的工作原理"></a>31、unitest的工作原理</h1><p>通过unittest类调用分析，可将框架的工作流程概况如下：</p>
+<p>编写TestCase，由TestLoader加载TestCase到TestSuite，然后由TextTestRunner来运行TestSuite，最后将运行的结果保存在TextTestResult中。</p>
+<h1 id="计算机网络基础"><a href="#计算机网络基础" class="headerlink" title="计算机网络基础"></a>计算机网络基础</h1><h2 id="1-描述用浏览器访问-www-baidu-com-的过程"><a href="#1-描述用浏览器访问-www-baidu-com-的过程" class="headerlink" title="1.描述用浏览器访问 www.baidu.com 的过程"></a>1.描述用浏览器访问 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 的过程</h2><p>1.浏览器向DNS服务器发出解析域名的请求；<br>2.DNS服务器将”<a target="_blank" rel="noopener" href="http://www.baidu.com"域名解析为对应的ip地址,并返回给浏览器;/">www.baidu.com&quot;域名解析为对应的IP地址，并返回给浏览器；</a><br>3.浏览器与百度服务器进行三次握手，建立TCP连接；<br>4.浏览器发出HTTP请求报文；<br>5.服务器回复HTTP响应报文；<br>6.浏览器解析响应报文，渲染HTML内容，并显示在页面上；<br>7.收发报文结束，释放TCP连接，执行四次挥手。</p>
+<h1 id="API测试"><a href="#API测试" class="headerlink" title="API测试"></a>API测试</h1><p>10. </p>
+<h1 id="mysql相关"><a href="#mysql相关" class="headerlink" title="mysql相关"></a>mysql相关</h1><h2 id="SQL-的-select-语句完整的执行顺序？"><a href="#SQL-的-select-语句完整的执行顺序？" class="headerlink" title="SQL 的 select 语句完整的执行顺序？"></a>SQL 的 select 语句完整的执行顺序？</h2><p>1.from 子句组装来自不同数据源的数据；<br>2.where 子句基于指定的条件对记录行进行筛选；<br>3.group by 子句将数据划分为多个分组；<br>4.使用聚集函数进行计算；<br>5.使用 having 子句筛选分组；<br>6.计算所有的表达式；<br>7.select 的字段；<br>8.使用 order by 对结果集进行排序。</p>
+<h1 id="自动化"><a href="#自动化" class="headerlink" title="自动化"></a>自动化</h1><h2 id="Selenium有以下功能特性"><a href="#Selenium有以下功能特性" class="headerlink" title="Selenium有以下功能特性:"></a>Selenium有以下功能特性:</h2><ul>
+<li>Selenium是一个开源和可移植的Web测试框架。</li>
+<li>Selenium IDE为创作测试提供了回放和录制功能，而无需学习测试脚本语言。</li>
+<li>它可以被视为领先的基于云的测试平台，可帮助测试人员记录他们的操作并将其导出为可重复使用的脚本，并具有易于理解且易于使用的界面。</li>
+<li>Selenium支持各种操作系统，浏览器和编程语言。如下列表:<ul>
+<li><strong>编程语言</strong>: C# ，Java，Python，PHP，Ruby，Perl和JavaScript</li>
+<li><strong>操作系统</strong>:Android，iOS，Windows，Linux，Mac，Solaris。</li>
+<li><strong>浏览器</strong>:谷歌浏览器，Mozilla Firefox，Internet Explorer，Edge，Opera，Safari等。</li>
+</ul>
+</li>
+<li>它还支持并行测试执行，从而减少了时间并提高了测试效率。</li>
+<li>Selenium可以与Ant和Maven等框架集成，用于源代码编译。</li>
+<li>Selenium还可以与TestNG等测试框架集成，以进行应用程序测试和生成报告。</li>
+<li>与其他自动化测试工具相比，Selenium需要的资源更少。</li>
+<li>WebDriver API已经尝试集于Selenium中，这是对Selenium进行的最重要的修改之一。</li>
+<li>Selenium Web驱动程序不需要服务器安装，测试脚本直接与浏览器交互。</li>
+<li>Selenium命令根据不同的类进行分类，使其更易于理解和实现。</li>
+<li>Selenium Remote Control(RC)与WebDriver API一起被称为Selenium 2.0。 此版本旨在支持充满活力的网页和Ajax</li>
+</ul>
+<h2 id="Selenium-Webdriver-原理？"><a href="#Selenium-Webdriver-原理？" class="headerlink" title="Selenium Webdriver 原理？"></a>Selenium Webdriver 原理？</h2><p>1.每个 Selenium 命令，这里指的是所谓的基础操作，例如，点击、输入等，都会创建一条 HTTP 请求， 发送给 Browser WebDriver<br>2.Browser WebDriver 使用一个 HTTP Server 监听和接收 HTTP 请求<br>3.HTTP Server 根据协议规则定义这些 Selenium 命令对应的浏览器具体操作<br>4.浏览器执行这些操作<br>5.浏览器将执行状态返回给 HTTP Server<br>6.HTTP Server 再将这些状态信息返回给自动化脚本</p>
+<h2 id="接口测试用例的编写要点有哪些？"><a href="#接口测试用例的编写要点有哪些？" class="headerlink" title="接口测试用例的编写要点有哪些？"></a>接口测试用例的编写要点有哪些？</h2><ol>
+<li>必填字段：请求参数必填项、可选项</li>
+<li>合法性：输入输出合法、非法参数</li>
+<li>边界：请求参数边界值等</li>
+<li>容错能力：大容量数据、频繁请求、重复请求（如：订单）、异常网络等的处理</li>
+<li>响应数据校验：断言、数据提取传递到下一级接口。..</li>
+<li>逻辑校验：如两个请求的接口有严格的先后顺序，需要测试调转顺序的情况</li>
+<li>性能：对接口模拟并发测试，逐步加压，分析瓶颈点</li>
+<li>安全性：构造恶意的字符请求，如：SQL 注入、XSS、敏感信息、业务逻辑（如：跳过某些关键步骤； 未经验证操纵敏感数据）<ul>
+<li>测试每个参数类型不合法的情况（类型不合法容易遗漏 NULL 型）</li>
+<li>测试每个参数取值范围不合法的情况</li>
+<li>测试参数为空的情况</li>
+<li>测试参数前后台定义的一致性</li>
+<li>测试每个参数的上下限（这里容易出致命的 BUG，如果程序处理不当，可能导致崩溃）</li>
+<li>如果两个请求有严格的先后顺序，需要测试调转顺序的情况</li>
+</ul>
+</li>
+</ol>
+<h2 id="接口测试常见bug："><a href="#接口测试常见bug：" class="headerlink" title="接口测试常见bug："></a>接口测试常见bug：</h2><ol>
+<li><p>特殊值处理不当导致程序异常退出或者崩溃</p>
+</li>
+<li><p>类型边界溢出，导致数据读出和写入不一致</p>
+</li>
+<li><p>取值边界外值未返回正确的错误信息</p>
+</li>
+<li><p>参数 为null或空字符串“”等</p>
+</li>
+<li><p>权限未处理，可以访问其他用户的信息</p>
+</li>
+</ol>
+<p>例如:无权限可以访问，或者 一般用户可以访问管理员权限）</p>
+<ol start="6">
+<li>逻辑校验不完善，可利用漏洞获取非正当利益</li>
+</ol>
+<p>例如：某网站兑换1块钱需要100币，当小于100币时调用后台 接口是否可以兑换</p>
+<p>例如：购物结算时为100元，调用 后台接口设为0元，哈哈</p>
+<ol start="7">
+<li><p>状态处理不当，导致逻辑出现错误（可能程序员123都搞懵了）</p>
+</li>
+<li><p>数组类型item个数为0或者item重复时程序异常退出</p>
+</li>
+<li><p>超时问题，超时后处理</p>
+</li>
+<li><p>潜在性能问题（后台提交处理或者把性能风险提前提出）</p>
+</li>
+</ol>
+<h2 id="APP专项测试"><a href="#APP专项测试" class="headerlink" title="APP专项测试"></a>APP专项测试</h2><p>专项的测试方法，包括：兼容性测试、流量测试、电量测试、弱网络测试、稳定性测试、 安全测试和环境相关测试。</p>
+<h1 id="微信发红包的测试点："><a href="#微信发红包的测试点：" class="headerlink" title="微信发红包的测试点："></a>微信发红包的测试点：</h1><h1 id="1-功能："><a href="#1-功能：" class="headerlink" title="1.功能："></a>1.功能：</h1><p><strong>单个红包：</strong></p>
+<p>1、红包金额为空、整数、小数大小在0.1到200间</p>
+<p>2、金额输入不能输入非数字和.</p>
+<p>3、留言输入是否可以为空、整数、小数、字母、汉字、特殊字符</p>
+<p>4、留言长度、是否可以复制粘贴</p>
+<p>5、表情选择收藏表情、其他表情</p>
+<p>6、删除表情、重新选择表情</p>
+<p>7、选择支付方式 零钱、银行卡、添加新卡支付。其中钱数&lt;红包钱数、其中钱数&#x3D;红包钱数、其中钱数&gt;红包钱数</p>
+<p>8、红包成功发送后 相应支付方式中钱数减少（减少金额与红包金额一致）</p>
+<p>9、接受者能看到红包具体信息，红包金额、留言、表情均能正确显示</p>
+<p><strong>群发红包-普通红包：</strong>（只写了与单个红包不同的地方）</p>
+<p>1、红包个数 为空、0、001、100、99、101</p>
+<p>2、红包拆开每个金额一样 均为发红包时设置的单个金额对应的钱数</p>
+<p>3、发红包者自己领红包</p>
+<p>4、红包24小时内未被拆完，剩余钱被退回，相应支付方式中钱数增加</p>
+<p><strong>群发红包-拼手气红包：</strong></p>
+<p>1、红包总额&#x2F;红包个数&lt;0.01</p>
+<p>2、红包每个人拆开金额不同，总金额与发红包设置的总额一致</p>
+<p>3、红包24小时内拆完后显示最佳手气</p>
+<p>4、红包24小时内未被拆完不显示最佳手气</p>
+<h1 id="2-性能："><a href="#2-性能：" class="headerlink" title="2.性能："></a>2.性能：</h1><p>1、不同网速下抢红包的速度</p>
+<p>2、发红包和抢红包的跳转时间</p>
+<p>3、退款到账的时间</p>
+<p>4、抢红包所耗费的电量</p>
+<h1 id="3-UI界面："><a href="#3-UI界面：" class="headerlink" title="3.UI界面："></a>3.UI界面：</h1><p>1、收发红包界面是否有错别字</p>
+<p>2、抢红包、抢完红包是否有错别字</p>
+<p>3、界面排版是否合理</p>
+<p>4、界面颜色搭配是否合理</p>
+<h1 id="4-安全："><a href="#4-安全：" class="headerlink" title="4.安全："></a>4.安全：</h1><p>1、红包发送成功后是否会提醒</p>
+<p>2、一个人是否可以多次抢红包</p>
+<p>3、红包领取后收红包着金额是否会添加</p>
+<p>4、发红包后发红包着金额是否会减少</p>
+<p>5、红包24小时未领取退回后发红包着的红包是否退回，且不能举行领取</p>
+<p>6、红包被拆时，有相应提示</p>
+<h1 id="5-易用："><a href="#5-易用：" class="headerlink" title="5.易用："></a>5.易用：</h1><p>1、红包描述是否可以语言输入</p>
+<p>2、支持密码、指纹、面部支付</p>
+<h1 id="6-兼容性："><a href="#6-兼容性：" class="headerlink" title="6.兼容性："></a>6.兼容性：</h1><p>1、不同系统苹果、安卓、是否可以使用</p>
+<p>2、不同手机型号是否可以使用</p>
+<h1 id="7-弱网"><a href="#7-弱网" class="headerlink" title="7.弱网"></a>7.弱网</h1><p>1、2g网抢红包的速度</p>
+<p>2、3g网抢红包的速度</p>
+<p>3、抢红包时网络断开</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1%E3%80%81%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">1、软件测试流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2%E3%80%81%E7%BC%BA%E9%99%B7%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">2、缺陷定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3%E3%80%81%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">3、黑盒测试用例设计方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4%E3%80%81%E5%85%AD%E5%A4%A7%E6%B5%8B%E8%AF%95%E5%88%86%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text">4、六大测试分类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5%E3%80%81%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E5%8C%85%E5%90%AB%E9%82%A3%E4%BA%9B%E5%86%85%E5%AE%B9"><span class="toc-number">5.</span> <span class="toc-text">5、测试用例包含那些内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6%E3%80%81%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87"><span class="toc-number">6.</span> <span class="toc-text">6、怎么保证测试覆盖率</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7%E3%80%81%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">7、软件测试方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8%E3%80%81%E5%BC%80%E5%8F%91%E5%AF%B9%E7%BC%BA%E9%99%B7%E4%B8%8D%E8%AE%A4%E5%8F%AF%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86"><span class="toc-number">8.</span> <span class="toc-text">8、开发对缺陷不认可如何处理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9%E3%80%81BUG%E4%B8%8D%E5%8F%AF%E5%A4%8D%E7%8E%B0%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-number">9.</span> <span class="toc-text">9、BUG不可复现怎么办</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#10%E3%80%81%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%ADBUG%E6%98%AF%E5%89%8D%E7%AB%AF%E8%BF%98%E6%98%AF%E5%90%8E%E7%AB%AF%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">10、如何判断BUG是前端还是后端问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#11%E3%80%81%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B"><span class="toc-number">11.</span> <span class="toc-text">11、接口测试流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#12%E3%80%81%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E5%86%85%E5%AE%B9"><span class="toc-number">12.</span> <span class="toc-text">12、测试报告内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#13%E3%80%81%E8%81%8C%E4%B8%9A%E8%A7%84%E5%88%92"><span class="toc-number">13.</span> <span class="toc-text">13、职业规划</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#14%E3%80%81%E8%AF%B4%E5%87%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">14.</span> <span class="toc-text">14、说出自己的缺点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#15%E3%80%81%E5%81%9A%E6%B5%8B%E8%AF%95%E8%87%AA%E5%B7%B1%E6%9C%80%E5%A4%A7%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">15.</span> <span class="toc-text">15、做测试自己最大的优势</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#16%E3%80%81UI%E8%87%AA%E5%8A%A8%E5%8C%96%E5%85%83%E7%B4%A0%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%AE%9A%E4%BD%8D%E4%B8%8D%E5%88%B0%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">16.</span> <span class="toc-text">16、UI自动化元素过程中定位不到的原因</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#17%E3%80%81UI%E8%87%AA%E5%8A%A8%E5%8C%96%E5%85%AB%E7%A7%8D%E5%AE%9A%E4%BD%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">17.</span> <span class="toc-text">17、UI自动化八种定位方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#18%E3%80%81UI%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B8%89%E7%A7%8D%E7%AD%89%E5%BE%85%E6%96%B9%E5%BC%8F"><span class="toc-number">18.</span> <span class="toc-text">18、UI自动化三种等待方式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#19%E3%80%81UI%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84"><span class="toc-number">19.</span> <span class="toc-text">19、UI自动化测试框架组成结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#20%E3%80%81PO%E6%A8%A1%E5%BC%8F"><span class="toc-number">20.</span> <span class="toc-text">20、PO模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#21%E3%80%81linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">21.</span> <span class="toc-text">21、linux常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#22%E3%80%81%E5%8D%B0%E8%B1%A1%E6%9C%80%E6%B7%B1%E7%9A%84BUG"><span class="toc-number">22.</span> <span class="toc-text">22、印象最深的BUG</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#23%E3%80%81%E9%97%AE%E9%9D%A2%E8%AF%95%E5%AE%98%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">23.</span> <span class="toc-text">23、问面试官的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#24%E3%80%81%E4%BA%A7%E5%93%81%E4%B8%8A%E7%BA%BF%E6%A0%87%E5%87%86"><span class="toc-number">23.1.</span> <span class="toc-text">24、产品上线标准</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#25%E3%80%81%E9%81%87%E5%88%B0frame%E6%A1%86%E6%9E%B6%E9%A1%B5%E9%9D%A2%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86"><span class="toc-number">23.2.</span> <span class="toc-text">25、遇到frame框架页面怎么处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#26%E3%80%81UI%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1"><span class="toc-number">23.3.</span> <span class="toc-text">26、UI自动化测试用例怎么设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#27%E3%80%81%E5%A6%82%E4%BD%95%E5%8E%BB%E6%8F%90%E5%8D%87UI%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E7%A8%B3%E5%AE%9A%E6%80%A7"><span class="toc-number">23.4.</span> <span class="toc-text">27、如何去提升UI自动化测试用例的稳定性?</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#28%E3%80%81%E5%85%83%E7%B4%A0%E5%AE%9A%E4%BD%8D%E5%88%B0%E4%BA%86%EF%BC%8C%E5%8D%B4%E7%82%B9%E5%87%BB%E6%97%A0%E6%95%88-%E4%B9%9F%E6%B2%A1%E6%8A%A5%E9%94%99%EF%BC%89%EF%BC%8C%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3"><span class="toc-number">24.</span> <span class="toc-text">28、元素定位到了，却点击无效(也没报错），如何解决?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#29%E3%80%81%E5%BE%AE%E4%BF%A1%E8%A7%86%E9%A2%91%E8%81%8A%E5%A4%A9%E6%B5%8B%E8%AF%95%E7%82%B9"><span class="toc-number">25.</span> <span class="toc-text">29、微信视频聊天测试点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#30%E3%80%81unittest%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">26.</span> <span class="toc-text">30、unittest是什么？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#31%E3%80%81unitest%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">27.</span> <span class="toc-text">31、unitest的工作原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80"><span class="toc-number">28.</span> <span class="toc-text">计算机网络基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%8F%8F%E8%BF%B0%E7%94%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BF%E9%97%AE-www-baidu-com-%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">28.1.</span> <span class="toc-text">1.描述用浏览器访问 www.baidu.com 的过程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#API%E6%B5%8B%E8%AF%95"><span class="toc-number">29.</span> <span class="toc-text">API测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql%E7%9B%B8%E5%85%B3"><span class="toc-number">30.</span> <span class="toc-text">mysql相关</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL-%E7%9A%84-select-%E8%AF%AD%E5%8F%A5%E5%AE%8C%E6%95%B4%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%EF%BC%9F"><span class="toc-number">30.1.</span> <span class="toc-text">SQL 的 select 语句完整的执行顺序？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="toc-number">31.</span> <span class="toc-text">自动化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Selenium%E6%9C%89%E4%BB%A5%E4%B8%8B%E5%8A%9F%E8%83%BD%E7%89%B9%E6%80%A7"><span class="toc-number">31.1.</span> <span class="toc-text">Selenium有以下功能特性:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Selenium-Webdriver-%E5%8E%9F%E7%90%86%EF%BC%9F"><span class="toc-number">31.2.</span> <span class="toc-text">Selenium Webdriver 原理？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E7%BC%96%E5%86%99%E8%A6%81%E7%82%B9%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number">31.3.</span> <span class="toc-text">接口测试用例的编写要点有哪些？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95%E5%B8%B8%E8%A7%81bug%EF%BC%9A"><span class="toc-number">31.4.</span> <span class="toc-text">接口测试常见bug：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#APP%E4%B8%93%E9%A1%B9%E6%B5%8B%E8%AF%95"><span class="toc-number">31.5.</span> <span class="toc-text">APP专项测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AE%E4%BF%A1%E5%8F%91%E7%BA%A2%E5%8C%85%E7%9A%84%E6%B5%8B%E8%AF%95%E7%82%B9%EF%BC%9A"><span class="toc-number">32.</span> <span class="toc-text">微信发红包的测试点：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%8A%9F%E8%83%BD%EF%BC%9A"><span class="toc-number">33.</span> <span class="toc-text">1.功能：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E6%80%A7%E8%83%BD%EF%BC%9A"><span class="toc-number">34.</span> <span class="toc-text">2.性能：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-UI%E7%95%8C%E9%9D%A2%EF%BC%9A"><span class="toc-number">35.</span> <span class="toc-text">3.UI界面：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E5%AE%89%E5%85%A8%EF%BC%9A"><span class="toc-number">36.</span> <span class="toc-text">4.安全：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E6%98%93%E7%94%A8%EF%BC%9A"><span class="toc-number">37.</span> <span class="toc-text">5.易用：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E5%85%BC%E5%AE%B9%E6%80%A7%EF%BC%9A"><span class="toc-number">38.</span> <span class="toc-text">6.兼容性：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-%E5%BC%B1%E7%BD%91"><span class="toc-number">39.</span> <span class="toc-text">7.弱网</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&text=软件测试面试题"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&title=软件测试面试题"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&is_video=false&description=软件测试面试题"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=软件测试面试题&body=Check out this article: http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&title=软件测试面试题"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&title=软件测试面试题"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&title=软件测试面试题"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&title=软件测试面试题"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&name=软件测试面试题&description=收集软件测试一些基础面试题!欢迎补充."><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/08/01/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E9%9D%A2%E8%AF%95%E9%A2%98/&t=软件测试面试题"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    yuan kun
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux定时执行任务">
+<meta property="og:url" content="http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/index.html">
+<meta property="og:site_name" content="勾三股四">
+<meta property="og:description" content="定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image.assets/1662393874290.png">
+<meta property="og:image" content="http://example.com/image.assets/join.gif">
+<meta property="article:published_time" content="2022-09-05T15:48:34.000Z">
+<meta property="article:modified_time" content="2022-12-16T14:58:02.333Z">
+<meta property="article:author" content="yuan kun">
+<meta property="article:tag" content="Linux从入门到放弃">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/image.assets/1662393874290.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux定时执行任务</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2022/09/11/Rocky%E4%B8%8A%E5%AE%9E%E7%8E%B0%E7%A7%81%E6%9C%89CA%E5%92%8C%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/09/04/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&text=Linux定时执行任务"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&title=Linux定时执行任务"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&is_video=false&description=Linux定时执行任务"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux定时执行任务&body=Check out this article: http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&title=Linux定时执行任务"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&title=Linux定时执行任务"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&title=Linux定时执行任务"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&title=Linux定时执行任务"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&name=Linux定时执行任务&description=定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&t=Linux定时执行任务"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81at%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">一、at命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81at%E5%91%BD%E4%BB%A4%E7%9A%84%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.1.</span> <span class="toc-text">1、at命令的准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81at-%E5%91%BD%E4%BB%A4%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">2、at 命令的访问控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81at-%E5%91%BD%E4%BB%A4%E8%AF%AD%E6%B3%95%E6%B7%BB%E5%8A%A0%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.3.</span> <span class="toc-text">3、at 命令语法添加定时执行任务</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-crontab%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">二、 crontab命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81crontab-%E5%91%BD%E4%BB%A4%E7%9A%84%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.1.</span> <span class="toc-text">1、crontab 命令的准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81-crontab-%E5%91%BD%E4%BB%A4%E8%AF%AD%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">2、 crontab 命令语法</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Linux定时执行任务
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">勒马听风</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-09-05T15:48:34.000Z" itemprop="datePublished">2022-09-05</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E6%94%BE%E5%BC%83/" rel="tag">Linux从入门到放弃</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="一、at命令"><a href="#一、at命令" class="headerlink" title="一、at命令"></a>一、at命令</h1><h2 id="1、at命令的准备工作"><a href="#1、at命令的准备工作" class="headerlink" title="1、at命令的准备工作"></a>1、at命令的准备工作</h2><p><strong>1）安装 at 软件包</strong> </p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 ~]# yum install -y at</span><br></pre></td></tr></table></figure>
+<p><strong>2）需要 atd 服务的支持。atd 服务是独立的服务</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查看atd服务状态：# systemctl status atd  </span><br><span class="line"></span><br><span class="line">开启atd服务：# systemctl start atd</span><br><span class="line"></span><br><span class="line">关闭atd服务：# systemctl stop atd</span><br></pre></td></tr></table></figure>
+<p><strong>3）查看是否开始开机启动服务：如果弹出enabled，说明开机启动此服务</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky ~]# systemctl is-enabled atd</span><br><span class="line">enabled</span><br><span class="line">[root@rocky ~]# </span><br></pre></td></tr></table></figure>
+<p><strong>4）安装好 at 软件包并开启 atd 服务之后，at 命令才可以正常使用。</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@rocky ~]# systemctl start atd </span><br><span class="line">[root@rocky ~]# systemctl status atd</span><br></pre></td></tr></table></figure>
+<p> <img src="/../image.assets/1662393874290.png" alt="1662393874290"> </p>
+<h2 id="2、at-命令的访问控制"><a href="#2、at-命令的访问控制" class="headerlink" title="2、at 命令的访问控制"></a>2、at 命令的访问控制</h2><p>访问控制：是指允许哪些用户使用 at 命令设定定时任务，或者不允许哪些用户使用 at 命令。可以将其想象成设定黑名单或白名单。at 命令的访问控制是依靠 &#x2F;etc&#x2F;at.allow（白名单）和 &#x2F;etc&#x2F;at.deny（黑名单）这两个文件来实现的，具体规则如下：</p>
+<ul>
+<li><p>1)如果系统中有 &#x2F;etc&#x2F;at.allow 文件，那么只有写入 &#x2F;etc&#x2F;at.allow 文件（白名单）中的用户可以使用 at 命令，其他用户不能使用 at 命令(（注意，&#x2F;etc&#x2F;at.allow 文件的优先级更高，也就是说，如果同一个用户既写入 &#x2F;etc&#x2F;at.allow 文件，又写入 &#x2F;etc&#x2F;at.deny 文件，那么这个用户是可以使用 at 命令的);</p>
+</li>
+<li><p>2)如果系统中没有 &#x2F;etc&#x2F;at.allow 文件，只有 &#x2F;etc&#x2F;at.deny 文件，那么写入 &#x2F;etc&#x2F;at.deny 文件（黑名单）中的用户不能使用 at 命令，其他用户可以使用 at 命令。不过这个文件对 root 用户不生效;</p>
+</li>
+<li><p>3)如果系统中这两个文件都不存在，那么只有 root 用户可以使用 at 命令;</p>
+</li>
+<li><p>4)系统中默认只有 &#x2F;etc&#x2F;at.deny 文件，而且这个文件是空的，因此，系统中所有的用户都可以使用 at 命令。如果我们打算控制用户的 at 命令权限，那么只需把用户名写入 &#x2F;etc&#x2F;at.deny 文件即可。</p>
+</li>
+</ul>
+<h2 id="3、at-命令语法添加定时执行任务"><a href="#3、at-命令语法添加定时执行任务" class="headerlink" title="3、at 命令语法添加定时执行任务"></a>3、at 命令语法添加定时执行任务</h2><p><strong>基本格式</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">at [选项] [时间] or at [option] TIME</span><br></pre></td></tr></table></figure>
+<p><strong>选项</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-V 显示版本信息</span><br><span class="line">-t time 时间格式 [[CC]YY]MMDDhhmm[.ss]</span><br><span class="line">-l 列出指定队列中等待运行的作业；相当于atq</span><br><span class="line">-d N 删除指定的N号作业；相当于atrm</span><br><span class="line">-c N 查看具体作业N号任务</span><br><span class="line">-f file 指定的文件中读取任务</span><br><span class="line">-m 当任务被完成之后，将给用户发送邮件，即使没有标准输出  </span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ul>
+<li>作业执行命令的结果中的标准输出和错误以执行任务的用户身份发邮件通知给 root</li>
+<li>默认CentOS 8 最小化安装没有安装邮件服务,需要自行安装</li>
+<li>TIME：定义出什么时候进行 at 这项任务的时间</li>
+</ul>
+<p><strong>此命令中关于时间参数可用的以下格式：</strong></p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HH:MM</td>
+<td>比如 04:00 AM。</td>
+</tr>
+<tr>
+<td>Midnight（midnight）</td>
+<td>代表 12:00 AM</td>
+</tr>
+<tr>
+<td>Noon（noon）</td>
+<td>代表 12:00 PM（相当于 12:00）</td>
+</tr>
+<tr>
+<td>Teatime（teatime）</td>
+<td>代表 4:00 PM（相当于 16:00）。</td>
+</tr>
+<tr>
+<td>英文月名 日期 年份</td>
+<td>比如 January 15 2018 表示 2018 年 1 月 15 号，年份可有可无。</td>
+</tr>
+<tr>
+<td>MMDDYY、MM&#x2F;DD&#x2F;YY、MM.DD.YY</td>
+<td>比如 011518 表示 2018 年 1 月 15 号。</td>
+</tr>
+<tr>
+<td>now+时间</td>
+<td>以 minutes、hours、days 或 weeks 为单位，例如 now+5 days 表示命令在 5 天之后的此时此刻执行。</td>
+</tr>
+<tr>
+<td><strong>具体的使用方法：</strong></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>at命令后想要输入执行程序的确切时间，然后回车，接着在 &gt; 后输入想要执行的命令，最后用 Ctrl+d 组合键退出 at 命令。</p>
+<p><strong>范例</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 ~]# at now+2 min</span><br><span class="line">at&gt; ls ./ &gt; a.log</span><br></pre></td></tr></table></figure>
+
+<p><strong>范例: ubuntu at任务存放路径</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu200404-1:~# ll /var/spool/cron/</span><br><span class="line">total 20</span><br><span class="line">drwxr-xr-x 5 root   root    4096 Feb 23  2022 ./</span><br><span class="line">drwxr-xr-x 4 root   root    4096 Feb 23  2022 ../</span><br><span class="line">drwxrwx--T 2 daemon daemon  4096 Sep  6 13:32 atjobs/</span><br><span class="line">drwxrwx--T 2 daemon daemon  4096 Nov 12  2018 atspool/</span><br><span class="line">drwx-wx--T 2 root   crontab 4096 Feb 13  2020 crontabs/</span><br><span class="line"></span><br><span class="line">root@ubuntu200404-1:~# ll /var/spool/cron/atjobs/</span><br><span class="line">total 16</span><br><span class="line">drwxrwx--T 2 daemon daemon 4096 Sep  6 13:32 ./</span><br><span class="line">drwxr-xr-x 5 root   root   4096 Feb 23  2022 ../</span><br><span class="line">-rwx------ 1 root   daemon 2838 Sep  6 13:33 a0000101a6c9d1*</span><br><span class="line">-rw------- 1 daemon daemon    6 Sep  6 13:32 .SEQ</span><br><span class="line">root@ubuntu200404-1:~# </span><br></pre></td></tr></table></figure>
+
+<p><strong>范例：centos at任务存放路径</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 ~]# ll /var/spool/at/</span><br><span class="line">total 4</span><br><span class="line">-rwx------. 1 root root 2831 Sep  6 21:37 a0000501a6c9d5</span><br><span class="line">drwx------. 2 root root   19 Sep  6 21:31 spool</span><br><span class="line">[root@centos7 ~]# </span><br></pre></td></tr></table></figure>
+
+<h1 id="二、-crontab命令"><a href="#二、-crontab命令" class="headerlink" title="二、 crontab命令"></a>二、 crontab命令</h1><p>  at 命令：是在指定的时间只能执行一次任务。 crontab 命令：可以循环重复的执行定时任务。</p>
+<h2 id="1、crontab-命令的准备工作"><a href="#1、crontab-命令的准备工作" class="headerlink" title="1、crontab 命令的准备工作"></a>1、crontab 命令的准备工作</h2><p>crontab 命令需要 crond 服务支持。crond 是 Linux 下用来周期地执行某种任务或等待处理某些事件的一个守护进程，在安装完成操作系统后，默认会安装 crond 服务工具，且 crond 服务默认就是自启动的。crond 进程每分钟会定期检查是否有要执行的任务，如果有，则会自动执行该任务。</p>
+<p>crontab 命令和 at 命令类似，也是通过 &#x2F;etc&#x2F;cron.allow 和 &#x2F;etc&#x2F;cron.deny 文件来限制某些用户是否可以使用 crontab 命令的。</p>
+<p>启动crond服务之后才能使用crontab 命令：  </p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl start crond 或者  # systemctl enable crond</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、-crontab-命令语法"><a href="#2、-crontab-命令语法" class="headerlink" title="2、 crontab 命令语法"></a>2、 <strong>crontab 命令语法</strong></h2><p><strong>命令格式</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab [-u user] [-l | -r | -e] [-i]</span><br></pre></td></tr></table></figure>
+<p><strong>常用选项</strong></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-l 列出所有任务</span><br><span class="line">-e 编辑任务</span><br><span class="line">-r 移除所有任务</span><br><span class="line">-i 同-r一同使用，以交互式模式移除指定任务</span><br><span class="line">-u user 指定用户管理cron任务,仅root可运行</span><br></pre></td></tr></table></figure>
+
+<p> crontab 定时任务非常简单，只需执“crontab -e”命令，然后输入想要定时执行的任务即可。注意文件格式如下： </p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 ~]## crontab -e</span><br><span class="line">#进入 crontab 编辑界面。会打开Vim编辑你的任务</span><br><span class="line">* * * * * 执行的任务</span><br></pre></td></tr></table></figure>
+<p>&#x2F;etc&#x2F;crontab 格式说明，详情参见 man 5 crontab<br>注释行以 # 开头</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 ~]# cat /etc/crontab </span><br><span class="line">SHELL=/bin/bash</span><br><span class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">MAILTO=root</span><br><span class="line"></span><br><span class="line"># For details see man 4 crontabs</span><br><span class="line"></span><br><span class="line"># Example of job definition:</span><br><span class="line"># .---------------- minute (0 - 59)</span><br><span class="line"># |  .------------- hour (0 - 23)</span><br><span class="line"># |  |  .---------- day of month (1 - 31)</span><br><span class="line"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...</span><br><span class="line"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span><br><span class="line"># |  |  |  |  |</span><br><span class="line"># *  *  *  *  * user-name  command to be executed</span><br><span class="line"></span><br><span class="line">You have mail in /var/spool/mail/root</span><br><span class="line">[root@centos7 ~]# </span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>含义</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一个”*”</td>
+<td>一小时当中的第几分钟（minute）</td>
+<td>0~59</td>
+</tr>
+<tr>
+<td>第二个”*”</td>
+<td>一天当中的第几小时（hour）</td>
+<td>0~23</td>
+</tr>
+<tr>
+<td>第三个”*”</td>
+<td>一个月当中的第几天（day）</td>
+<td>1~31</td>
+</tr>
+<tr>
+<td>第四个”*”</td>
+<td>一年当中的第几个月（month）</td>
+<td>1~12</td>
+</tr>
+<tr>
+<td>第五个”*”</td>
+<td>一周当中的星期几（week）</td>
+<td>0~7（0和7都代表星期日）</td>
+</tr>
+</tbody></table>
+<p>**在这个时间的表达式中，还有一些特殊符号如下：    **</p>
+<table>
+<thead>
+<tr>
+<th>特殊符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*（星号）</td>
+<td>代表任何时间。比如第一个”*”就代表一小时种每分钟都执行一次的意思。</td>
+</tr>
+<tr>
+<td>,（逗号）</td>
+<td>代表不连续的时间。比如”0 8，12，16***命令”就代表在每天的 8 点 0 分、12 点 0 分、16 点 0 分都执行一次命令。</td>
+</tr>
+<tr>
+<td>-（中杠）</td>
+<td>代表连续的时间范围。比如”0 5 ** 1-6命令”，代表在周一到周六的凌晨 5 点 0 分执行命令。</td>
+</tr>
+<tr>
+<td>&#x2F;（正斜线）</td>
+<td>代表每隔多久执行一次。比如”<em>&#x2F;10</em>***命令”，代表每隔 10 分钟就执行一次命令。</td>
+</tr>
+</tbody></table>
+<p>当“crontab -e”编辑完成之后，一旦保存退出，那么这个定时任务实际就会写入 &#x2F;var&#x2F;spool&#x2F;cron&#x2F; 目录中，每个用户的定时任务用自己的用户名进行区分。而且 crontab 命令只要保存就会生效，只要 crond 服务是启动的。</p>
+<p>这里举几个时间的例子来熟悉一下时间字段（星期几和几日最好不要同时出现，非常容易让管理员混淆）：</p>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1 2 * * *</td>
+<td>在每天凌晨 2 点 1 分执行命令</td>
+</tr>
+<tr>
+<td>0 17 * * 1</td>
+<td>在每周一的 17 点 0 分执行命令</td>
+</tr>
+<tr>
+<td>0 5 1,15 * *</td>
+<td>在每月 1 日和 15 日的凌晨 5 点 0 分执行命令</td>
+</tr>
+<tr>
+<td>40 4 * * 1-5</td>
+<td>在每周一到周五的凌晨 4 点 40 分执行命令</td>
+</tr>
+<tr>
+<td>*&#x2F;10 4 * * *</td>
+<td>在每天的凌晨 4 点，每隔 10 分钟执行命令</td>
+</tr>
+<tr>
+<td>3,15 8-11 *&#x2F;2 * *</td>
+<td>在每隔两天的上午 8 点到 11 点的第 3 和第 15 分钟执行命令。</td>
+</tr>
+</tbody></table>
+<p> <img src="/../image.assets/join.gif" alt="img"> </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81at%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">一、at命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81at%E5%91%BD%E4%BB%A4%E7%9A%84%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.1.</span> <span class="toc-text">1、at命令的准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81at-%E5%91%BD%E4%BB%A4%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">2、at 命令的访问控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81at-%E5%91%BD%E4%BB%A4%E8%AF%AD%E6%B3%95%E6%B7%BB%E5%8A%A0%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.3.</span> <span class="toc-text">3、at 命令语法添加定时执行任务</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-crontab%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">二、 crontab命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81crontab-%E5%91%BD%E4%BB%A4%E7%9A%84%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.1.</span> <span class="toc-text">1、crontab 命令的准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81-crontab-%E5%91%BD%E4%BB%A4%E8%AF%AD%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">2、 crontab 命令语法</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&text=Linux定时执行任务"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&title=Linux定时执行任务"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&is_video=false&description=Linux定时执行任务"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux定时执行任务&body=Check out this article: http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&title=Linux定时执行任务"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&title=Linux定时执行任务"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&title=Linux定时执行任务"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&title=Linux定时执行任务"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&name=Linux定时执行任务&description=定时执行任务：是指在约定好的时间执行已经计划好的工作，如系统周期性所要执行的备份系统数据、清理缓存等。常用与定时执行任务的命令：at命令，batch命令（batch命令的用法和at相似），与周期性任务相关的crontab命令，CentOS7的新特性timer命令。"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/09/05/Linux%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1/&t=Linux定时执行任务"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    yuan kun
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
