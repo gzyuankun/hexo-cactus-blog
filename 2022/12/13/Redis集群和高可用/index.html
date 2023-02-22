@@ -9,45 +9,45 @@
     <meta name="description" content="Redis单机服务存在数据和服务的单点问题,而且单机性能也存在着上限,可以利用Redis的集群相关技术来解决这些问题">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis集群和高可用">
-<meta property="og:url" content="http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/index.html">
+<meta property="og:url" content="http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/index.html">
 <meta property="og:site_name" content="勾三股四">
 <meta property="og:description" content="Redis单机服务存在数据和服务的单点问题,而且单机性能也存在着上限,可以利用Redis的集群相关技术来解决这些问题">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/image.assets/1671327877294.png">
-<meta property="og:image" content="http://example.com/image.assets/1670942266531.png">
-<meta property="og:image" content="http://example.com/image.assets/1671283453244.png">
-<meta property="og:image" content="http://example.com/image.assets/1671326052932.png">
-<meta property="og:image" content="http://example.com/image.assets/1671326076150.png">
-<meta property="og:image" content="http://example.com/image.assets/1671326092067.png">
-<meta property="og:image" content="http://example.com/image.assets/1671326121741.png">
-<meta property="og:image" content="http://example.com/image.assets/1671327580442.png">
-<meta property="og:image" content="http://example.com/image.assets/1671328724924.png">
-<meta property="og:image" content="http://example.com/image.assets/1671328782321.png">
-<meta property="og:image" content="http://example.com/image.assets/1671328827665.png">
-<meta property="og:image" content="http://example.com/image.assets/1671328870673.png">
-<meta property="og:image" content="http://example.com/image.assets/1671328992908.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329004830.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329162018.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329175313.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329671490.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329705222.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329719113.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329733621.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329778357.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329787950.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329813270.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329824032.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329836794.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329862455.png">
-<meta property="og:image" content="http://example.com/image.assets/1671329876909.png">
-<meta property="og:image" content="http://example.com/image.assets/1671337258210.png">
-<meta property="og:image" content="http://example.com/image.assets/1671364901011.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671327877294.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1670942266531.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671283453244.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671326052932.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671326076150.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671326092067.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671326121741.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671327580442.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671328724924.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671328782321.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671328827665.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671328870673.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671328992908.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329004830.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329162018.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329175313.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329671490.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329705222.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329719113.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329733621.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329778357.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329787950.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329813270.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329824032.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329836794.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329862455.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671329876909.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671337258210.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1671364901011.png">
 <meta property="article:published_time" content="2022-12-13T14:20:06.000Z">
 <meta property="article:modified_time" content="2022-12-18T14:10:14.494Z">
 <meta property="article:author" content="yuan kun">
 <meta property="article:tag" content="Linux从入门到放弃">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/image.assets/1671327877294.png">
+<meta name="twitter:image" content="http://cactus.itshare.work/image.assets/1671327877294.png">
     
     
       
@@ -125,17 +125,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&text=Redis集群和高可用"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&is_video=false&description=Redis集群和高可用"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Redis集群和高可用&body=Check out this article: http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&name=Redis集群和高可用&description=Redis单机服务存在数据和服务的单点问题,而且单机性能也存在着上限,可以利用Redis的集群相关技术来解决这些问题"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&t=Redis集群和高可用"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&text=Redis集群和高可用"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&is_video=false&description=Redis集群和高可用"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Redis集群和高可用&body=Check out this article: http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&name=Redis集群和高可用&description=Redis单机服务存在数据和服务的单点问题,而且单机性能也存在着上限,可以利用Redis的集群相关技术来解决这些问题"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&t=Redis集群和高可用"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -532,17 +532,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&text=Redis集群和高可用"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&is_video=false&description=Redis集群和高可用"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Redis集群和高可用&body=Check out this article: http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&name=Redis集群和高可用&description=Redis单机服务存在数据和服务的单点问题,而且单机性能也存在着上限,可以利用Redis的集群相关技术来解决这些问题"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&t=Redis集群和高可用"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&text=Redis集群和高可用"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&is_video=false&description=Redis集群和高可用"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Redis集群和高可用&body=Check out this article: http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&title=Redis集群和高可用"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&name=Redis集群和高可用&description=Redis单机服务存在数据和服务的单点问题,而且单机性能也存在着上限,可以利用Redis的集群相关技术来解决这些问题"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://cactus.itshare.work/2022/12/13/Redis%E9%9B%86%E7%BE%A4%E5%92%8C%E9%AB%98%E5%8F%AF%E7%94%A8/&t=Redis集群和高可用"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

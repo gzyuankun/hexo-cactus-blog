@@ -9,18 +9,18 @@
     <meta name="description" content="有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx平滑升级">
-<meta property="og:url" content="http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/index.html">
+<meta property="og:url" content="http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/index.html">
 <meta property="og:site_name" content="勾三股四">
 <meta property="og:description" content="有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/image.assets/1673076066017.png">
-<meta property="og:image" content="http://example.com/image.assets/1673076087140.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1673076066017.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1673076087140.png">
 <meta property="article:published_time" content="2023-01-07T05:34:33.000Z">
 <meta property="article:modified_time" content="2023-01-08T12:25:50.362Z">
 <meta property="article:author" content="yuan kun">
 <meta property="article:tag" content="Linux从入门到放弃">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/image.assets/1673076066017.png">
+<meta name="twitter:image" content="http://cactus.itshare.work/image.assets/1673076066017.png">
     
     
       
@@ -98,17 +98,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&text=Nginx平滑升级"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&is_video=false&description=Nginx平滑升级"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Nginx平滑升级&body=Check out this article: http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&name=Nginx平滑升级&description=有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&t=Nginx平滑升级"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&text=Nginx平滑升级"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&is_video=false&description=Nginx平滑升级"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Nginx平滑升级&body=Check out this article: http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&name=Nginx平滑升级&description=有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&t=Nginx平滑升级"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -283,17 +283,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&text=Nginx平滑升级"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&is_video=false&description=Nginx平滑升级"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Nginx平滑升级&body=Check out this article: http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&name=Nginx平滑升级&description=有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&t=Nginx平滑升级"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&text=Nginx平滑升级"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&is_video=false&description=Nginx平滑升级"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Nginx平滑升级&body=Check out this article: http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&title=Nginx平滑升级"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&name=Nginx平滑升级&description=有时候我们需要对Nginx版本进行升级以满足对其功能的需求，例如添加新模块，需要新功能，而此时Nginx又在跑着业务无法停掉，这时我们就可能选择平滑升级"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://cactus.itshare.work/2023/01/07/Nginx%E5%B9%B3%E6%BB%91%E5%8D%87%E7%BA%A7/&t=Nginx平滑升级"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

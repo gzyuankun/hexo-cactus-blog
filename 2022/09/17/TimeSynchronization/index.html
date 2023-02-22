@@ -9,22 +9,22 @@
     <meta name="description" content="多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="时间同步机制和架构">
-<meta property="og:url" content="http://example.com/2022/09/17/TimeSynchronization/index.html">
+<meta property="og:url" content="http://cactus.itshare.work/2022/09/17/TimeSynchronization/index.html">
 <meta property="og:site_name" content="勾三股四">
 <meta property="og:description" content="多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/image.assets/1663418081035.png">
-<meta property="og:image" content="http://example.com/image.assets/1663419170404.png">
-<meta property="og:image" content="http://example.com/image.assets/1663419297813.png">
-<meta property="og:image" content="http://example.com/image.assets/1663419361157.png">
-<meta property="og:image" content="http://example.com/image.assets/1663419502330.png">
-<meta property="og:image" content="http://example.com/image.assets/1663420018409.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1663418081035.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1663419170404.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1663419297813.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1663419361157.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1663419502330.png">
+<meta property="og:image" content="http://cactus.itshare.work/image.assets/1663420018409.png">
 <meta property="article:published_time" content="2022-09-17T10:32:45.000Z">
 <meta property="article:modified_time" content="2022-12-16T14:59:58.756Z">
 <meta property="article:author" content="yuan kun">
 <meta property="article:tag" content="Linux从入门到放弃">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/image.assets/1663418081035.png">
+<meta name="twitter:image" content="http://cactus.itshare.work/image.assets/1663418081035.png">
     
     
       
@@ -102,17 +102,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/09/17/TimeSynchronization/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/09/17/TimeSynchronization/&text=时间同步机制和架构"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/09/17/TimeSynchronization/&is_video=false&description=时间同步机制和架构"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=时间同步机制和架构&body=Check out this article: http://example.com/2022/09/17/TimeSynchronization/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/09/17/TimeSynchronization/&name=时间同步机制和架构&description=&lt;p class=&#34;note note-success&#34;&gt;多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/09/17/TimeSynchronization/&t=时间同步机制和架构"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://cactus.itshare.work/2022/09/17/TimeSynchronization/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&text=时间同步机制和架构"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&is_video=false&description=时间同步机制和架构"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=时间同步机制和架构&body=Check out this article: http://cactus.itshare.work/2022/09/17/TimeSynchronization/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&name=时间同步机制和架构&description=&lt;p class=&#34;note note-success&#34;&gt;多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&t=时间同步机制和架构"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -302,17 +302,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/09/17/TimeSynchronization/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/09/17/TimeSynchronization/&text=时间同步机制和架构"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/09/17/TimeSynchronization/&is_video=false&description=时间同步机制和架构"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=时间同步机制和架构&body=Check out this article: http://example.com/2022/09/17/TimeSynchronization/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/09/17/TimeSynchronization/&name=时间同步机制和架构&description=&lt;p class=&#34;note note-success&#34;&gt;多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/09/17/TimeSynchronization/&t=时间同步机制和架构"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://cactus.itshare.work/2022/09/17/TimeSynchronization/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&text=时间同步机制和架构"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&is_video=false&description=时间同步机制和架构"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=时间同步机制和架构&body=Check out this article: http://cactus.itshare.work/2022/09/17/TimeSynchronization/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&title=时间同步机制和架构"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&name=时间同步机制和架构&description=&lt;p class=&#34;note note-success&#34;&gt;多主机协作工作时，各个主机的时间同步很重要，时间不一致会造成很多重要应用的故障，如：加密协议，日志，集群等， 利用NTP（Network Time Protocol） 协议使网络中的各个计算机时间达到同步。目前NTP协议属于运维基础架构中必备的基本服务之一&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://cactus.itshare.work/2022/09/17/TimeSynchronization/&t=时间同步机制和架构"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
