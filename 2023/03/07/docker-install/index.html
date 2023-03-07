@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker安装部署">
+<meta property="og:url" content="http://cactus.itshare.work/2023/03/07/docker-install/index.html">
+<meta property="og:site_name" content="Cookie">
+<meta property="og:description" content="Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-07T06:36:10.000Z">
+<meta property="article:modified_time" content="2023-03-07T09:10:23.349Z">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Docker安装部署</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2023/03/07/Docker%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/03/02/Zabbix/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://cactus.itshare.work/2023/03/07/docker-install/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://cactus.itshare.work/2023/03/07/docker-install/&text=Docker安装部署"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://cactus.itshare.work/2023/03/07/docker-install/&title=Docker安装部署"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://cactus.itshare.work/2023/03/07/docker-install/&is_video=false&description=Docker安装部署"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Docker安装部署&body=Check out this article: http://cactus.itshare.work/2023/03/07/docker-install/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://cactus.itshare.work/2023/03/07/docker-install/&title=Docker安装部署"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://cactus.itshare.work/2023/03/07/docker-install/&title=Docker安装部署"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://cactus.itshare.work/2023/03/07/docker-install/&title=Docker安装部署"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://cactus.itshare.work/2023/03/07/docker-install/&title=Docker安装部署"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://cactus.itshare.work/2023/03/07/docker-install/&name=Docker安装部署&description=Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://cactus.itshare.work/2023/03/07/docker-install/&t=Docker安装部署"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%92%8C%E5%88%A0%E9%99%A4%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">安装和删除方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu-%E5%AE%89%E8%A3%85%E5%92%8C%E5%88%A0%E9%99%A4Docker"><span class="toc-number">1.1.</span> <span class="toc-text">Ubuntu 安装和删除Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CentOS-%E5%AE%89%E8%A3%85%E5%92%8C%E5%88%A0%E9%99%A4Docker"><span class="toc-number">1.2.</span> <span class="toc-text">CentOS 安装和删除Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85"><span class="toc-number">1.3.</span> <span class="toc-text">二进制安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85%E4%B8%8B%E8%BD%BD%E8%B7%AF%E5%BE%84"><span class="toc-number">1.3.1.</span> <span class="toc-text">二进制安装下载路径</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Docker安装部署
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name"></span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-03-07T06:36:10.000Z" itemprop="datePublished">2023-03-07</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="安装和删除方法"><a href="#安装和删除方法" class="headerlink" title="安装和删除方法"></a>安装和删除方法</h1><p>官方文档 : <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a><br>阿里云文档: <a target="_blank" rel="noopener" href="https://developer.aliyun.com/mirror/docker-ce?spm=a2c6h.13651102.0.0.3e221b11gu">https://developer.aliyun.com/mirror/docker-ce?spm=a2c6h.13651102.0.0.3e221b11gu</a></p>
+<h2 id="Ubuntu-安装和删除Docker"><a href="#Ubuntu-安装和删除Docker" class="headerlink" title="Ubuntu 安装和删除Docker"></a>Ubuntu 安装和删除Docker</h2><p>官方文档: <a target="_blank" rel="noopener" href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">https://docs.docker.com/install/linux/docker-ce/ubuntu/</a></p>
+<h2 id="CentOS-安装和删除Docker"><a href="#CentOS-安装和删除Docker" class="headerlink" title="CentOS 安装和删除Docker"></a>CentOS 安装和删除Docker</h2><p>官方文档: <a target="_blank" rel="noopener" href="https://docs.docker.com/install/linux/docker-ce/centos/">https://docs.docker.com/install/linux/docker-ce/centos/</a><br>CentOS 6 因内核太旧，即使支持安装docker，但会有各种问题，不建议安装<br>CentOS 7 的 extras 源虽然可以安装docker，但包比较旧，建议从官方源或镜像源站点下载安装docker<br>CentOS 8 有新技术 podman 代替 docker<br>因此建议在CentOS 7 上安装 docker</p>
+<p>参考阿里云文档: <a target="_blank" rel="noopener" href="https://developer.aliyun.com/mirror/docker-ce?spm=a2c6h.13651102.0.0.3e221b11gu">https://developer.aliyun.com/mirror/docker-ce?spm=a2c6h.13651102.0.0.3e221b11gu</a></p>
+<h2 id="二进制安装"><a href="#二进制安装" class="headerlink" title="二进制安装"></a>二进制安装</h2><p>本方法适用于无法上网或无法通过包安装方式安装的主机上安装docker<br>安装文档: <a target="_blank" rel="noopener" href="https://docs.docker.com/install/linux/docker-ce/binaries/">https://docs.docker.com/install/linux/docker-ce/binaries/</a></p>
+<h3 id="二进制安装下载路径"><a href="#二进制安装下载路径" class="headerlink" title="二进制安装下载路径"></a>二进制安装下载路径</h3><p><a target="_blank" rel="noopener" href="https://download.docker.com/linux/">https://download.docker.com/linux/</a><br><a target="_blank" rel="noopener" href="https://mirrors.aliyun.com/docker-ce/linux/static/stable/x86_64/">https://mirrors.aliyun.com/docker-ce/linux/static/stable/x86_64/</a></p>
+<p>范例：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">wget https://mirrors.aliyun.com/docker-ce/linux/static/stable/x86_64/docker-20.10.10.tgz?spm=a2c6h.25603864.0.0.1caf15acK1B2NZ</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压</span></span><br><span class="line">[root@centos7 src]<span class="comment"># tar xf docker-20.10.10.tgz</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tree</span></span><br><span class="line">[root@centos7 src]<span class="comment"># tree</span></span><br><span class="line">.</span><br><span class="line">├── docker</span><br><span class="line">│   ├── containerd</span><br><span class="line">│   ├── containerd-shim</span><br><span class="line">│   ├── containerd-shim-runc-v2</span><br><span class="line">│   ├── ctr</span><br><span class="line">│   ├── docker</span><br><span class="line">│   ├── dockerd</span><br><span class="line">│   ├── docker-init</span><br><span class="line">│   ├── docker-proxy</span><br><span class="line">│   └── runc</span><br><span class="line">└── docker-20.10.10.tgz</span><br><span class="line"></span><br><span class="line">1 directory, 10 files</span><br><span class="line">[root@centos7 src]<span class="comment"># </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加环境变量</span></span><br><span class="line">[root@centos7 src]<span class="comment"># ln -s /usr/local/src/docker/* /usr/bin/</span></span><br><span class="line"><span class="comment">#启动dockerd服务</span></span><br><span class="line">[root@centos7 src]<span class="comment">#dockerd &amp;&gt;/dev/null &amp;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编写service文件</span></span><br><span class="line">[root@centos7 ~]<span class="comment"># cat /lib/systemd/system/docker.service</span></span><br><span class="line"></span><br><span class="line">[Unit]</span><br><span class="line">Description=Docker Application Container Engine</span><br><span class="line">Documentation=https://docs.docker.com</span><br><span class="line">After=network-online.target docker.socket firewalld.service containerd.service time-set.target</span><br><span class="line">Wants=network-online.target containerd.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=notify</span><br><span class="line">ExecStart=/usr/bin/dockerd -H unix://var/run/docker.sock</span><br><span class="line">ExecReload=/bin/kill -s HUP <span class="variable">$MAINPID</span></span><br><span class="line">TimeoutStartSec=0</span><br><span class="line">RestartSec=2</span><br><span class="line">Restart=always</span><br><span class="line">StartLimitBurst=3</span><br><span class="line">StartLimitInterval=60s</span><br><span class="line"></span><br><span class="line"><span class="comment"># Having non-zero Limit*s causes performance problems due to accounting overhead</span></span><br><span class="line"><span class="comment"># in the kernel. We recommend using cgroups to do container-local accounting.</span></span><br><span class="line">LimitNOFILE=infinity</span><br><span class="line">LimitNPROC=infinity</span><br><span class="line">LimitCORE=infinity</span><br><span class="line"></span><br><span class="line"><span class="comment"># Comment TasksMax if your systemd version does not support it.</span></span><br><span class="line"><span class="comment"># Only systemd 226 and above support this option.</span></span><br><span class="line">TasksMax=infinity</span><br><span class="line"></span><br><span class="line"><span class="comment"># set delegate yes so that systemd does not reset the cgroups of docker containers</span></span><br><span class="line">Delegate=<span class="built_in">yes</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># kill only the docker process, not all processes in the cgroup</span></span><br><span class="line">KillMode=process</span><br><span class="line">OOMScoreAdjust=-500</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/tags/">标签</a></li>
+         
+          <li><a href="/categories/">分类</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%92%8C%E5%88%A0%E9%99%A4%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">安装和删除方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu-%E5%AE%89%E8%A3%85%E5%92%8C%E5%88%A0%E9%99%A4Docker"><span class="toc-number">1.1.</span> <span class="toc-text">Ubuntu 安装和删除Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CentOS-%E5%AE%89%E8%A3%85%E5%92%8C%E5%88%A0%E9%99%A4Docker"><span class="toc-number">1.2.</span> <span class="toc-text">CentOS 安装和删除Docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85"><span class="toc-number">1.3.</span> <span class="toc-text">二进制安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E8%A3%85%E4%B8%8B%E8%BD%BD%E8%B7%AF%E5%BE%84"><span class="toc-number">1.3.1.</span> <span class="toc-text">二进制安装下载路径</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://cactus.itshare.work/2023/03/07/docker-install/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://cactus.itshare.work/2023/03/07/docker-install/&text=Docker安装部署"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://cactus.itshare.work/2023/03/07/docker-install/&title=Docker安装部署"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://cactus.itshare.work/2023/03/07/docker-install/&is_video=false&description=Docker安装部署"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Docker安装部署&body=Check out this article: http://cactus.itshare.work/2023/03/07/docker-install/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://cactus.itshare.work/2023/03/07/docker-install/&title=Docker安装部署"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://cactus.itshare.work/2023/03/07/docker-install/&title=Docker安装部署"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://cactus.itshare.work/2023/03/07/docker-install/&title=Docker安装部署"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://cactus.itshare.work/2023/03/07/docker-install/&title=Docker安装部署"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://cactus.itshare.work/2023/03/07/docker-install/&name=Docker安装部署&description=Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache2.0 协议开源。Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://cactus.itshare.work/2023/03/07/docker-install/&t=Docker安装部署"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Cookie
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+<!--<p class="size-small">
+    <a href="http://www.beian.miit.gov.cn" target="_blank" rel="noopener">黔ICP备2022006994号</a>
+  </p>-->
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
